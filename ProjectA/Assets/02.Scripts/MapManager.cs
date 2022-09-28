@@ -32,7 +32,6 @@ public class MapManager : MonoBehaviour
     #endregion
 
 
-    public GameObject player;
     public List<GameObject> mapList = new List<GameObject>(); //생성되는 맵의 종류를 저장하는 리스트
     public List<float> mapSpawnPer = new List<float>(); //맵이 생성될확률을 저장하는 리스트
 

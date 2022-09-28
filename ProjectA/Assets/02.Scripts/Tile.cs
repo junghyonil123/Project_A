@@ -16,8 +16,8 @@ public class Tile : MonoBehaviour
     
     private void CreatMap()
     {
-        float playerXPos = GameManager.Instance.player.transform.position.x; //플레이어의 x포지션과 y포지션을 저장하는 변수
-        float playerYPos = GameManager.Instance.player.transform.position.y;
+        float playerXPos = Player.Instance.transform.position.x; //플레이어의 x포지션과 y포지션을 저장하는 변수
+        float playerYPos = Player.Instance.transform.position.y;
 
         float deltaX = playerXPos - transform.position.x; //플레이어와 타일의 거리차를 저장하는 변수
         float deltaY = playerYPos - transform.position.y;
