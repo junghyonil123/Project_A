@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1805089566581331589}
   - component: {fileID: 1805089566581331586}
   - component: {fileID: 1805089566581331591}
+  - component: {fileID: 3933682295824683368}
   m_Layer: 0
   m_Name: OceanMap
   m_TagString: Untagged
@@ -125,3 +126,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3933682295824683368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805089566581331587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d5c3d7cdfe7524cb5e9468899644b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topMap: {fileID: 0}
+  bottomMap: {fileID: 0}
+  leftMap: {fileID: 0}
+  rightMap: {fileID: 0}
