@@ -343,6 +343,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7ee92f0bf3c794581dfb56e16f2bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 5
+  maxHp: 10
+  mp: 0
+  maxMp: 10
+  atk: 0
+  def: 5
   target: {fileID: 0}
   speed: 2
   activePoint: 10

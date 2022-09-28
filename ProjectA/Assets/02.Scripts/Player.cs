@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
     private bool isCanMove=true;
     public Transform target;
@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+
+    public override void Start()
+    {
+        base.Start();
+    }
 
     private void Update()
     {
@@ -72,4 +77,8 @@ public class Player : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 
+    public override void GetDamage(float damage)
+    {
+        base.GetDamage(damage);
+    }
 }
