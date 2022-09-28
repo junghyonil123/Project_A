@@ -2,4 +2,4 @@
 
 <br>
 
-## [게임 기획서 📜](https://www.notion.so/hyon-il/5f7db7205bf24bb0824b51817623a1e7)
+## [게임 기획서 📜](https://hyon-il.notion.site/cc660a4dfb95454993c3f7479e7c30c5)
