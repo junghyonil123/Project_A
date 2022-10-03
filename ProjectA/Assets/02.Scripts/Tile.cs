@@ -9,9 +9,14 @@ public class Tile : MonoBehaviour
     public GameObject leftMap;
     public GameObject rightMap;
 
+    public GameObject thisMap;
+
+    public int numberOfNextBlock;
+
     private void Awake()
     {
-        CreatMap();   
+        CreatMap();
+        thisMap = gameObject;
     }
     
     private void CreatMap()
@@ -50,7 +55,7 @@ public class Tile : MonoBehaviour
         else
         {
             //Debug.Log("Å¾¸Ê¸¸µé¾îÁü");
-            topMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y + 3));
+            topMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y + 3), numberOfNextBlock, thisMap);
         }
     }
 
@@ -68,7 +73,7 @@ public class Tile : MonoBehaviour
         else
         {
             //Debug.Log("¹ÙÅÒ¸Ê¸¸µé¾îÁü");
-            bottomMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y - 3));
+            bottomMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y - 3), numberOfNextBlock, thisMap);
         }
     }
 
@@ -84,7 +89,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            leftMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x - 3, transform.position.y));
+            leftMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x - 3, transform.position.y), numberOfNextBlock, thisMap);
         }
     }
     
@@ -100,7 +105,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            rightMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x + 3, transform.position.y));
+            rightMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x + 3, transform.position.y), numberOfNextBlock, thisMap);
         }
     }
 
