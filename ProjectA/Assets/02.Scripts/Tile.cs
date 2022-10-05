@@ -38,7 +38,6 @@ public class Tile : MonoBehaviour
             CreatRightMap();
             CreatLeftMap();
         }
-        
     }
 
     private void CreatTopMap()
