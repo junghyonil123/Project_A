@@ -60,6 +60,8 @@
     <Compile Include="Assets\02.Scripts\MapManager.cs" />
     <Compile Include="Assets\02.Scripts\FollowCamera.cs" />
     <Compile Include="Assets\02.Scripts\GameManager.cs" />
+    <Compile Include="Assets\03.Ui\Scripts\MainCanvas.cs" />
+    <Compile Include="Assets\03.Ui\Scripts\StatusCanvas.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

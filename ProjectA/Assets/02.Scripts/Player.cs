@@ -8,11 +8,19 @@ public class Player : Unit
     
     public float speed;
     
-    [SerializeField] private int activePoint = 10;
-    
+    public float maxActivePoint = 10;
+    public float nowActivePoint;
+
+    public Animator playerAnimator;
+
+    public void ResetActivePoint()
+    {
+        nowActivePoint = maxActivePoint;
+    }
+
     public Transform target;
     
-    public Tile nowStrandingTile;
+    //public Tile nowStrandingTile;
 
 
      #region singleton
@@ -46,6 +54,7 @@ public class Player : Unit
     {
         base.Start();
         PlayerPosionRay();
+        ResetActivePoint();
     }
 
     private void Update()
@@ -56,7 +65,7 @@ public class Player : Unit
     void PlayerMove()
     {
 
-        if (Input.GetMouseButtonUp(0) && isCanMove && activePoint != 0)
+        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0)
         {
 
             isCanMove = false;
@@ -67,33 +76,31 @@ public class Player : Unit
             if (!hit)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
                 return;
 
-            Debug.Log(hit.collider.gameObject);
-
-            if (hit.transform == nowStrandingTile.topMap.transform)
+            if (hit.transform == target.GetComponent<Tile>().topMap.transform)
             {
                 target = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
-                nowStrandingTile = target.GetComponent<Tile>();
+                playerAnimator.SetBool("Walk", true);
             }
-            else if (hit.transform == nowStrandingTile.bottomMap.transform)
+            else if (hit.transform == target.GetComponent<Tile>().bottomMap.transform)
             {
-                target = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
-                nowStrandingTile = target.GetComponent<Tile>();
+                target = hit.transform;  
+                playerAnimator.SetBool("Walk", true);
             }
-            else if(hit.transform == nowStrandingTile.leftMap.transform)
+            else if(hit.transform == target.GetComponent<Tile>().leftMap.transform)
             {
-                target = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
-                nowStrandingTile = target.GetComponent<Tile>();
+                target = hit.transform; 
+                playerAnimator.SetBool("Walk", true);
             }
-            else if(hit.transform == nowStrandingTile.rightMap.transform)
+            else if(hit.transform == target.GetComponent<Tile>().rightMap.transform)
             {
-                target = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
-                nowStrandingTile = target.GetComponent<Tile>();
+                target = hit.transform;  
+                playerAnimator.SetBool("Walk", true);
             }
 
 
             if (transform.position != target.transform.position)
             {   //Player가 서있는 땅을 눌러도 activePoint 소모 안하도록 막음
-                activePoint--;
+                nowActivePoint--;
             }
 
         }
@@ -108,6 +115,11 @@ public class Player : Unit
         }
 
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+        if (transform.position == target.position)
+        { //이동이끝났음
+            playerAnimator.SetBool("Walk", false);
+        }
     }
 
     public override void GetDamage(float damage)
@@ -121,7 +133,7 @@ public class Player : Unit
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
-        nowStrandingTile = hit.transform.GetComponent<Tile>();
-        target = nowStrandingTile.transform;
+        //nowStrandingTile = hit.transform.GetComponent<Tile>();
+        target = hit.transform;
     }
 }
