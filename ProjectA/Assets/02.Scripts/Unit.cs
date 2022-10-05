@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public float hp;
+    public float nowHp;
     public float maxHp;
-    public float mp;
+    public float nowMp;
     public float maxMp;
     public float atk;
     public float def;
+    public float lv;
 
     virtual public void Start()
     {
-        hp = maxHp;
-        mp = maxMp;
+        nowHp = maxHp;
+        nowMp = maxMp;
     }
 
     virtual public void GetDamage(float damage)
     {
         if(damage - def <= 1)
         {
-            hp--;
+            nowHp--;
         }
         else
         {
-          hp = hp - (damage - def);
+          nowHp = nowHp - (damage - def);
         }
     }
 }
