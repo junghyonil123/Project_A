@@ -33,7 +33,7 @@ public class StatusCanvas : MonoBehaviour
         defText.text = "방어력 :" + Player.Instance.def;
         hpText.text = "체력 :" + Player.Instance.nowHp+ "/" + Player.Instance.maxHp;
 
-        strText.text = "Str :" + Player.Instance.str;
+        strText.text = "Str : " + Player.Instance.str;
         dexText.text = "Dex :" + Player.Instance.dex;
         conText.text = "Con :" + Player.Instance.con;
 
@@ -42,8 +42,11 @@ public class StatusCanvas : MonoBehaviour
 
     public void UpStr()
     {
+        Debug.Log("눌렸음");
+
         if (Player.Instance.statusPoint > 0)
         {
+            Debug.Log("이프문들어옴");
             Player.Instance.str += 1;
             Player.Instance.statusPoint -= 1;
             SetStatusWindow();
@@ -64,7 +67,7 @@ public class StatusCanvas : MonoBehaviour
     {
         if (Player.Instance.statusPoint > 0)
         {
-            Player.Instance.maxHp += 1;
+            Player.Instance.con += 1;
             Player.Instance.statusPoint -= 1;
             SetStatusWindow();
         }

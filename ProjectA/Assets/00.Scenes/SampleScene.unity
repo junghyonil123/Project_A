@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowHp: 0
-  maxHp: 100
+  maxHp: 0
   nowMp: 0
   maxMp: 0
   atk: 10
@@ -298,7 +298,7 @@ MonoBehaviour:
   str: 5
   dex: 5
   con: 5
-  statusPoint: 0
+  statusPoint: 10
   playerAnimator: {fileID: 250060571}
   job: "\uBB34\uC9C1"
   nowStandingTile: {fileID: 0}
@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 405413110}
   - component: {fileID: 405413109}
   m_Layer: 5
-  m_Name: StrText (1)
+  m_Name: StatusPointText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1608,7 +1608,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1057814245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1809419513}
+        m_TargetAssemblyTypeName: StatusCanvas, Assembly-CSharp
+        m_MethodName: UpDex
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1057814245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2132,7 +2144,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1274293819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1809419513}
+        m_TargetAssemblyTypeName: StatusCanvas, Assembly-CSharp
+        m_MethodName: UpStr
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1274293819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2941,7 +2965,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1799113180}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1809419513}
+        m_TargetAssemblyTypeName: StatusCanvas, Assembly-CSharp
+        m_MethodName: UpCon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1799113180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,9 +3074,10 @@ MonoBehaviour:
   atkText: {fileID: 1078874587}
   defText: {fileID: 1738490680}
   hpText: {fileID: 328288103}
-  strText: {fileID: 0}
-  dexText: {fileID: 0}
-  conText: {fileID: 0}
+  strText: {fileID: 1721244856}
+  dexText: {fileID: 1341381186}
+  conText: {fileID: 959236030}
+  statusPointText: {fileID: 405413109}
 --- !u!114 &1809419514
 MonoBehaviour:
   m_ObjectHideFlags: 0

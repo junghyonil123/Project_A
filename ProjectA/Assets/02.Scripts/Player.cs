@@ -75,6 +75,8 @@ public class Player : Unit
     public override void Start()
     {
         base.Start();
+        SetStatus();
+        ResetHp();
         PlayerPosionRay();
         ResetActivePoint();
     }
