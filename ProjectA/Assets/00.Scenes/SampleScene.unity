@@ -504,6 +504,7 @@ MonoBehaviour:
   atk: 10
   def: 5
   lv: 0
+  statuscanvas: {fileID: 1809419513}
   speed: 3.3
   maxActivePoint: 100
   nowActivePoint: 0
@@ -4909,7 +4910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da76acafb9fe804bb7fd6a82ce305ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profileWindow: {fileID: 2055491620}
+  statusWindow: {fileID: 2055491620}
   jobText: {fileID: 2100543748}
   atkText: {fileID: 1078874587}
   defText: {fileID: 1738490680}
@@ -4921,6 +4922,7 @@ MonoBehaviour:
   uiWindowList:
   - {fileID: 349852614}
   - {fileID: 1224339567}
+  isOpenCanvas: 0
 --- !u!114 &1809419514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5235,7 +5237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2055491621
 RectTransform:
   m_ObjectHideFlags: 0
