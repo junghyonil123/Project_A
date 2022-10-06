@@ -26,7 +26,6 @@ public class StatusCanvas : MonoBehaviour
         {
             if (uiWindowList[i].name == "ProfileWindow")
             {
-                Debug.Log(uiWindowList[i].name + "µé¿È");
                 uiWindowList[i].SetActive(true);
             }
             else
@@ -40,10 +39,23 @@ public class StatusCanvas : MonoBehaviour
     {
         for (int i = 0; i < uiWindowList.Count; i++)
         {
-            Debug.Log(uiWindowList[i].name);
             if (uiWindowList[i].name == "EquipmentWindow")
             {
-                Debug.Log(uiWindowList[i].name + "µé¿È");
+                uiWindowList[i].SetActive(true);
+            }
+            else
+            {
+                uiWindowList[i].SetActive(false);
+            }
+        }
+    }
+
+    public void InventoryWindowOnOff()
+    {
+        for (int i = 0; i < uiWindowList.Count; i++)
+        {
+            if (uiWindowList[i].name == "InventoryWindow")
+            {
                 uiWindowList[i].SetActive(true);
             }
             else

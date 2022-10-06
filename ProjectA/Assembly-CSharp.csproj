@@ -97,6 +97,9 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\02.Scripts\GameManager.cs" />
+    <Compile Include="Assets\03.Ui\Scripts\Slot.cs" />
+    <Compile Include="Assets\05.Item\Scripts\Item.cs" />
+    <Compile Include="Assets\05.Item\Scripts\Inventory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
