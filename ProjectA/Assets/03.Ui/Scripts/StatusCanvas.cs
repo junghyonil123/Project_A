@@ -5,7 +5,7 @@ using TMPro;
 
 public class StatusCanvas : MonoBehaviour
 {
-    public GameObject profileWindow;
+    public GameObject statusWindow;
 
     public TextMeshProUGUI jobText;
     public TextMeshProUGUI atkText;
@@ -19,6 +19,8 @@ public class StatusCanvas : MonoBehaviour
     public TextMeshProUGUI statusPointText;
 
     public List<GameObject> uiWindowList = new List<GameObject>();
+
+    public bool isOpenCanvas = false;
 
     public void ProfilWindowOnOff()
     {
@@ -67,7 +69,8 @@ public class StatusCanvas : MonoBehaviour
 
     public void OnOffStatusWindow()
     {
-        profileWindow.SetActive(!profileWindow.activeSelf);
+        statusWindow.SetActive(!statusWindow.activeSelf);
+        isOpenCanvas = statusWindow.activeSelf;
         SetStatusWindow();
     }
 

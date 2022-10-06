@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Sprite enemy;
+    public Player player;
 
     #region singleton
     private static GameManager instance = null;

@@ -79,7 +79,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\03.Ui\Scripts\StatusCanvas.cs" />
     <Compile Include="Assets\02.Scripts\Player.cs" />
-    <Compile Include="Assets\test.cs" />
     <Compile Include="Assets\02.Scripts\GrassMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -97,9 +96,8 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\02.Scripts\GameManager.cs" />
-    <Compile Include="Assets\03.Ui\Scripts\Slot.cs" />
-    <Compile Include="Assets\05.Item\Scripts\Item.cs" />
-    <Compile Include="Assets\05.Item\Scripts\Inventory.cs" />
+    <Compile Include="Assets\PlayerBattle.cs" />
+    <Compile Include="Assets\EnemyBattle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
