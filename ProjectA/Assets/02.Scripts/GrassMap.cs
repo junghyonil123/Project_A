@@ -12,7 +12,6 @@ public class GrassMap : MonoBehaviour
         {
             if (Random.Range(0,9) < 1)
             {
-                Instantiate(environmentList[i], transform.position + new Vector3(Random.Range(-1f,1f), Random.Range(-1f, 1f), 0), transform.rotation);
                 break;
             }
         }
