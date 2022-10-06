@@ -56,6 +56,7 @@
     <Compile Include="Assets\02.Scripts\Tile.cs" />
     <Compile Include="Assets\02.Scripts\Unit.cs" />
     <Compile Include="Assets\02.Scripts\Player.cs" />
+    <Compile Include="Assets\test.cs" />
     <Compile Include="Assets\02.Scripts\GrassMap.cs" />
     <Compile Include="Assets\02.Scripts\MapManager.cs" />
     <Compile Include="Assets\02.Scripts\FollowCamera.cs" />

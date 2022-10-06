@@ -58,7 +58,7 @@ public class Player : Unit
 
         if (Input.GetMouseButtonUp(0) && isCanMove && activePoint != 0)
         {
-
+                        
             isCanMove = false;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //마우스 위치로 ray발사

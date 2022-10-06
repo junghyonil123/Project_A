@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Sprite enemy;
+
     #region singleton
     private static GameManager instance = null;
 
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
