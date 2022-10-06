@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour
 
     public void SetMapActive()
     {
-        if (returnDeltaX() >= 15 || returnDeltaY() >= 10)
+        if (returnDeltaX() >= 20 || returnDeltaY() >= 20)
         {
             gameObject.SetActive(false);
         }
@@ -62,7 +62,7 @@ public class Tile : MonoBehaviour
 
     private void CreatMap()
     {
-        if (returnDeltaX() <= 10 && returnDeltaY() <= 5)
+        if (returnDeltaX() <= 15 && returnDeltaY() <= 10)
         {
             //플레이어와 맵의 위치 차이가 x,y 축으로 20이상 나지 않는다면 맵을 생성
             CreatTopMap();
