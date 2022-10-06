@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : Unit
 {
+    public StatusCanvas statuscanvas;
+
     private bool isCanMove=true;
     
     public float speed;
@@ -50,6 +52,7 @@ public class Player : Unit
 
     private void Awake()
     {
+        statuscanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
         if (null == instance)
         {
             instance = this;
@@ -84,12 +87,12 @@ public class Player : Unit
     private void Update()
     {
         PlayerMove();
+        Debug.Log(statuscanvas.isOpenCanvas);
     }
 
     void PlayerMove()
     {
-
-        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0)
+        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && !statuscanvas.isOpenCanvas)
         {
             isCanMove = false;
 
@@ -102,7 +105,7 @@ public class Player : Unit
             if (hit.transform.position.x < transform.position.x)
             {
                 //플레이어가 왼쪽으로 간다면 플레이어를 왼쪽을 바라보도록 뒤집어줌
-                if (transform.localScale.x >= 0)
+                if (transform.localScale.x > 0)
                 {
                     transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
                 }
