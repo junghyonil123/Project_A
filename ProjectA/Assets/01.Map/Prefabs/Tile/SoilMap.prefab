@@ -144,3 +144,4 @@ MonoBehaviour:
   rightMap: {fileID: 0}
   thisMap: {fileID: 0}
   numberOfNextBlock: 0
+  requiredActivePoint: 1

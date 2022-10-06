@@ -95,7 +95,7 @@ public class Player : Unit
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //마우스 위치로 ray발사
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
-
+            Tile hitTile = hit.transform.GetComponent<Tile>();
             if (!hit)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
                 return;
 
@@ -119,28 +119,26 @@ public class Player : Unit
             {
                 nowStandingTile = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
                 playerAnimator.SetBool("Walk", true);
+                nowActivePoint -= hitTile.requiredActivePoint;
             }
             else if (hit.transform == nowStandingTile.GetComponent<Tile>().bottomMap.transform)
             {
                 nowStandingTile = hit.transform;  
                 playerAnimator.SetBool("Walk", true);
+                nowActivePoint -= hitTile.requiredActivePoint;
             }
             else if(hit.transform == nowStandingTile.GetComponent<Tile>().leftMap.transform)
             {
                 nowStandingTile = hit.transform; 
                 playerAnimator.SetBool("Walk", true);
+                nowActivePoint -= hitTile.requiredActivePoint;
             }
             else if(hit.transform == nowStandingTile.GetComponent<Tile>().rightMap.transform)
             {
                 nowStandingTile = hit.transform;  
                 playerAnimator.SetBool("Walk", true);
+                nowActivePoint -= hitTile.requiredActivePoint;
             }
-
-            if (transform.position != hit.transform.position)
-            {   //Player가 서있는 땅을 눌러도 activePoint 소모 안하도록 막음
-                nowActivePoint -= hit.transform.GetComponent<Tile>().requiredActivePoint;
-            }
-
         }
         else if (nowStandingTile == null)
         {
@@ -148,7 +146,7 @@ public class Player : Unit
         }
         else
         {
-            if (transform.position == nowStandingTile.position)
+            if (transform.position == nowStandingTile.position) //플레이어가 클릭한 타일에 도착하기전에 다른타일로 이동하는것을 막기위한 isCanMove;
                 isCanMove = true;
         }
 
