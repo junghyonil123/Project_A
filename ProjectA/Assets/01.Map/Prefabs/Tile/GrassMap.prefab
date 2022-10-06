@@ -119,6 +119,7 @@ MonoBehaviour:
   rightMap: {fileID: 0}
   thisMap: {fileID: 0}
   numberOfNextBlock: 0
+  requiredActivePoint: 1
 --- !u!61 &7298704195440187022
 BoxCollider2D:
   m_ObjectHideFlags: 0
