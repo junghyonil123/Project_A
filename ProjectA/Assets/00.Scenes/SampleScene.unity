@@ -505,7 +505,7 @@ MonoBehaviour:
   def: 5
   lv: 0
   speed: 3.3
-  maxActivePoint: 10
+  maxActivePoint: 100
   nowActivePoint: 0
   str: 5
   dex: 5
@@ -2701,6 +2701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
+  player: {fileID: 250060570}
 --- !u!4 &1196318144
 Transform:
   m_ObjectHideFlags: 0
@@ -5068,7 +5069,7 @@ MonoBehaviour:
   - {fileID: 7298704195440187017, guid: 036a374d6275bc84e9a3e9827b431abf, type: 3}
   mapSpawnPer:
   - 20
-  - 30
+  - 10
   - 100
   specialTile: 000100
 --- !u!4 &2003109268
