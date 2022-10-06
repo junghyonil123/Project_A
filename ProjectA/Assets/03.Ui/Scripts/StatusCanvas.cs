@@ -18,6 +18,41 @@ public class StatusCanvas : MonoBehaviour
 
     public TextMeshProUGUI statusPointText;
 
+    public List<GameObject> uiWindowList = new List<GameObject>();
+
+    public void ProfilWindowOnOff()
+    {
+        for (int i = 0; i < uiWindowList.Count; i++)
+        {
+            if (uiWindowList[i].name == "ProfileWindow")
+            {
+                Debug.Log(uiWindowList[i].name + "µé¿È");
+                uiWindowList[i].SetActive(true);
+            }
+            else
+            {
+                uiWindowList[i].SetActive(false);
+            }
+        }
+    }
+
+    public void EquipmentWindowOnOff()
+    {
+        for (int i = 0; i < uiWindowList.Count; i++)
+        {
+            Debug.Log(uiWindowList[i].name);
+            if (uiWindowList[i].name == "EquipmentWindow")
+            {
+                Debug.Log(uiWindowList[i].name + "µé¿È");
+                uiWindowList[i].SetActive(true);
+            }
+            else
+            {
+                uiWindowList[i].SetActive(false);
+            }
+        }
+    }
+
     public void OnOffStatusWindow()
     {
         profileWindow.SetActive(!profileWindow.activeSelf);
