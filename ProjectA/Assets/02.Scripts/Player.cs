@@ -88,6 +88,8 @@ public class Player : Unit
     {
         PlayerMove();
         Debug.Log(statuscanvas.isOpenCanvas);
+        Debug.DrawRay(transform.position + new Vector3(1f, 0f, 0f), transform.forward * 10, Color.red);
+
     }
 
     void PlayerMove()
@@ -171,8 +173,7 @@ public class Player : Unit
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
-        //nowStrandingTile = hit.transform.GetComponent<Tile>();
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
     }
 }
