@@ -1122,9 +1122,11 @@ GameObject:
   - component: {fileID: 250060568}
   - component: {fileID: 250060570}
   - component: {fileID: 250060571}
+  - component: {fileID: 250060572}
+  - component: {fileID: 250060573}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1243,6 +1245,65 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &250060572
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250060567}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &250060573
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250060567}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.19985674, y: 0.3777138}
+      - {x: -0.3580353, y: 0.1257852}
+      - {x: -0.32660356, y: -0.04603362}
+      - {x: -0.20635685, y: -0.14957528}
+      - {x: -0.29053476, y: -0.2113938}
+      - {x: -0.29592794, y: -0.31867838}
+      - {x: -0.20257054, y: -0.5135001}
+      - {x: 0.304098, y: -0.44006625}
+      - {x: 0.33258215, y: -0.23687814}
+      - {x: 0.25355405, y: -0.12030417}
+      - {x: 0.35070148, y: 0.0036476403}
+      - {x: 0.36167645, y: 0.22790736}
+      - {x: 0.22016025, y: 0.38410476}
 --- !u!1 &267854012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,6 +1767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerActivePoint: {fileID: 267854012}
+  playerHp: {fileID: 1225144744}
 --- !u!1 &405413107
 GameObject:
   m_ObjectHideFlags: 0
@@ -8536,12 +8598,14 @@ MonoBehaviour:
   mapList:
   - {fileID: 902840271243383067, guid: ed2b4e096edef224ea009e0941e49415, type: 3}
   - {fileID: 1805089566581331587, guid: 809424ae191f7db4ea1240056b68a03e, type: 3}
+  - {fileID: 2377554811794246576, guid: 434f453411dd1be4ab4c3bf14ecc115c, type: 3}
   - {fileID: 7298704195440187017, guid: 036a374d6275bc84e9a3e9827b431abf, type: 3}
   mapSpawnPer:
   - 20
   - 10
+  - 2
   - 100
-  specialTile: 000100
+  specialTile: 00010000
 --- !u!4 &2003109268
 Transform:
   m_ObjectHideFlags: 0
