@@ -123,7 +123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5874598585585955137}
         m_TargetAssemblyTypeName: Slot, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
