@@ -27,9 +27,5 @@ public class Item : MonoBehaviour
         ItemSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
 }
 

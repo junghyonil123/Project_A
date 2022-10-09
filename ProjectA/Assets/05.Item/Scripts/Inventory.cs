@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -49,6 +51,14 @@ public class Inventory : MonoBehaviour
 
     public List<GameObject> inventory = new List<GameObject>();
 
+    public GameObject explanationWindow;
+    public Image itemImage;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI typeText;
+    public TextMeshProUGUI abilityText;
+    public TextMeshProUGUI explanationText;
+
+
     public void GetItem(Item item)
     {
         foreach (GameObject slot in inventory)
@@ -61,8 +71,39 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ExplanationWindow()
+    public string ReturnItemType(ItemType itemtype)
     {
+        switch (itemtype)
+        {
+            case ItemType.Weapon:
+                return "Weapon";
+            case ItemType.Head:
+                return "Head";
+            case ItemType.Glove:
+                return "Glove";
+            case ItemType.Armo:
+                return "Armo";
+            case ItemType.ConsumableItme:
+                return "ConsumableItme";
+            case ItemType.Material:
+                return "Material";
+            default:
+                return "null";
+        }
+    }
 
+    public void ItemExplanation(Item item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+        Debug.Log("¸®ÅÏ¾ÈµÌ¾î¿è");
+        explanationWindow.SetActive(!explanationWindow.activeSelf);
+        itemImage.sprite = item.ItemSprite;
+        nameText.text = item.ItmeName;
+        typeText.text = ReturnItemType(item.itmeType);
+        abilityText.text = "°ø°Ý·Â: "+item.itemAt;
+        explanationText.text = item.itmeExplanation;
     }
 }

@@ -20,5 +20,7 @@ public class Slot : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log("´­·Ç¾î¿°");
+        Inventory.Instance.ItemExplanation(item);
     }
 }
