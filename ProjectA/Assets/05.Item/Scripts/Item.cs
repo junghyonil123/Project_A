@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
     public Sprite ItemSprite;
     public ItemType itmeType;
 
-    public int itemAt;
+    public int itemStatus;
     public string itmeExplanation;
 
     private void Awake()
@@ -27,5 +27,10 @@ public class Item : MonoBehaviour
         ItemSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
+    public void AddStatus()
+    {
+        //플레이어의 공격력만 더해줌
+        Player.Instance.atk += itemStatus;
+    }
 }
 

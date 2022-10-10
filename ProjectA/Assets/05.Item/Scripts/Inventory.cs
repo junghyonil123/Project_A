@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI abilityText;
     public TextMeshProUGUI explanationText;
 
+    public Slot nowSelectSlot;
 
     public void GetItem(Item item)
     {
@@ -98,12 +99,16 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
-        Debug.Log("리턴안됫어욤");
         explanationWindow.SetActive(!explanationWindow.activeSelf);
         itemImage.sprite = item.ItemSprite;
         nameText.text = item.ItmeName;
         typeText.text = ReturnItemType(item.itmeType);
-        abilityText.text = "공격력: "+item.itemAt;
+        abilityText.text = "공격력: "+item.itemStatus;
         explanationText.text = item.itmeExplanation;
+    }
+
+    public void EquipItem()
+    {
+        EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
     }
 }
