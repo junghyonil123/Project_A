@@ -48,15 +48,18 @@ public class EquipmentWindow : MonoBehaviour
     }
     #endregion
 
-    public Slot headSlot;
-    public Slot mainWeaponSlot;
-    public Slot ArmoSlot;
-    public Slot SubWeaponSlot;
-    public Slot ShoesSlot;
+    public EquipSlot headSlot;
+    public EquipSlot mainWeaponSlot;
+    public EquipSlot ArmoSlot;
+    public EquipSlot SubWeaponSlot;
+    public EquipSlot ShoesSlot;
 
     public void EquipItem(Item item)
     {
-        mainWeaponSlot.SetItem(item);
+        //æ∆¿Ã≈€¿ª ¿Â¬¯«ÿ¡‹
+        mainWeaponSlot.EquipItem(item);
+        mainWeaponSlot.itemImage.color = new Color(255, 255, 255, 255);
+        mainWeaponSlot.isEquipped = true;
         item.AddStatus();
     }
 
