@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -49,20 +51,93 @@ public class Inventory : MonoBehaviour
 
     public List<GameObject> inventory = new List<GameObject>();
 
+    public GameObject explanationWindow;
+    public GameObject dropItemButton;
+    public GameObject unEpuipItemButton;
+
+    public Image itemImage;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI typeText;
+    public TextMeshProUGUI abilityText;
+    public TextMeshProUGUI explanationText;
+
+
+
+    public Slot nowSelectSlot;
+
     public void GetItem(Item item)
     {
         foreach (GameObject slot in inventory)
         {
             if (slot.GetComponent<Slot>().item == null)
             {
-                slot.GetComponent<Slot>().SetItem(item);
+                slot.GetComponent<Slot>().EquipItem(item);
                 break;
             }
         }
     }
 
-    public void ExplanationWindow()
+    public string ReturnItemType(ItemType itemtype)
     {
+        switch (itemtype)
+        {
+            case ItemType.Weapon:
+                return "Weapon";
+            case ItemType.Head:
+                return "Head";
+            case ItemType.Glove:
+                return "Glove";
+            case ItemType.Armo:
+                return "Armo";
+            case ItemType.ConsumableItme:
+                return "ConsumableItme";
+            case ItemType.Material:
+                return "Material";
+            default:
+                return "null";
+        }
+    }
 
+    public void ItemExplanation(Item item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        dropItemButton.SetActive(true);
+        unEpuipItemButton.SetActive(false);
+
+        explanationWindow.SetActive(!explanationWindow.activeSelf);
+        itemImage.sprite = item.ItemSprite;
+        nameText.text = item.ItmeName;
+        typeText.text = ReturnItemType(item.itmeType);
+        abilityText.text = "공격력: "+item.itemStatus;
+        explanationText.text = item.itmeExplanation;
+    }
+
+    public void EquippedItemExplanation(Item item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        dropItemButton.SetActive(false);
+        unEpuipItemButton.SetActive(true);
+
+        explanationWindow.SetActive(!explanationWindow.activeSelf);
+        itemImage.sprite = item.ItemSprite;
+        nameText.text = item.ItmeName;
+        typeText.text = ReturnItemType(item.itmeType);
+        abilityText.text = "공격력: " + item.itemStatus;
+        explanationText.text = item.itmeExplanation;
+    }
+
+    public void EquipItem()
+    {
+        //아이템 장착
+        EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
+        nowSelectSlot.DeleteItem();
     }
 }

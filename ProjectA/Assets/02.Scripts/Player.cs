@@ -24,6 +24,11 @@ public class Player : Unit
 
     public Transform nowStandingTile;
 
+    public void GetITem(Item item) //아이템을 얻는 함수
+    {
+        Inventory.Instance.GetItem(item);
+    }
+
     public void SetStatus()
     {
         atk = str * 2;
@@ -88,9 +93,15 @@ public class Player : Unit
     private void Update()
     {
         PlayerMove();
-        Debug.Log(statuscanvas.isOpenCanvas);
-        Debug.DrawRay(transform.position + new Vector3(1f, 0f, 0f), transform.forward * 10, Color.red);
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+        {
+            GetITem(collision.GetComponent<Item>());
+            Destroy(collision.gameObject);
+        }
     }
 
     void PlayerMove()
