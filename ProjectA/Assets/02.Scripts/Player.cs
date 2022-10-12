@@ -56,6 +56,7 @@ public class Player : Unit
         if (null == instance)
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
