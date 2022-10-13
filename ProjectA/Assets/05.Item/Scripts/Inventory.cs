@@ -53,6 +53,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject explanationWindow;
     public GameObject dropItemButton;
+    public GameObject equipItemButton;
     public GameObject unEpuipItemButton;
 
     public Image itemImage;
@@ -60,8 +61,6 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI abilityText;
     public TextMeshProUGUI explanationText;
-
-
 
     public Slot nowSelectSlot;
 
@@ -71,10 +70,17 @@ public class Inventory : MonoBehaviour
         {
             if (slot.GetComponent<Slot>().item == null)
             {
-                slot.GetComponent<Slot>().EquipItem(item);
+                slot.GetComponent<Slot>().SetItem(item);
+                unEquipSlot = slot.GetComponent<Slot>();
                 break;
             }
         }
+
+    }
+
+    public void DropItem()
+    {
+        nowSelectSlot.DeleteItem();
     }
 
     public string ReturnItemType(ItemType itemtype)
@@ -98,46 +104,53 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ItemExplanation(Item item)
+    public void ItemExplanation(Item item, bool isEquipped)
     {
         if (item == null)
         {
             return;
         }
 
-        dropItemButton.SetActive(true);
-        unEpuipItemButton.SetActive(false);
-
-        explanationWindow.SetActive(!explanationWindow.activeSelf);
-        itemImage.sprite = item.ItemSprite;
-        nameText.text = item.ItmeName;
-        typeText.text = ReturnItemType(item.itmeType);
-        abilityText.text = "공격력: "+item.itemStatus;
-        explanationText.text = item.itmeExplanation;
-    }
-
-    public void EquippedItemExplanation(Item item)
-    {
-        if (item == null)
+        if (isEquipped)
         {
-            return;
+            dropItemButton.SetActive(false);
+            equipItemButton.SetActive(false);
+            unEpuipItemButton.SetActive(true);
+        }
+        else
+        {
+            dropItemButton.SetActive(true);
+            equipItemButton.SetActive(true);
+            unEpuipItemButton.SetActive(false);
         }
 
-        dropItemButton.SetActive(false);
-        unEpuipItemButton.SetActive(true);
-
         explanationWindow.SetActive(!explanationWindow.activeSelf);
-        itemImage.sprite = item.ItemSprite;
-        nameText.text = item.ItmeName;
+        itemImage.sprite = item.itemSprite;
+        nameText.text = item.itmeName;
         typeText.text = ReturnItemType(item.itmeType);
         abilityText.text = "공격력: " + item.itemStatus;
         explanationText.text = item.itmeExplanation;
     }
 
+    public Slot equipSlot;
+    public Slot unEquipSlot;
+
     public void EquipItem()
     {
         //아이템 장착
-        EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
+        equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
+        ItemExplanation(nowSelectSlot.item , true);
+        explanationWindow.SetActive(true);
         nowSelectSlot.DeleteItem();
+        nowSelectSlot = equipSlot;
+    }
+
+    public void UnEquipItem()
+    {
+        GetItem(nowSelectSlot.item);
+        ItemExplanation(nowSelectSlot.item, false);
+        explanationWindow.SetActive(true);
+        nowSelectSlot.DeleteItem();
+        nowSelectSlot = unEquipSlot;
     }
 }

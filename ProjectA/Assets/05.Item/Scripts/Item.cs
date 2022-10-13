@@ -15,8 +15,8 @@ public enum ItemType
 
 public class Item : MonoBehaviour
 {
-    public string ItmeName;
-    public Sprite ItemSprite;
+    public string itmeName;
+    public Sprite itemSprite;
     public ItemType itmeType;
 
     public int itemStatus;
@@ -24,7 +24,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        ItemSprite = GetComponent<SpriteRenderer>().sprite;
+        itemSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     public void AddStatus()

@@ -54,13 +54,15 @@ public class EquipmentWindow : MonoBehaviour
     public EquipSlot SubWeaponSlot;
     public EquipSlot ShoesSlot;
 
-    public void EquipItem(Item item)
+    public EquipSlot EquipItem(Item item)
     {
         //æ∆¿Ã≈€¿ª ¿Â¬¯«ÿ¡‹
-        mainWeaponSlot.EquipItem(item);
+        mainWeaponSlot.SetItem(item);
         mainWeaponSlot.itemImage.color = new Color(255, 255, 255, 255);
         mainWeaponSlot.isEquipped = true;
         item.AddStatus();
+
+        return mainWeaponSlot;
     }
 
 }

@@ -13,12 +13,12 @@ public class Slot : MonoBehaviour
         itemImage = transform.GetChild(0).GetComponent<Image>();
     }
 
-    public void EquipItem(Item _item)
+    public void SetItem(Item _item)
     {
         //아이템을 슬롯에 추가해주는함수
         item = Instantiate(_item, transform);
         itemImage.gameObject.SetActive(true);
-        itemImage.sprite = _item.ItemSprite;
+        itemImage.sprite = _item.itemSprite;
     }
 
     public virtual void DeleteItem()
@@ -33,6 +33,6 @@ public class Slot : MonoBehaviour
     public virtual void OnClick()
     {
         Inventory.Instance.nowSelectSlot = this;
-        Inventory.Instance.ItemExplanation(item);
+        Inventory.Instance.ItemExplanation(item, false);
     }
 }
