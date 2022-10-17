@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    public string unitName;
     public float nowHp;
     public float maxHp;
     public float nowMp;
     public float maxMp;
     public float atk;
     public float def;
-    public float lv;
+    public int lv;
 
     virtual public void Start()
     {

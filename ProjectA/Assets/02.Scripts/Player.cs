@@ -107,6 +107,7 @@ public class Player : Unit
     {
         if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && !statuscanvas.isOpenCanvas)
         {
+           
             isCanMove = false;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //마우스 위치로 ray발사
@@ -155,6 +156,12 @@ public class Player : Unit
                 playerAnimator.SetBool("Walk", true);
                 nowActivePoint -= hitTile.requiredActivePoint;
             }
+
+            transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
+
+            //한번 이동할 때 마다 데이터를 저장해줌
+            DataManager.Instance.SaveData();
+
         }
         else if (nowStandingTile == null)
         {
@@ -166,7 +173,6 @@ public class Player : Unit
                 isCanMove = true;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
         if (transform.position == nowStandingTile.position)
         { //이동이끝났음
@@ -181,6 +187,7 @@ public class Player : Unit
 
     public void PlayerPosionRay()
     {
+        Debug.Log("터짐");
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
 

@@ -21,7 +21,7 @@ public class EquipmentWindow : MonoBehaviour
                 }
                 else
                 {
-                    var newPlayer = new GameObject("InventoryUi").AddComponent<EquipmentWindow>(); //null이라면 새로만들어줌
+                    var newPlayer = new GameObject("EquipmentWindow").AddComponent<EquipmentWindow>(); //null이라면 새로만들어줌
                     instance = newPlayer;
                 }
             }
