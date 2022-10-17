@@ -5,24 +5,50 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : Unit
 {
-    public Sprite sprite;
+    public SpriteRenderer spriteRenderer;
+
+    public bool isBattle = false;
 
     private void Awake()
     {
-        sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        BattleGetDamage();
+        Die();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("col");
             BattleManager.Instance.enemy = gameObject;
-            Debug.Log("Com");
             DontDestroyOnLoad(this);
-            gameObject.SetActive(false);
-            BattleManager.Instance.player.SetActive(false);
+            spriteRenderer.sortingOrder = -2;
+            BattleManager.Instance.player.GetComponent<SpriteRenderer>().sortingOrder = -2;
             SceneManager.LoadScene("BattleScene");
         }
+    }
+
+    public void BattleGetDamage()
+    {
+        Debug.Log(isBattle);
+        if (isBattle)
+        {
+            Debug.Log("Battle2");
+            GetDamage(BattleManager.Instance.player.GetComponent<Player>().atk);
+            isBattle = false;
+        }
+    }
+
+    public override void Die()
+    {
+        if(nowHp <= 0)
+        {
+            GameObject.Find("EnemyBattle").SetActive(false);
+        }
+        base.Die();
     }
 }

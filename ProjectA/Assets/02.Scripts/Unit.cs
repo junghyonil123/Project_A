@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Unit : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Unit : MonoBehaviour
     public float def;
     public float lv;
 
+    public bool isDie = false;
     virtual public void Start()
     {
         nowHp = maxHp;
@@ -27,6 +29,16 @@ public class Unit : MonoBehaviour
         else
         {
           nowHp = nowHp - (damage - def);
+        }
+    }
+
+    virtual public void Die()
+    {
+        if(nowHp <= 0)
+        {
+            Time.timeScale = 0;
+            gameObject.SetActive(false);
+            isDie = true;
         }
     }
 }

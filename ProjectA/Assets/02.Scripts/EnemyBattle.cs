@@ -19,7 +19,6 @@ public class EnemyBattle : Unit
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine("KnockBack");
-        GetDamage(BattleManager.Instance.player.GetComponent<Player>().atk);
     }
 
     IEnumerator KnockBack()

@@ -7,6 +7,7 @@ public class Player : Unit
     public StatusCanvas statuscanvas;
 
     private bool isCanMove=true;
+    public bool isBattle = false;
     
     public float speed;
     
@@ -93,6 +94,8 @@ public class Player : Unit
     private void Update()
     {
         PlayerMove();
+        BattleGetDamage();
+        Die();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -187,5 +190,25 @@ public class Player : Unit
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
+    }
+
+    public override void Die()
+    {
+        if (nowHp <= 0)
+        {
+            GameObject.Find("PlayerBattle").SetActive(false);
+        }
+        base.Die();
+    }
+
+    public void BattleGetDamage()
+    {
+        Debug.Log(isBattle);
+        if (isBattle)
+        {
+            Debug.Log("Battle2");
+            GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
+            isBattle = false;
+        }
     }
 }

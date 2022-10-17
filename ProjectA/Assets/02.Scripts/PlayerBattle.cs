@@ -22,6 +22,8 @@ public class PlayerBattle : Unit
         StartCoroutine("KnockBack");
         GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
         Debug.Log(collision.gameObject.name);
+        BattleManager.Instance.enemy.GetComponent<Enemy>().isBattle = true;
+        BattleManager.Instance.player.GetComponent<Player>().isBattle = true;
     }
 
     IEnumerator KnockBack()

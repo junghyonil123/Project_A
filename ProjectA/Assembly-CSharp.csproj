@@ -62,10 +62,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\02.Scripts\InnTile.cs" />
     <Compile Include="Assets\05.Item\Scripts\Item.cs" />
+    <Compile Include="Assets\02.Scripts\BattleManager.cs" />
+    <Compile Include="Assets\02.Scripts\Enemy.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
-    <Compile Include="Assets\EnemyBattle.cs" />
+    <Compile Include="Assets\02.Scripts\EnemyBattle.cs" />
     <Compile Include="Assets\03.Ui\Scripts\EquipSlot.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
@@ -90,7 +92,7 @@
     <Compile Include="Assets\03.Ui\Scripts\EquipmentWindow.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
-    <Compile Include="Assets\PlayerBattle.cs" />
+    <Compile Include="Assets\02.Scripts\PlayerBattle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\02.Scripts\MapManager.cs" />
