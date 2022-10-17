@@ -51,6 +51,8 @@ public class Inventory : MonoBehaviour
 
     public List<GameObject> inventory = new List<GameObject>();
 
+
+    public GameObject equipmentWindow;
     public GameObject explanationWindow;
     public GameObject dropItemButton;
     public GameObject equipItemButton;
@@ -132,12 +134,32 @@ public class Inventory : MonoBehaviour
         explanationText.text = item.itmeExplanation;
     }
 
+    public void SkillExplanation(Skill skill)
+    {
+        if (skill == null)
+        {
+            return;
+        }
+
+        dropItemButton.SetActive(false);
+        equipItemButton.SetActive(false);
+        unEpuipItemButton.SetActive(false);
+
+        explanationWindow.SetActive(!explanationWindow.activeSelf);
+        itemImage.sprite = skill.skillSprite;
+        nameText.text = skill.skillName;
+        abilityText.text = "";
+        typeText.text = "";
+        explanationText.text = skill.skillExplanation;
+    }
+
     public Slot equipSlot;
     public Slot unEquipSlot;
 
     public void EquipItem()
     {
         //æ∆¿Ã≈€ ¿Â¬¯
+        equipmentWindow.SetActive(true);
         equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
         ItemExplanation(nowSelectSlot.item , true);
         explanationWindow.SetActive(true);

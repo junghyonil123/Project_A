@@ -51,6 +51,21 @@ public class StatusCanvas : MonoBehaviour
             }
         }
     }
+    public void SkillWindowOnOff()
+    {
+        for (int i = 0; i < uiWindowList.Count; i++)
+        {
+            if (uiWindowList[i].name == "SkillWindow")
+            {
+                uiWindowList[i].SetActive(true);
+            }
+            else
+            {
+                uiWindowList[i].SetActive(false);
+            }
+        }
+    }
+
 
     public void InventoryWindowOnOff()
     {
