@@ -6,7 +6,7 @@ public class Player : Unit
 {
     public StatusCanvas statuscanvas;
 
-    private bool isCanMove=true;
+    private bool isCanMove = true;
     
     public float speed;
     
@@ -85,7 +85,6 @@ public class Player : Unit
         base.Start();
         SetStatus();
         ResetHp();
-        PlayerPosionRay();
         ResetActivePoint();
     }
 
@@ -157,11 +156,7 @@ public class Player : Unit
                 nowActivePoint -= hitTile.requiredActivePoint;
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
-
-            //한번 이동할 때 마다 데이터를 저장해줌
-            DataManager.Instance.SaveData();
-
+            
         }
         else if (nowStandingTile == null)
         {
@@ -173,10 +168,14 @@ public class Player : Unit
                 isCanMove = true;
         }
 
+        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
         if (transform.position == nowStandingTile.position)
-        { //이동이끝났음
+        {   
+            //이동이끝났음
             playerAnimator.SetBool("Walk", false);
+            //한번 이동할 때 마다 데이터를 저장해줌
+            DataManager.Instance.SaveData();
         }
     }
 
