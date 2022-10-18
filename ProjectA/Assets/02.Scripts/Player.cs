@@ -6,7 +6,8 @@ public class Player : Unit
 {
     public StatusCanvas statuscanvas;
 
-    private bool isCanMove = true;
+    private bool isCanMove=true;
+    public bool isBattle = false;
     
     public float speed;
     
@@ -61,6 +62,7 @@ public class Player : Unit
         if (null == instance)
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
@@ -85,12 +87,15 @@ public class Player : Unit
         base.Start();
         SetStatus();
         ResetHp();
+        PlayerPosionRay();
         ResetActivePoint();
     }
 
     private void Update()
     {
         PlayerMove();
+        BattleGetDamage();
+        Die();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -156,7 +161,11 @@ public class Player : Unit
                 nowActivePoint -= hitTile.requiredActivePoint;
             }
 
-            
+            transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
+
+            //한번 이동할 때 마다 데이터를 저장해줌
+            DataManager.Instance.SaveData();
+
         }
         else if (nowStandingTile == null)
         {
@@ -168,14 +177,10 @@ public class Player : Unit
                 isCanMove = true;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
         if (transform.position == nowStandingTile.position)
-        {   
-            //이동이끝났음
+        { //이동이끝났음
             playerAnimator.SetBool("Walk", false);
-            //한번 이동할 때 마다 데이터를 저장해줌
-            DataManager.Instance.SaveData();
         }
     }
 
@@ -192,5 +197,25 @@ public class Player : Unit
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
+    }
+
+    public override void Die()
+    {
+        if (nowHp <= 0)
+        {
+            GameObject.Find("PlayerBattle").SetActive(false);
+        }
+        base.Die();
+    }
+
+    public void BattleGetDamage()
+    {
+        Debug.Log(isBattle);
+        if (isBattle)
+        {
+            Debug.Log("Battle2");
+            GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
+            isBattle = false;
+        }
     }
 }
