@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Unit : MonoBehaviour
 {
+    public string unitName;
     public float nowHp;
     public float maxHp;
     public float nowMp;
     public float maxMp;
     public float atk;
     public float def;
-    public float lv;
+    public int lv;
 
     public bool isDie = false;
     virtual public void Start()
