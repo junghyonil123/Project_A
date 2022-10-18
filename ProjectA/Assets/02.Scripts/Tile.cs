@@ -78,7 +78,7 @@ public class Tile : MonoBehaviour
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
 
-        if (hitInfo)
+        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
         {
             // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
             topMap = hitInfo.transform.gameObject;
@@ -101,7 +101,7 @@ public class Tile : MonoBehaviour
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 3), this.transform.up, 0.1f);
 
-        if (hitInfo)
+        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
         {
             // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
             bottomMap = hitInfo.transform.gameObject;
@@ -123,7 +123,7 @@ public class Tile : MonoBehaviour
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x - 3, transform.position.y), this.transform.up, 0.1f);
 
-        if (hitInfo)
+        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
         {
             // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
             leftMap = hitInfo.transform.gameObject;
@@ -144,7 +144,7 @@ public class Tile : MonoBehaviour
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x + 3, transform.position.y), this.transform.up, 0.1f);
 
-        if (hitInfo)
+        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
         {
             // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
             rightMap = hitInfo.transform.gameObject;

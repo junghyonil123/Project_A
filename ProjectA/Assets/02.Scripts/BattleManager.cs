@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{ 
+public class BattleManager : MonoBehaviour
+{
+    public GameObject enemy;
+    public GameObject player;
+
     #region singleton
-    private static GameManager instance = null;
+    private static BattleManager instance = null;
 
     private void Awake()
     {
@@ -19,7 +22,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    public static GameManager Instance
+    public static BattleManager Instance
     {
         get
         {
@@ -31,5 +34,4 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
 }
