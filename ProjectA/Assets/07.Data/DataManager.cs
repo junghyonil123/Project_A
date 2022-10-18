@@ -97,7 +97,7 @@ public class DataManager : MonoBehaviour
         playerData.con = Player.Instance.con;
         playerData.statusPoint = Player.Instance.statusPoint;
 
-        playerData.playerTransform = Player.Instance.transform.position;
+        playerData.playerTransform = Player.Instance.nowStandingTile.position;
     }
 
     public void SetPlayerData()
@@ -119,6 +119,8 @@ public class DataManager : MonoBehaviour
         Player.Instance.statusPoint = playerData.statusPoint;
 
         Player.Instance.transform.Translate(playerData.playerTransform);
+
+        Player.Instance.PlayerPosionRay();
     }
 
     public void SaveData()
