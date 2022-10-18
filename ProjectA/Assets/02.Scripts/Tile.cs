@@ -8,8 +8,13 @@ public class Tile : MonoBehaviour
     public GameObject bottomMap;
     public GameObject leftMap;
     public GameObject rightMap;
-
     public GameObject thisMap;
+
+    public int tileType;
+
+    public float tileCreatPercent;
+
+    public bool specialTile;
 
     public int numberOfNextBlock;
 

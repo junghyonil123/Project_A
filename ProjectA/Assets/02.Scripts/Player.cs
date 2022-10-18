@@ -176,7 +176,7 @@ public class Player : Unit
                 isCanMove = true;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
         if (transform.position == nowStandingTile.position)
         { //이동이끝났음
@@ -210,7 +210,6 @@ public class Player : Unit
 
     public void BattleGetDamage()
     {
-        Debug.Log(isBattle);
         if (isBattle)
         {
             Debug.Log("Battle2");
