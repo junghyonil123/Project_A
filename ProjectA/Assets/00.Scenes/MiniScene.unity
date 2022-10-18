@@ -270,6 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cde3964d75de2459773b48fd091eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &940423051
 Transform:
   m_ObjectHideFlags: 0
@@ -410,16 +412,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7ee92f0bf3c794581dfb56e16f2bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  unitName: 
+  nowHp: 0
   maxHp: 10
-  mp: 0
+  nowMp: 0
   maxMp: 10
   atk: 0
   def: 5
+  lv: 0
+  statuscanvas: {fileID: 0}
   speed: 5
-  activePoint: 10
-  target: {fileID: 0}
-  nowStrandingTile: {fileID: 0}
+  maxActivePoint: 10
+  nowActivePoint: 0
+  str: 0
+  dex: 0
+  con: 0
+  statusPoint: 0
+  playerAnimator: {fileID: 0}
+  job: 
+  nowStandingTile: {fileID: 0}
 --- !u!212 &1527711413
 SpriteRenderer:
   m_ObjectHideFlags: 0
