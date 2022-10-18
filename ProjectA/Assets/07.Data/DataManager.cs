@@ -76,7 +76,7 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
-        LoadData();
+        //LoadData();
     }
 
     public void GetPlayerData()

@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
             Time.timeScale = 0;
             gameObject.SetActive(false);
             isDie = true;
+            BattleManager.Instance.finishCanvas.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

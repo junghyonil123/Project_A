@@ -6,6 +6,7 @@ public class BattleManager : MonoBehaviour
 {
     public GameObject enemy;
     public GameObject player;
+    public GameObject finishCanvas;
 
     #region singleton
     private static BattleManager instance = null;
