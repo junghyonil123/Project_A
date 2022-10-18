@@ -34,7 +34,6 @@ public class Enemy : Unit
 
     public void BattleGetDamage()
     {
-        Debug.Log(isBattle);
         if (isBattle)
         {
             Debug.Log("Battle2");

@@ -144,6 +144,9 @@ MonoBehaviour:
   leftMap: {fileID: 0}
   rightMap: {fileID: 0}
   thisMap: {fileID: 0}
+  tileType: 3
+  tileCreatPercent: 1
+  specialTile: 0
   numberOfNextBlock: 0
   requiredActivePoint: 1
 --- !u!114 &95124099305742165
