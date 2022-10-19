@@ -8,10 +8,12 @@ public class Player : Unit
 
     private bool isCanMove=true;
     public bool isBattle = false;
+    public bool isFinishBattle = false;
+
     private bool isCanSave = false;//세이브가 가능함을 표시하는 플래그
     
     public float speed;
-    
+
     public float maxActivePoint = 10;
     public float nowActivePoint;
 
@@ -110,7 +112,7 @@ public class Player : Unit
 
     void PlayerMove()
     {
-        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && !statuscanvas.isOpenCanvas)
+        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statuscanvas.isOpenCanvas)
         {
             isCanSave = true;
             isCanMove = false;

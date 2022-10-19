@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FinishCanvas : MonoBehaviour
 {
+    SpriteRenderer spriteRender;
     public TextMeshProUGUI textMeshpro;
     public TextMeshProUGUI xpTextMesh;
     public TextMeshProUGUI goldTextMesh;
@@ -13,6 +15,7 @@ public class FinishCanvas : MonoBehaviour
     private static FinishCanvas instance = null;
     private void Awake()
     {
+        spriteRender = GetComponent<SpriteRenderer>();
         if (null == instance)
         {
             instance = this;
@@ -21,9 +24,9 @@ public class FinishCanvas : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        textMeshpro = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        xpTextMesh = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        goldTextMesh = transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        textMeshpro = GameObject.Find("result").GetComponent<TextMeshProUGUI>();
+        xpTextMesh = GameObject.Find("XpText").GetComponent<TextMeshProUGUI>();
+        goldTextMesh = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
         BattleManager.Instance.finishCanvas = this.gameObject;
     }
     public static FinishCanvas Instance
@@ -48,6 +51,18 @@ public class FinishCanvas : MonoBehaviour
         else
         {
             textMeshpro.text = "ÆÐ¹è";
+        }
+        ReturnScene();
+    }
+
+    public void ReturnScene()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            SceneManager.LoadScene("SampleScene");
+            gameObject.SetActive(false);
+            Time.timeScale = 1;
+            BattleManager.Instance.player.GetComponent<SpriteRenderer>().sortingOrder = 3;
         }
     }
 }

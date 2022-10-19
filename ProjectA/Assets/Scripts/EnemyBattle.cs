@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBattle : Unit
+public class EnemyBattle : MonoBehaviour
 { 
     Rigidbody2D rigid;
 
