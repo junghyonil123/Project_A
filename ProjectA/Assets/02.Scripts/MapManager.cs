@@ -38,15 +38,20 @@ public class MapManager : MonoBehaviour
 
     public GameObject CreatMap(Vector2 mapPos , int numberOfNextBlock , GameObject thisMap) //새로운 맵을 만들어주는 함수
     {
-        Debug.Log("맵을 만듭니다.");
 
+        if (!DataManager.Instance.isLoadFinish)
+        {
+            return null;
+        }
+
+        Debug.Log("새로운 맵을 생성합니다");
         if (numberOfNextBlock != 0)
         {
             //만약 다음블럭갯수가 있다면 똑같은 블럭을 생성함
             numberOfNextBlock -= 1;
             newBlock = Instantiate(thisMap, mapPos, Quaternion.identity, transform);
             newBlock.GetComponent<Tile>().numberOfNextBlock = numberOfNextBlock;
-            //mapList.Add(newBlock); //tile이 생성될때마다 맵리스트에 저장시켜줌
+            mapList.Add(newBlock); //tile이 생성될때마다 맵리스트에 저장시켜줌
             return newBlock;
         }
 

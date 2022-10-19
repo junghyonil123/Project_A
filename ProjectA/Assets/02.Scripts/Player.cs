@@ -8,6 +8,7 @@ public class Player : Unit
 
     private bool isCanMove=true;
     public bool isBattle = false;
+    private bool isCanSave = false;//세이브가 가능함을 표시하는 플래그
     
     public float speed;
     
@@ -111,7 +112,7 @@ public class Player : Unit
     {
         if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && !statuscanvas.isOpenCanvas)
         {
-           
+            isCanSave = true;
             isCanMove = false;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //마우스 위치로 ray발사
@@ -161,10 +162,6 @@ public class Player : Unit
                 nowActivePoint -= hitTile.requiredActivePoint;
             }
 
-
-            //한번 이동할 때 마다 데이터를 저장해줌
-            DataManager.Instance.SaveData();
-
         }
         else if (nowStandingTile == null)
         {
@@ -181,6 +178,14 @@ public class Player : Unit
         if (transform.position == nowStandingTile.position)
         { //이동이끝났음
             playerAnimator.SetBool("Walk", false);
+
+            if (isCanSave)
+            {
+                //한번 이동할 때 마다 데이터를 저장해줌
+                DataManager.Instance.SaveData();
+
+                isCanSave = false;
+            }
         }
     }
 
@@ -191,7 +196,6 @@ public class Player : Unit
 
     public void PlayerPosionRay()
     {
-        Debug.Log("터짐");
         RaycastHit2D hitInfo;
         hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
 
