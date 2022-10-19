@@ -22,70 +22,62 @@ public class StatusCanvas : MonoBehaviour
 
     public bool isOpenCanvas = false;
 
-    public void ProfilWindowOnOff()
+
+    public void WindowOnOff(string name)
     {
         for (int i = 0; i < uiWindowList.Count; i++)
         {
-            if (uiWindowList[i].name == "ProfileWindow")
+            if (uiWindowList[i].name == name)
             {
-                uiWindowList[i].SetActive(true);
+                if (uiWindowList[i].GetComponent<RectTransform>().position.x < 0)
+                {
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(+350, 0, 0));
+                }
             }
             else
             {
-                uiWindowList[i].SetActive(false);
+                if (uiWindowList[i].GetComponent<RectTransform>().position.x > 0)
+                {
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(-350, 0, 0));
+                }
             }
         }
     }
 
+    public void ProfilWindowOnOff()
+    {
+        WindowOnOff("ProfileWindow");
+    }
+
     public void EquipmentWindowOnOff()
     {
-        for (int i = 0; i < uiWindowList.Count; i++)
-        {
-            if (uiWindowList[i].name == "EquipmentWindow")
-            {
-                uiWindowList[i].SetActive(true);
-            }
-            else
-            {
-                uiWindowList[i].SetActive(false);
-            }
-        }
+        WindowOnOff("EquipmentWindow");
     }
+
     public void SkillWindowOnOff()
     {
-        for (int i = 0; i < uiWindowList.Count; i++)
-        {
-            if (uiWindowList[i].name == "SkillWindow")
-            {
-                uiWindowList[i].SetActive(true);
-            }
-            else
-            {
-                uiWindowList[i].SetActive(false);
-            }
-        }
+        WindowOnOff("SkillWindow");
     }
 
 
     public void InventoryWindowOnOff()
     {
-        for (int i = 0; i < uiWindowList.Count; i++)
-        {
-            if (uiWindowList[i].name == "InventoryWindow")
-            {
-                uiWindowList[i].SetActive(true);
-            }
-            else
-            {
-                uiWindowList[i].SetActive(false);
-            }
-        }
+        WindowOnOff("InventoryWindow");
     }
 
     public void OnOffStatusWindow()
     {
-        statusWindow.SetActive(!statusWindow.activeSelf);
-        isOpenCanvas = statusWindow.activeSelf;
+        Debug.Log(statusWindow.GetComponent<RectTransform>().position.x);
+
+        if (statusWindow.GetComponent<RectTransform>().position.x == 73.5)
+        {
+            //켜져있다면
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+        }
+        else
+        {
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(400, 0, 0));
+        }
         SetStatusWindow();
     }
 
