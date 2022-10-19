@@ -9,6 +9,11 @@ public class MainCanvas : MonoBehaviour
     private float playerActivePointPer;
     private float playerHpPer;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Update()
     {
         //플레이어의 행동력을 Ui형태로 보여줌

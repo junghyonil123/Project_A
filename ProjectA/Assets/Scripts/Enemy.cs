@@ -7,6 +7,15 @@ public class Enemy : Unit
 {
     public SpriteRenderer spriteRenderer;
 
+    public int xp;
+    public int gold;
+    public int number;
+
+    public List<Item> dropItem = new List<Item>();
+    public List<float> dropPer = new List<float>();
+    public List<int> dropMin = new List<int>();
+    public List<int> dropMax = new List<int>();
+
     public bool isBattle = false;
 
     private void Awake()
@@ -45,10 +54,28 @@ public class Enemy : Unit
 
     public override void Die()
     {
+        base.Die();
         if(nowHp <= 0)
         {
+            Drop();
             GameObject.Find("EnemyBattle").SetActive(false);
         }
-        base.Die();
+    }
+
+    public void Drop()
+    {
+        Debug.Log("!");
+        FinishCanvas.Instance.xpTextMesh.text = " "+xp;
+        FinishCanvas.Instance.goldTextMesh.text = " "+gold;
+
+        for (int i = 0; i < dropItem.Count; i++)
+        {
+            Debug.Log("아이템을 드롭합니다.");
+            if (dropPer[i] < Random.Range(1,101))
+            {
+                BattleManager.Instance.monsterItemDrop(dropItem[i]);
+                Inventory.Instance.GetItem(dropItem[i]);
+            }
+        }
     }
 }

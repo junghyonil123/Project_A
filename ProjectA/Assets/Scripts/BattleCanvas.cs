@@ -9,6 +9,8 @@ public class BattleCanvas : MonoBehaviour
     private float playerBattleHpPer;
     private float enemyBattleHpPer;
 
+
+
     private void Update()
     {
         playerBattleHpPer = Player.Instance.nowHp / Player.Instance.maxHp;

@@ -8,8 +8,6 @@ public class Unit : MonoBehaviour
     public string unitName;
     public float nowHp;
     public float maxHp;
-    public float nowMp;
-    public float maxMp;
     public float atk;
     public float def;
     public int lv;
@@ -18,7 +16,6 @@ public class Unit : MonoBehaviour
     virtual public void Start()
     {
         nowHp = maxHp;
-        nowMp = maxMp;
     }
 
     virtual public void GetDamage(float damage)
@@ -40,7 +37,7 @@ public class Unit : MonoBehaviour
             Time.timeScale = 0;
             gameObject.SetActive(false);
             isDie = true;
-            BattleManager.Instance.finishCanvas.transform.GetChild(0).gameObject.SetActive(true);
+            BattleManager.Instance.FinishCanvasOn();
         }
     }
 }

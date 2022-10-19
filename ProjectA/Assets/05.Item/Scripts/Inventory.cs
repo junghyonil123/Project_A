@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
         //    return;
         //}
 
-        //DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
+        DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
     }
     #endregion
 
@@ -77,7 +77,6 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
-
     }
 
     public void DropItem()
