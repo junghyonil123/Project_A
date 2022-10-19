@@ -27,8 +27,8 @@ public class PlayerData
 
 public class MapData
 {
-    public List<Vector3> mapTransformList = new List<Vector3>();
-    public List<int> mapTypeList = new List<int>();
+    public List<Vector3> tileTransformList = new List<Vector3>();
+    public List<int> tileTypeList = new List<int>();
 }
 
 public class DataManager : MonoBehaviour
@@ -78,10 +78,12 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
+    public bool isLoadFinish = false; //로딩이 끝나면 true가되는 플래그
 
     void Start()
     {
-        //LoadData();
+        isLoadFinish = false;
+        LoadData();
     }
 
     #region playerData
@@ -107,30 +109,39 @@ public class DataManager : MonoBehaviour
         playerDataClass.con = Player.Instance.con;
         playerDataClass.statusPoint = Player.Instance.statusPoint;
 
-        playerDataClass.playerTransform = Player.Instance.nowStandingTile.position;
+        playerDataClass.playerTransform = Player.Instance.transform.position;
+
+        string playerData = JsonUtility.ToJson(playerDataClass);
+        File.WriteAllText(playerDataPath, playerData);
     }
 
     public void SetPlayerData()
     {
-        Player.Instance.unitName = playerDataClass.name;
-        Player.Instance.job = playerDataClass.job;
+        if (File.Exists(playerDataPath))
+        {
+            string playerData = File.ReadAllText(playerDataPath);
+            playerDataClass = JsonUtility.FromJson<PlayerData>(playerData);
 
-        Player.Instance.lv = playerDataClass.lv;
+            Player.Instance.unitName = playerDataClass.name;
+            Player.Instance.job = playerDataClass.job;
 
-        Player.Instance.nowHp = playerDataClass.nowHp;
-        Player.Instance.maxHp = playerDataClass.maxHp;
-        Player.Instance.atk = playerDataClass.atk;
-        Player.Instance.def = playerDataClass.def;
-        Player.Instance.maxActivePoint = playerDataClass.maxActivePoint;
-        Player.Instance.nowActivePoint = playerDataClass.nowActivePoint;
-        Player.Instance.str = playerDataClass.str;
-        Player.Instance.dex = playerDataClass.dex;
-        Player.Instance.con = playerDataClass.con;
-        Player.Instance.statusPoint = playerDataClass.statusPoint;
+            Player.Instance.lv = playerDataClass.lv;
 
-        Player.Instance.transform.Translate(playerDataClass.playerTransform);
+            Player.Instance.nowHp = playerDataClass.nowHp;
+            Player.Instance.maxHp = playerDataClass.maxHp;
+            Player.Instance.atk = playerDataClass.atk;
+            Player.Instance.def = playerDataClass.def;
+            Player.Instance.maxActivePoint = playerDataClass.maxActivePoint;
+            Player.Instance.nowActivePoint = playerDataClass.nowActivePoint;
+            Player.Instance.str = playerDataClass.str;
+            Player.Instance.dex = playerDataClass.dex;
+            Player.Instance.con = playerDataClass.con;
+            Player.Instance.statusPoint = playerDataClass.statusPoint;
 
-        Player.Instance.PlayerPosionRay();
+            Player.Instance.transform.Translate(playerDataClass.playerTransform);
+
+            Player.Instance.PlayerPosionRay();
+        }
     }
 
     #endregion
@@ -144,31 +155,52 @@ public class DataManager : MonoBehaviour
     {
         for (int i = 0; i < MapManager.Instance.mapList.Count; i++)
         {
-            mapDataClass.mapTransformList.Add(MapManager.Instance.mapList[i].transform.position);
-            //mapDataClass.mapTypeList.Add(MapManager.Instance.mapList[i].GetComponent<Tile>); 맵타입추가하기
+            mapDataClass.tileTransformList.Add(MapManager.Instance.mapList[i].transform.position);
+            mapDataClass.tileTypeList.Add(MapManager.Instance.mapList[i].GetComponent<Tile>().tileType); 
         }
 
+        string mapData = JsonUtility.ToJson(mapDataClass); //맵 데이터를 제이슨형식의 문자열로 전환
+        File.WriteAllText(mapDataPath, mapData); //전환된 문자열을 mapDataPath경로에 저장
+        Debug.Log(mapData);
+    }
+
+    public void SetMapData()
+    {
+        if (File.Exists(mapDataPath))
+        {
+            string mapData = File.ReadAllText(mapDataPath);
+            mapDataClass = JsonUtility.FromJson<MapData>(mapData);
+
+            for (int i = 0; i < mapDataClass.tileTransformList.Count; i++)
+            {
+                Debug.Log("저장된 맵을 생성합니다");
+                MapManager.Instance.mapList.Add(Instantiate(MapManager.Instance.canMakeMapList[mapDataClass.tileTypeList[i]], mapDataClass.tileTransformList[i], Quaternion.identity, MapManager.Instance.transform));  
+                //블럭을 복제한다 (복제할 블럭 타입, 블럭이 마지막에있던 위치, 블럭의 회전, MapManager의 자식으로 넣어줌)
+            }
+        }
     }
 
     #endregion
 
     public void SaveData()
     {
+        GetMapData();
         GetPlayerData();
-        string playerData = JsonUtility.ToJson(playerDataClass);
-        File.WriteAllText(playerDataPath, playerData);
-        Debug.Log(playerData);
+        DataClear();
     }
 
     public void LoadData()
     {
-        if (File.Exists(playerDataPath))
-        {
-            string playerData = File.ReadAllText(playerDataPath);
-            playerDataClass = JsonUtility.FromJson<PlayerData>(playerData);
-            print(playerData);
-            SetPlayerData();
-        }
+        SetMapData();
+        SetPlayerData();
+        DataClear();
+        isLoadFinish = true;
+    }
+
+    public void DataClear()
+    {
+        playerDataClass = new PlayerData();
+        mapDataClass = new MapData();
     }
 
     // Update is called once per frame

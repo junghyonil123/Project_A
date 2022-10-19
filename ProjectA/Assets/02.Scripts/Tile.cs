@@ -22,7 +22,6 @@ public class Tile : MonoBehaviour
 
     private void Awake()
     {
-        CreatMap();
         thisMap = gameObject;
     }
 
