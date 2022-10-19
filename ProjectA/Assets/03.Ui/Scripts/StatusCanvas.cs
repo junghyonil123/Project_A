@@ -20,8 +20,13 @@ public class StatusCanvas : MonoBehaviour
 
     public List<GameObject> uiWindowList = new List<GameObject>();
 
-    public bool isOpenCanvas = false;
+    public bool isOpenCanvas = true;
 
+
+    private void Start()
+    {
+        statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+    }
 
     public void WindowOnOff(string name)
     {
@@ -73,10 +78,12 @@ public class StatusCanvas : MonoBehaviour
         {
             //켜져있다면
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+            isOpenCanvas = true;
         }
         else
         {
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(400, 0, 0));
+            isOpenCanvas = false;
         }
         SetStatusWindow();
     }

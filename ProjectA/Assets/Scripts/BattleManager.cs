@@ -12,10 +12,13 @@ public class BattleManager : MonoBehaviour
 
     public void monsterItemDrop(Item item)
     {
+        Debug.Log("1");
         foreach (Slot slot in dropItemSlot)
         {
+            Debug.Log("2");
             if (slot.item == null)
             {
+                Debug.Log("3");
                 slot.SetItem(item);
                 break;
             }

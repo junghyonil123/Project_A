@@ -53,25 +53,29 @@ public class Enemy : Unit
 
     public override void Die()
     {
-        base.Die();
         if(nowHp <= 0)
         {
+            Debug.Log("die" + gameObject);
+            BattleManager.Instance.FinishCanvasOn();
             Drop();
             GameObject.Find("EnemyBattle").SetActive(false);
+            gameObject.SetActive(false);
         }
+
+        base.Die();
     }
 
     public void Drop()
     {
-        Debug.Log("!");
-        FinishCanvas.Instance.xpTextMesh.text = " "+xp;
-        FinishCanvas.Instance.goldTextMesh.text = " "+gold;
+        Debug.Log(dropItem.Count);
+        FinishCanvas.Instance.xpTextMesh.text = ""+xp;
+        FinishCanvas.Instance.goldTextMesh.text = ""+gold;
 
         for (int i = 0; i < dropItem.Count; i++)
         {
-            Debug.Log("아이템을 드롭합니다.");
-            if (dropPer[i] < Random.Range(1,101))
+            if (dropPer[i] >= Random.Range(1, 101))
             {
+                Debug.Log(dropItem[i]);
                 BattleManager.Instance.monsterItemDrop(dropItem[i]);
                 Inventory.Instance.GetItem(dropItem[i]);
             }

@@ -45,12 +45,10 @@ public class Inventory : MonoBehaviour
         //    return;
         //}
 
-        DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
     }
     #endregion
 
     public List<GameObject> inventory = new List<GameObject>();
-
 
     public GameObject equipmentWindow;
     public GameObject explanationWindow;
@@ -73,7 +71,6 @@ public class Inventory : MonoBehaviour
             if (slot.GetComponent<Slot>().item == null)
             {
                 slot.GetComponent<Slot>().SetItem(item);
-                unEquipSlot = slot.GetComponent<Slot>();
                 break;
             }
         }
