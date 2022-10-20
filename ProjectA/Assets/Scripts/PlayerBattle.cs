@@ -17,6 +17,7 @@ public class PlayerBattle : MonoBehaviour
                 BattleManager.Instance.enemy = collision.gameObject;
                 BattleManager.Instance.isBattle = true;
                 transform.position = BattleManager.Instance.playerBattlePos.transform.position; //플레이어 위치를 배틀신으로 옮긴다
+                transform.localScale = new Vector3(2, 2, 2);
                 collision.gameObject.transform.position = BattleManager.Instance.enemyBattlePos.transform.position; // 몬스터의 위치를 배틀신으로 옮긴다
                 Invoke("StartFos", 1f);
             }
@@ -38,7 +39,6 @@ public class PlayerBattle : MonoBehaviour
         playerRigid = GetComponent<Rigidbody2D>();
     }
 
-
     IEnumerator _PlayerKnockBack(Rigidbody2D rigid)
     {
         if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
@@ -49,14 +49,15 @@ public class PlayerBattle : MonoBehaviour
 
             yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
 
+            if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
+            {
+                StopCoroutine("_PlayerKnockBack");
+            }
+
             rigid.velocity = Vector2.zero; //힘을제로로
 
             rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
             
-            if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
-            {
-                Player.Instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            }
         }
     }
 
@@ -64,17 +65,15 @@ public class PlayerBattle : MonoBehaviour
     {
         if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
         {
-            Debug.Log("1" + enemy.GetComponent<Enemy>().isDie);
             rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
-            Debug.Log("2" + enemy.GetComponent<Enemy>().isDie);
+
             rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
-            Debug.Log("3" + enemy.GetComponent<Enemy>().isDie);
+            
             yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
-            Debug.Log("4" + enemy.GetComponent<Enemy>().isDie);
+            
             rigid.velocity = Vector2.zero; //힘을제로로
-            Debug.Log("5" + enemy.GetComponent<Enemy>().isDie);
+            
             rigid.AddForce(Vector2.left * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
-            Debug.Log("6" + enemy.GetComponent<Enemy>().isDie);
         }
     }
 
