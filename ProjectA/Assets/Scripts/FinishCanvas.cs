@@ -59,10 +59,10 @@ public class FinishCanvas : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("SampleScene");
+            BattleManager.Instance.isBattle = false;
             gameObject.SetActive(false);
             Time.timeScale = 1;
-            BattleManager.Instance.player.GetComponent<SpriteRenderer>().sortingOrder = 3;
+            Player.Instance.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }

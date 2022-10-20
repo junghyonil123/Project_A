@@ -1,24 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
     public GameObject enemy;
     public GameObject player;
     public GameObject finishCanvas;
+    public GameObject playerBattlePos;
+    public GameObject enemyBattlePos;
+
+    public TextMeshProUGUI textMeshpro;
 
     public List<Slot> dropItemSlot = new List<Slot>();
 
+    public bool isBattle = false;
+
     public void monsterItemDrop(Item item)
     {
-        Debug.Log("1");
         foreach (Slot slot in dropItemSlot)
         {
-            Debug.Log("2");
             if (slot.item == null)
             {
-                Debug.Log("3");
                 slot.SetItem(item);
                 break;
             }
@@ -28,12 +32,15 @@ public class BattleManager : MonoBehaviour
     public void FinishCanvasOn()
     {
         finishCanvas.SetActive(true);
+        ResultText();
     }
 
     public void FinishCanvasOff()
     {
         finishCanvas.SetActive(false);
     }
+
+
 
     #region singleton
     private static BattleManager instance = null;
@@ -62,4 +69,16 @@ public class BattleManager : MonoBehaviour
         }
     }
     #endregion
+
+    void ResultText()
+    {
+        if (BattleManager.Instance.player.GetComponent<Player>().nowHp != 0)
+        {
+            textMeshpro.text = "½Â¸®";
+        }
+        else
+        {
+            textMeshpro.text = "ÆÐ¹è";
+        }
+    }
 }

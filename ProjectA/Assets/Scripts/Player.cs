@@ -7,8 +7,8 @@ public class Player : Unit
     public StatusCanvas statuscanvas;
 
     private bool isCanMove=true;
-    public bool isBattle = false;
     public bool isFinishBattle = false;
+    public bool isFight = false;
 
     private bool isCanSave = false;//세이브가 가능함을 표시하는 플래그
     
@@ -96,8 +96,11 @@ public class Player : Unit
 
     private void Update()
     {
-        PlayerMove();
-        BattleGetDamage();
+        Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        if (!BattleManager.Instance.isBattle)
+        {
+            PlayerMove();
+        }
         Die();
     }
 
@@ -212,15 +215,5 @@ public class Player : Unit
             GameObject.Find("PlayerBattle").SetActive(false);
         }
         base.Die();
-    }
-
-    public void BattleGetDamage()
-    {
-        if (isBattle)
-        {
-            Debug.Log("Battle2");
-            GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
-            isBattle = false;
-        }
     }
 }

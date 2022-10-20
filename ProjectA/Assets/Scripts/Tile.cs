@@ -27,17 +27,17 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        SetMapActive();
+        //SetMapActive();
         CreatMap();
     }
 
-    public void SetMapActive()
-    {
-        if (returnDeltaX() >= 20 || returnDeltaY() >= 20)
-        {
-            gameObject.SetActive(false);
-        }
-    }
+    //public void SetMapActive()
+    //{
+    //    if (returnDeltaX() >= 20 || returnDeltaY() >= 20)
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 
     public float returnDeltaX()
     {

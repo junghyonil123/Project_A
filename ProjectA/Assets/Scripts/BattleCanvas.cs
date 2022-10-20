@@ -40,10 +40,13 @@ public class BattleCanvas : MonoBehaviour
     private void Update()
     {
 
+        if (BattleManager.Instance.isBattle)
+        {
             playerBattleHpPer = Player.Instance.nowHp / Player.Instance.maxHp;
             playerBattleHp.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 300 * playerBattleHpPer);
 
             enemyBattleHpPer = BattleManager.Instance.enemy.GetComponent<Enemy>().nowHp / BattleManager.Instance.enemy.GetComponent<Enemy>().maxHp;
             enemyBattleHp.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 300 * enemyBattleHpPer);
+        }
     }
 }

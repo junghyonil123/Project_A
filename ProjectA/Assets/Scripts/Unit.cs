@@ -12,6 +12,8 @@ public class Unit : MonoBehaviour
     public float def;
     public int lv;
 
+    public bool isDie = false;
+
     virtual public void Start()
     {
         nowHp = maxHp;
@@ -31,6 +33,7 @@ public class Unit : MonoBehaviour
         if(nowHp < 0)
         {
             nowHp = 0;
+            Die();
         }
     }
 
@@ -38,7 +41,9 @@ public class Unit : MonoBehaviour
     {
         if(nowHp <= 0)
         {
+            BattleManager.Instance.FinishCanvasOn();
             Time.timeScale = 0;
+            isDie = true;
         }
     }
 }

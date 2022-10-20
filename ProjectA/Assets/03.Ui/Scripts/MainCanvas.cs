@@ -9,10 +9,33 @@ public class MainCanvas : MonoBehaviour
     private float playerActivePointPer;
     private float playerHpPer;
 
+    #region singleton
+    private static MainCanvas instance = null;
+
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
+    public static MainCanvas Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
 
     private void Update()
     {
