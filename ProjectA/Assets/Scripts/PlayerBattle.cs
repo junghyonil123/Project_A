@@ -2,45 +2,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBattle : Unit
+public class PlayerBattle : MonoBehaviour
 {
-    Rigidbody2D rigid;
+    public GameObject enemy;
+    Rigidbody2D playerRigid;
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (!BattleManager.Instance.isBattle)
+            {
+                enemy = collision.gameObject;
+                BattleManager.Instance.enemy = collision.gameObject;
+                BattleManager.Instance.isBattle = true;
+                transform.position = BattleManager.Instance.playerBattlePos.transform.position; //플레이어 위치를 배틀신으로 옮긴다
+                collision.gameObject.transform.position = BattleManager.Instance.enemyBattlePos.transform.position; // 몬스터의 위치를 배틀신으로 옮긴다
+                Invoke("StartFos", 1f);
+            }
+            else
+            {
+                GetComponent<AudioSource>().Play();
+                Player.Instance.GetDamage(enemy.GetComponent<Enemy>().atk);
+                enemy.GetComponent<Enemy>().GetDamage(Player.Instance.atk);
+
+                StartCoroutine(_PlayerKnockBack(playerRigid));
+                StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
+
+
+            }
+        }
+    }
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        playerRigid = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+
+    IEnumerator _PlayerKnockBack(Rigidbody2D rigid)
     {
-        Invoke("StartFos", 1f);
+        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
+        {
+            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
+
+            rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+
+            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+
+            rigid.velocity = Vector2.zero; //힘을제로로
+
+            rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
+            
+            if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
+            {
+                Player.Instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator EnemyKnockBack(Rigidbody2D rigid)
     {
-        GetComponent<AudioSource>().Play();
-        StartCoroutine("KnockBack");
-        GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
-        Debug.Log(collision.gameObject.name);
-        BattleManager.Instance.enemy.GetComponent<Enemy>().isBattle = true;
-        BattleManager.Instance.player.GetComponent<Player>().isBattle = true;
-    }
-
-    IEnumerator KnockBack()
-    {
-        rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
-
-        rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
-
-        yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
-
-        rigid.velocity = Vector2.zero; //힘을제로로
-
-        rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
+        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
+        {
+            Debug.Log("1" + enemy.GetComponent<Enemy>().isDie);
+            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
+            Debug.Log("2" + enemy.GetComponent<Enemy>().isDie);
+            rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+            Debug.Log("3" + enemy.GetComponent<Enemy>().isDie);
+            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+            Debug.Log("4" + enemy.GetComponent<Enemy>().isDie);
+            rigid.velocity = Vector2.zero; //힘을제로로
+            Debug.Log("5" + enemy.GetComponent<Enemy>().isDie);
+            rigid.AddForce(Vector2.left * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
+            Debug.Log("6" + enemy.GetComponent<Enemy>().isDie);
+        }
     }
 
     void StartFos()
     {
-        rigid.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
+        playerRigid.AddForce(Vector2.right * 20, ForceMode2D.Impulse);
+        enemy.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 20, ForceMode2D.Impulse);
     }
+
 }
