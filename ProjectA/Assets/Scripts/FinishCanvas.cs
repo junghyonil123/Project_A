@@ -63,6 +63,8 @@ public class FinishCanvas : MonoBehaviour
             gameObject.SetActive(false);
             Time.timeScale = 1;
             Player.Instance.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Player.Instance.transform.position = Player.Instance.nowStandingTile.transform.position;
+            BattleManager.Instance.battleCanvas.SetActive(false);
         }
     }
 }
