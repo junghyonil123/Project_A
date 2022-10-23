@@ -6,7 +6,6 @@ public class PlayerBattle : MonoBehaviour
 {
     public GameObject enemy;
     Rigidbody2D playerRigid;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -18,6 +17,7 @@ public class PlayerBattle : MonoBehaviour
                 BattleManager.Instance.isBattle = true;
                 transform.position = BattleManager.Instance.playerBattlePos.transform.position; //플레이어 위치를 배틀신으로 옮긴다
                 BattleManager.Instance.battleCanvas.SetActive(true);
+                BattleManager.Instance.UiCanvas.SetActive(false);
                 transform.localScale = new Vector3(2, 2, 2);
                 collision.gameObject.transform.position = BattleManager.Instance.enemyBattlePos.transform.position; // 몬스터의 위치를 배틀신으로 옮긴다
                 Invoke("StartFos", 1f);

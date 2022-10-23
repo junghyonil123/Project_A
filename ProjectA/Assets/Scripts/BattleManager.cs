@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public GameObject playerBattlePos;
     public GameObject enemyBattlePos;
     public GameObject battleCanvas;
+    public GameObject UiCanvas;
 
     public TextMeshProUGUI textMeshpro;
 
