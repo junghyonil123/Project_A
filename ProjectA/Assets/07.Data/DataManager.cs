@@ -31,6 +31,13 @@ public class MapData
     public List<int> tileTypeList = new List<int>();
 }
 
+public class ItemData
+{
+    public List<int> inventoryItemNumberList = new List<int>();
+    public List<int> equipmentItemNumberList = new List<int>();
+}
+
+
 public class DataManager : MonoBehaviour
 {
     #region Singleton
@@ -75,6 +82,7 @@ public class DataManager : MonoBehaviour
 
         playerDataPath = Application.persistentDataPath + "/" + "PlayerData";
         mapDataPath = Application.persistentDataPath + "/" + "mapData";
+        itemDataPath = Application.persistentDataPath + "/" + "itemData";
     }
     #endregion
 
@@ -180,10 +188,65 @@ public class DataManager : MonoBehaviour
 
     #endregion
 
+    #region ItemData
+
+    ItemData itemDataClass = new ItemData();
+    string itemDataPath;
+
+    public void GetItemData()
+    {
+        for (int i = 0; i < itemDataClass.inventoryItemNumberList.Count; i++)
+        {
+            if (Inventory.Instance.inventoryList[i] == null)
+            {
+                return;
+            }
+
+            itemDataClass.inventoryItemNumberList[i] = Inventory.Instance.inventoryList[i].GetComponent<Item>().itemNumber;
+        }
+
+        for (int i = 0; i < itemDataClass.equipmentItemNumberList.Count; i++)
+        {
+            if (EquipmentWindow.Instance.equipmentSlotList[i] == null)
+            {
+                return;
+            }
+
+            itemDataClass.equipmentItemNumberList[i] = EquipmentWindow.Instance.equipmentSlotList[i].GetComponent<Item>().itemNumber;
+        }
+
+        string itemData = JsonUtility.ToJson(itemDataClass);
+        File.WriteAllText(itemDataPath, itemData);
+    }
+
+    public void SetItemData()
+    {
+        if (File.Exists(playerDataPath))
+        {
+            string itemData = File.ReadAllText(itemDataPath);
+            itemDataClass = JsonUtility.FromJson<ItemData>(itemData);
+
+            for (int i = 0; i < itemDataClass.inventoryItemNumberList.Count; i++)
+            {
+                Inventory.Instance.GetItem(ItemManager.Instance.itemLibrary[itemDataClass.inventoryItemNumberList[i]]);
+            }
+
+            for (int i = 0; i < itemDataClass.equipmentItemNumberList.Count; i++)
+            {
+                itemDataClass.inventoryItemNumberList[i] = EquipmentWindow.Instance.equipmentSlotList[i].GetComponent<Item>().itemNumber;
+                EquipmentWindow.Instance.equipmentSlotList[i].GetComponent<EquipSlot>().SetItem(ItemManager.Instance.itemLibrary[itemDataClass.equipmentItemNumberList[i]]);
+            }
+
+        }
+    }
+
+    #endregion
+
     public void SaveData()
     {
         GetMapData();
         GetPlayerData();
+        //GetItemData();
         DataClear();
     }
 
@@ -191,6 +254,7 @@ public class DataManager : MonoBehaviour
     {
         SetMapData();
         SetPlayerData();
+        //SetItemData();
         DataClear();
         isLoadFinish = true;
     }

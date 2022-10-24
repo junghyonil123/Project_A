@@ -18,6 +18,7 @@ public class Item : MonoBehaviour
     public string itmeName;
     public Sprite itemSprite;
     public ItemType itmeType;
+    public int itemNumber;
 
     public int itemStatus;
     public string itmeExplanation;

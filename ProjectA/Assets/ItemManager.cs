@@ -1,27 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
-public class EquipmentWindow : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
+
     #region Singleton
-    private static EquipmentWindow instance;
-    public static EquipmentWindow Instance
+    private static ItemManager instance;
+    public static ItemManager Instance
     {
         get
         {
             if (instance == null) //instance 가 존재하지않는다면
             {
-                var obj = FindObjectOfType<EquipmentWindow>(); //Player 타입이 존재하는지 확인
+                var obj = FindObjectOfType<ItemManager>(); //Player 타입이 존재하는지 확인
                 if (obj != null)
                 {
                     instance = obj; //null이 아니라면 instance에 넣어줌
                 }
                 else
                 {
-                    var newPlayer = new GameObject("EquipmentWindow").AddComponent<EquipmentWindow>(); //null이라면 새로만들어줌
+                    var newPlayer = new GameObject("ItemManager").AddComponent<ItemManager>(); //null이라면 새로만들어줌
                     instance = newPlayer;
                 }
             }
@@ -45,26 +44,18 @@ public class EquipmentWindow : MonoBehaviour
         //}
 
         //DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
+
+        for (int i = 0; i < itemLibrary.Count; i++)
+        {
+            if (itemLibrary[i].itemNumber != i)
+            {
+                Debug.Log("아이템넘버 불일치");
+            }
+        }
     }
     #endregion
 
-    public List<GameObject> equipmentSlotList = new List<GameObject>();
+    public List<Item> itemLibrary = new List<Item>();
 
-    public EquipSlot headSlot;
-    public EquipSlot mainWeaponSlot;
-    public EquipSlot ArmoSlot;
-    public EquipSlot SubWeaponSlot;
-    public EquipSlot ShoesSlot;
-
-    public EquipSlot EquipItem(Item item)
-    {
-        //아이템을 장착해줌
-        mainWeaponSlot.SetItem(item);
-        mainWeaponSlot.itemImage.color = new Color(255, 255, 255, 255);
-        mainWeaponSlot.isEquipped = true;
-        item.AddStatus();
-        gameObject.SetActive(false);
-        return mainWeaponSlot;
-    }
 
 }
