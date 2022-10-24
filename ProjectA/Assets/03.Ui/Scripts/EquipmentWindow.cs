@@ -63,7 +63,6 @@ public class EquipmentWindow : MonoBehaviour
         mainWeaponSlot.itemImage.color = new Color(255, 255, 255, 255);
         mainWeaponSlot.isEquipped = true;
         item.AddStatus();
-        gameObject.SetActive(false);
         return mainWeaponSlot;
     }
 
