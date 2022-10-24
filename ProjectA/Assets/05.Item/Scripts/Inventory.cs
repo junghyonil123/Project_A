@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
     }
     #endregion
 
-    public List<GameObject> inventory = new List<GameObject>();
+    public List<GameObject> inventoryList = new List<GameObject>();
 
 
     public GameObject equipmentWindow;
@@ -68,7 +68,7 @@ public class Inventory : MonoBehaviour
 
     public void GetItem(Item item)
     {
-        foreach (GameObject slot in inventory)
+        foreach (GameObject slot in inventoryList)
         {
             if (slot.GetComponent<Slot>().item == null)
             {
