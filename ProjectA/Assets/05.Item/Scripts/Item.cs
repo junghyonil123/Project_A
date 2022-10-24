@@ -23,11 +23,6 @@ public class Item : MonoBehaviour
     public int itemStatus;
     public string itmeExplanation;
 
-    private void Awake()
-    {
-        itemSprite = GetComponent<SpriteRenderer>().sprite;
-    }
-
     public void AddStatus()
     {
         //플레이어의 공격력만 더해줌

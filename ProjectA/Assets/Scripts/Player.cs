@@ -7,11 +7,13 @@ public class Player : Unit
     public StatusCanvas statuscanvas;
 
     private bool isCanMove=true;
-    public bool isBattle = false;
+    public bool isFinishBattle = false;
+    public bool isFight = false;
+
     private bool isCanSave = false;//세이브가 가능함을 표시하는 플래그
     
     public float speed;
-    
+
     public float maxActivePoint = 10;
     public float nowActivePoint;
 
@@ -94,8 +96,11 @@ public class Player : Unit
 
     private void Update()
     {
-        PlayerMove();
-        BattleGetDamage();
+        Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        if (!BattleManager.Instance.isBattle)
+        {
+            PlayerMove();
+        }
         Die();
     }
 
@@ -110,7 +115,7 @@ public class Player : Unit
 
     void PlayerMove()
     {
-        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && !statuscanvas.isOpenCanvas)
+        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statuscanvas.isOpenCanvas)
         {
             isCanSave = true;
             isCanMove = false;
@@ -210,15 +215,5 @@ public class Player : Unit
             GameObject.Find("PlayerBattle").SetActive(false);
         }
         base.Die();
-    }
-
-    public void BattleGetDamage()
-    {
-        if (isBattle)
-        {
-            Debug.Log("Battle2");
-            GetDamage(BattleManager.Instance.enemy.GetComponent<Enemy>().atk);
-            isBattle = false;
-        }
     }
 }

@@ -44,7 +44,6 @@ public class MapManager : MonoBehaviour
             return null;
         }
 
-        Debug.Log("새로운 맵을 생성합니다");
         if (numberOfNextBlock != 0)
         {
             //만약 다음블럭갯수가 있다면 똑같은 블럭을 생성함

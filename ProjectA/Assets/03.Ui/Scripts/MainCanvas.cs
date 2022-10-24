@@ -9,6 +9,34 @@ public class MainCanvas : MonoBehaviour
     private float playerActivePointPer;
     private float playerHpPer;
 
+    #region singleton
+    private static MainCanvas instance = null;
+
+    private void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    public static MainCanvas Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
+
     private void Update()
     {
         //플레이어의 행동력을 Ui형태로 보여줌

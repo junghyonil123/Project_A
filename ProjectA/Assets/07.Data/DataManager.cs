@@ -71,12 +71,12 @@ public class DataManager : MonoBehaviour
     {
         //생성과 동시에 실행되는 Awake는 이미 생성되어있는 싱글톤 오브젝트가 있는지 검사하고 있다면 지금 생성된 오브젝트를 파괴
 
-        //var objs = FindObjectsOfType<Player>();
-        //if (objs.Length != 1)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
+        var objs = FindObjectsOfType<Player>();
+        if (objs.Length != 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
 
@@ -169,7 +169,6 @@ public class DataManager : MonoBehaviour
 
         string mapData = JsonUtility.ToJson(mapDataClass); //맵 데이터를 제이슨형식의 문자열로 전환
         File.WriteAllText(mapDataPath, mapData); //전환된 문자열을 mapDataPath경로에 저장
-        Debug.Log(mapData);
     }
 
     public void SetMapData()
@@ -181,7 +180,6 @@ public class DataManager : MonoBehaviour
 
             for (int i = 0; i < mapDataClass.tileTransformList.Count; i++)
             {
-                Debug.Log("저장된 맵을 생성합니다");
                 MapManager.Instance.mapList.Add(Instantiate(MapManager.Instance.canMakeMapList[mapDataClass.tileTypeList[i]], mapDataClass.tileTransformList[i], Quaternion.identity, MapManager.Instance.transform));  
                 //블럭을 복제한다 (복제할 블럭 타입, 블럭이 마지막에있던 위치, 블럭의 회전, MapManager의 자식으로 넣어줌)
             }
