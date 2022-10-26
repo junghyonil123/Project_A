@@ -25,7 +25,7 @@ public class StatusCanvas : MonoBehaviour
 
     private void Start()
     {
-        statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+        statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-500, 0, 0));
     }
 
     public void WindowOnOff(string name)
@@ -36,14 +36,14 @@ public class StatusCanvas : MonoBehaviour
             {
                 if (uiWindowList[i].GetComponent<RectTransform>().position.x < 0)
                 {
-                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(+350, 0, 0));
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(+485, 0, 0));
                 }
             }
             else
             {
                 if (uiWindowList[i].GetComponent<RectTransform>().position.x > 0)
                 {
-                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(-350, 0, 0));
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
                 }
             }
         }
@@ -74,15 +74,16 @@ public class StatusCanvas : MonoBehaviour
     {
         Debug.Log(statusWindow.GetComponent<RectTransform>().position.x);
 
-        if (statusWindow.GetComponent<RectTransform>().position.x == 73.5)
+        if (!isOpenCanvas)
         {
             //켜져있다면
-            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
             isOpenCanvas = true;
+
         }
         else
         {
-            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(400, 0, 0));
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(485, 0, 0));
             isOpenCanvas = false;
         }
         SetStatusWindow();
