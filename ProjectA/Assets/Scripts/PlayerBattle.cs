@@ -71,7 +71,7 @@ public class PlayerBattle : MonoBehaviour
             rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
             
             yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
-            
+
             rigid.velocity = Vector2.zero; //힘을제로로
             
             rigid.AddForce(Vector2.left * 50, ForceMode2D.Impulse); //적방향으로 힘을받음

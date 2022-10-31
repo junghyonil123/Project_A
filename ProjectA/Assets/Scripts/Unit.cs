@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
           nowHp = nowHp - (damage - def);
         }
 
-        if(nowHp < 0)
+        if(nowHp <= 0)
         {
             nowHp = 0;
             Die();

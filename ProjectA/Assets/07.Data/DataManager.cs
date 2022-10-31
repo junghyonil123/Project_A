@@ -246,7 +246,7 @@ public class DataManager : MonoBehaviour
     {
         GetMapData();
         GetPlayerData();
-        //GetItemData();
+        GetItemData();
         DataClear();
     }
 
@@ -254,7 +254,7 @@ public class DataManager : MonoBehaviour
     {
         SetMapData();
         SetPlayerData();
-        //SetItemData();
+        SetItemData();
         DataClear();
         isLoadFinish = true;
     }
@@ -263,11 +263,5 @@ public class DataManager : MonoBehaviour
     {
         playerDataClass = new PlayerData();
         mapDataClass = new MapData();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

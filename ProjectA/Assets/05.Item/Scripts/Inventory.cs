@@ -173,5 +173,6 @@ public class Inventory : MonoBehaviour
         explanationWindow.SetActive(true);
         nowSelectSlot.DeleteItem();
         nowSelectSlot = unEquipSlot;
+        explanationCanvas.SetActive(false);
     }
 }

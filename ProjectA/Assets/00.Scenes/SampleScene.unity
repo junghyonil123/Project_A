@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slot
       objectReference: {fileID: 0}
+    - target: {fileID: 5367179934864911647, guid: bfe04dca65445b74b87534fc70aba3b8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7648146197866267158, guid: bfe04dca65445b74b87534fc70aba3b8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3155,7 +3159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06b8e28cae0b004a925a10fe2e67a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory:
+  inventoryList:
   - {fileID: 1965635846}
   - {fileID: 1278012453}
   - {fileID: 538995886}
@@ -3189,7 +3193,7 @@ MonoBehaviour:
   dropItemButton: {fileID: 651161867}
   equipItemButton: {fileID: 668093025}
   unEpuipItemButton: {fileID: 1542295942}
-  explanationCanvas: {fileID: 0}
+  explanationCanvas: {fileID: 1408225966}
   itemImage: {fileID: 1432837079}
   nameText: {fileID: 793648524}
   typeText: {fileID: 1009537792}
@@ -3672,7 +3676,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631210792}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.9426, y: -1.0678567, z: 1.9794312}
+  m_LocalPosition: {x: -9, y: -1.0678567, z: 1.9794312}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1280013635}
@@ -5263,7 +5267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976134374}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.0574, y: -1.0678567, z: 1.9794312}
+  m_LocalPosition: {x: 7, y: -1.0678567, z: 1.9794312}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1280013635}
@@ -7406,6 +7410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ec859bb817e994c97f26f1389fe055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipmentSlotList: []
   headSlot: {fileID: 1768580239}
   mainWeaponSlot: {fileID: 670512610}
   ArmoSlot: {fileID: 1218279659}
@@ -10951,6 +10956,7 @@ MonoBehaviour:
   itmeName: 
   itemSprite: {fileID: 21300000, guid: 834a1a067beadae4d8548fd97179cadd, type: 3}
   itmeType: 0
+  itemNumber: 0
   itemStatus: 0
   itmeExplanation: "\uD3C9\uBC94\uD55C\uAC80\uC774\uB2E4 \uC0AC\uB78C\uC744 \uB4A4\uC5D0\uC11C\uCC0C\uB974\uBA74
     \uD55C\uBC29\uC5D0 \uBCF4\uB0BC \uC218 \uB3C4\uC788\uACE0 \uBABB\uBCF4\uB0BC
@@ -11314,6 +11320,7 @@ MonoBehaviour:
   - {fileID: 1224339567}
   - {fileID: 528096003}
   - {fileID: 935109353}
+  explanationCanvas: {fileID: 1408225966}
   isOpenCanvas: 1
 --- !u!114 &1809419514
 MonoBehaviour:
