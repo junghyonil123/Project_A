@@ -1030,8 +1030,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: "\uAE40\uD50C\uB808\uC774\uC5B4"
-  nowHp: 0
-  maxHp: 0
+  nowHp: 100
+  maxHp: 25
   atk: 10
   def: 5
   lv: 0
@@ -1140,6 +1140,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
+  player: {fileID: 250060567}
+  isBattle: 0
+  playerBattlePos: {fileID: 631210793}
+  enemyBattlePos: {fileID: 976134375}
+  battleCanvas: {fileID: 1280013634}
+  finishCanvas: {fileID: 3684192412027403121}
 --- !u!82 &250060575
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2006,7 +2012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 369145180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.26, y: -1.24, z: 0}
+  m_LocalPosition: {x: 15.14, y: 0.93, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6268,7 +6274,7 @@ GameObject:
   - component: {fileID: 1089556856}
   - component: {fileID: 1089556855}
   m_Layer: 5
-  m_Name: EnemyHpPointCanvas (1)
+  m_Name: EnemyHpPointCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7777,7 +7783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280013635}
   m_Layer: 0
-  m_Name: BattleScene
+  m_Name: BattleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11935,7 +11941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1954012191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11973,6 +11979,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBattleHp: {fileID: 531723811}
   enemyBattleHp: {fileID: 1089556853}
+  resultTextMesh: {fileID: 3684192412553718598}
+  xpTextMesh: {fileID: 3684192412179213307}
+  goldTextMesh: {fileID: 3684192411924954364}
 --- !u!114 &1954012193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13183,6 +13192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8167033b848894e8203820d0067193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRender: {fileID: 0}
   textMeshpro: {fileID: 3684192412553718598}
   xpTextMesh: {fileID: 3684192412801662675}
   goldTextMesh: {fileID: 3684192412588802084}

@@ -34,6 +34,10 @@ public class Unit : MonoBehaviour
         {
             nowHp = 0;
             Die();
+<<<<<<< Updated upstream
+=======
+            PlayerBattle.Instance.isBattle = false;
+>>>>>>> Stashed changes
         }
     }
 
@@ -41,8 +45,11 @@ public class Unit : MonoBehaviour
     {
         if(nowHp <= 0)
         {
+<<<<<<< Updated upstream
             BattleManager.Instance.FinishCanvasOn();
             Time.timeScale = 0;
+=======
+>>>>>>> Stashed changes
             isDie = true;
         }
     }

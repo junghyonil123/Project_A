@@ -13,7 +13,7 @@ public class BattleCamera : MonoBehaviour
 
     void Update()
     {
-        if (BattleManager.Instance.isBattle)
+        if (PlayerBattle.Instance.isBattle)
         {
             camera.depth = 2;
         }

@@ -23,34 +23,28 @@ public class Enemy : Unit
 
     private void Update()
     {
-        Die();
     }
+
     public override void Die()
     {
         base.Die();
-        if(nowHp <= 0)
-        {
-            Debug.Log("die" + gameObject);
-            Drop();
-            Destroy(gameObject);
-        }
-
+        Drop();
+        Destroy(gameObject);
     }
 
     public void Drop()
     {
-        FinishCanvas.Instance.xpTextMesh.text = ""+xp;
-        FinishCanvas.Instance.goldTextMesh.text = ""+gold;
+        BattleCanvas.Instance.xpTextMesh.text = ""+xp;
+        BattleCanvas.Instance.goldTextMesh.text = ""+gold;
 
         for (int i = 0; i < dropItem.Count; i++)
         {
             if (dropPer[i] >= Random.Range(1, 101))
             {
-                BattleManager.Instance.monsterItemDrop(dropItem[i]);
+                BattleCanvas.Instance.MonsterItemDrop(dropItem[i]);
                 Inventory.Instance.GetItem(dropItem[i]);
             }
         }
     }
-
 
 }
