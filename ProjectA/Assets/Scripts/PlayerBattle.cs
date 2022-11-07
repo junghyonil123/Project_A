@@ -6,6 +6,9 @@ public class PlayerBattle : MonoBehaviour
 {
     public GameObject enemy;
     Rigidbody2D playerRigid;
+    IEnumerator playerknockback;
+    IEnumerator enemyknockback;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -13,23 +16,26 @@ public class PlayerBattle : MonoBehaviour
             if (!BattleManager.Instance.isBattle)
             {
                 enemy = collision.gameObject;
+                enemyknockback = EnemyKnockBack(enemy.GetComponent<Rigidbody2D>());
                 BattleManager.Instance.enemy = collision.gameObject;
                 BattleManager.Instance.isBattle = true;
                 transform.position = BattleManager.Instance.playerBattlePos.transform.position; //플레이어 위치를 배틀신으로 옮긴다
                 BattleManager.Instance.battleCanvas.SetActive(true);
-                BattleManager.Instance.UiCanvas.SetActive(false);
+                BattleManager.Instance.UiCanvas.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
                 transform.localScale = new Vector3(2, 2, 2);
                 collision.gameObject.transform.position = BattleManager.Instance.enemyBattlePos.transform.position; // 몬스터의 위치를 배틀신으로 옮긴다
                 Invoke("StartFos", 1f);
             }
             else
             {
+                if ((!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie))
+                {
+                    StartCoroutine(_PlayerKnockBack(playerRigid));
+                    StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
+                }
                 GetComponent<AudioSource>().Play();
                 Player.Instance.GetDamage(enemy.GetComponent<Enemy>().atk);
                 enemy.GetComponent<Enemy>().GetDamage(Player.Instance.atk);
-
-                StartCoroutine(_PlayerKnockBack(playerRigid));
-                StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
 
 
             }
@@ -38,6 +44,7 @@ public class PlayerBattle : MonoBehaviour
     private void Awake()
     {
         playerRigid = GetComponent<Rigidbody2D>();
+        playerknockback = _PlayerKnockBack(playerRigid);
     }
 
     IEnumerator _PlayerKnockBack(Rigidbody2D rigid)
@@ -50,10 +57,10 @@ public class PlayerBattle : MonoBehaviour
 
             yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
 
-            if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
-            {
-                StopCoroutine("_PlayerKnockBack");
-            }
+            //if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
+            //{
+            //    StopCoroutine(playerknockback);
+            //}
 
             rigid.velocity = Vector2.zero; //힘을제로로
 

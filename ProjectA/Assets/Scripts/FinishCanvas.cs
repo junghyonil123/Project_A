@@ -64,7 +64,7 @@ public class FinishCanvas : MonoBehaviour
             Time.timeScale = 1;
             Player.Instance.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             BattleManager.Instance.battleCanvas.SetActive(false);
-            BattleManager.Instance.UiCanvas.SetActive(true);
+            BattleManager.Instance.UiCanvas.GetComponent<RectTransform>().Translate(new Vector3(485, 0, 0));
         }
     }
 }
