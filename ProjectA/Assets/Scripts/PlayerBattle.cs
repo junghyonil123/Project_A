@@ -5,12 +5,7 @@ using UnityEngine;
 public class PlayerBattle : MonoBehaviour
 {
     public GameObject enemy;
-    public Rigidbody2D playerRigid;
-    IEnumerator playerknockback;
-    IEnumerator enemyknockback;
-
-    public static PlayerBattle instance;
-
+    Rigidbody2D playerRigid;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -18,12 +13,13 @@ public class PlayerBattle : MonoBehaviour
             if (!BattleManager.Instance.isBattle)
             {
                 enemy = collision.gameObject;
-                enemyknockback = EnemyKnockBack(enemy.GetComponent<Rigidbody2D>());
                 BattleManager.Instance.enemy = collision.gameObject;
                 BattleManager.Instance.isBattle = true;
                 transform.position = BattleManager.Instance.playerBattlePos.transform.position; //플레이어 위치를 배틀신으로 옮긴다
                 BattleManager.Instance.battleCanvas.SetActive(true);
-                BattleManager.Instance.UiCanvas.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
+
+                BattleManager.Instance.UiCanvas.GetComponent<RectTransform>().Translate(new Vector3(-1000, 0, 0));
+
                 transform.localScale = new Vector3(2, 2, 2);
                 collision.gameObject.transform.position = BattleManager.Instance.enemyBattlePos.transform.position; // 몬스터의 위치를 배틀신으로 옮긴다
                 Invoke("StartFos", 1f);
@@ -34,46 +30,52 @@ public class PlayerBattle : MonoBehaviour
                 Player.Instance.GetDamage(enemy.GetComponent<Enemy>().atk);
                 enemy.GetComponent<Enemy>().GetDamage(Player.Instance.atk);
 
-                if (BattleManager.Instance.isBattle)
-                {
-                    StartCoroutine(_PlayerKnockBack(playerRigid));
-                    StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
-                }
+                StartCoroutine(_PlayerKnockBack(playerRigid));
+                StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
+
+
             }
         }
     }
     private void Awake()
     {
-        instance = this;
         playerRigid = GetComponent<Rigidbody2D>();
-        playerknockback = _PlayerKnockBack(playerRigid);
     }
 
     IEnumerator _PlayerKnockBack(Rigidbody2D rigid)
     {
-        rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
+        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
+        {
+            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
 
-        rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+            rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
 
-        yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
 
-        rigid.velocity = Vector2.zero; //힘을제로로
+            if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
+            {
+                StopCoroutine("_PlayerKnockBack");
+            }
 
-        rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
+            rigid.velocity = Vector2.zero; //힘을제로로
+
+            rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
+            
+        }
     }
 
     IEnumerator EnemyKnockBack(Rigidbody2D rigid)
     {
-        rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
-
-        rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
-            
-        yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
-
-        if (enemy != null)
+        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
         {
-            rigid.velocity = Vector2.zero; //힘을제로로
+            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
 
+            rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+            
+            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+            
+            rigid.velocity = Vector2.zero; //힘을제로로
+            
             rigid.AddForce(Vector2.left * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
         }
     }

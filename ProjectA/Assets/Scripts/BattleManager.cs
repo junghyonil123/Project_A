@@ -33,6 +33,7 @@ public class BattleManager : MonoBehaviour
 
     public void FinishCanvasOn()
     {
+        BattleManager.Instance.UiCanvas.GetComponent<RectTransform>().Translate(new Vector3(1000, 0, 0));
         finishCanvas.SetActive(true);
         ResultText();
     }

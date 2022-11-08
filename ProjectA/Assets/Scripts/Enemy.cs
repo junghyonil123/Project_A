@@ -47,6 +47,7 @@ public class Enemy : Unit
         {
             if (dropPer[i] >= Random.Range(1, 101))
             {
+                Debug.Log("µÎ¹ø ½ÇÇàµÊ" + dropItem[i]);
                 BattleManager.Instance.monsterItemDrop(dropItem[i]);
                 Inventory.Instance.GetItem(dropItem[i]);
             }
