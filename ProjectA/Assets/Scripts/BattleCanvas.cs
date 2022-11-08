@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
 
 public class BattleCanvas : MonoBehaviour
 {
@@ -12,10 +9,6 @@ public class BattleCanvas : MonoBehaviour
     private float playerBattleHpPer;
     private float enemyBattleHpPer;
 
-    //SpriteRenderer spriteRender;
-    public TextMeshProUGUI resultTextMesh;
-    public TextMeshProUGUI xpTextMesh;
-    public TextMeshProUGUI goldTextMesh;
 
     #region singleton
     private static BattleCanvas instance = null;
@@ -46,31 +39,14 @@ public class BattleCanvas : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerBattle.Instance.isBattle)
+
+        if (BattleManager.Instance.isBattle)
         {
             playerBattleHpPer = Player.Instance.nowHp / Player.Instance.maxHp;
             playerBattleHp.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 300 * playerBattleHpPer);
 
-            enemyBattleHpPer = PlayerBattle.Instance.enemy.GetComponent<Enemy>().nowHp 
-                / PlayerBattle.Instance.enemy.GetComponent<Enemy>().maxHp;
+            enemyBattleHpPer = BattleManager.Instance.enemy.GetComponent<Enemy>().nowHp / BattleManager.Instance.enemy.GetComponent<Enemy>().maxHp;
             enemyBattleHp.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 300 * enemyBattleHpPer);
         }
-    }
-
-    //public void ReturnScene()
-    //{
-    //    Player.Instance.transform.position = Player.Instance.nowStandingTile.transform.position;
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        gameObject.SetActive(false);
-    //        Player.Instance.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    //        PlayerBattle.Instance.battleCanvas.SetActive(false);
-    //        MainCanvas.Instance.gameObject.SetActive(true);
-    //    }
-    //}
-
-    public void MonsterItemDrop(Item item)
-    {
-
     }
 }

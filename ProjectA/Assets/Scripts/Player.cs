@@ -96,7 +96,8 @@ public class Player : Unit
 
     private void Update()
     {
-        if (!PlayerBattle.Instance.isBattle)
+        Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        if (!BattleManager.Instance.isBattle)
         {
             PlayerMove();
         }
@@ -209,6 +210,10 @@ public class Player : Unit
 
     public override void Die()
     {
+        if (nowHp <= 0)
+        {
+            GameObject.Find("PlayerBattle").SetActive(false);
+        }
         base.Die();
     }
 }
