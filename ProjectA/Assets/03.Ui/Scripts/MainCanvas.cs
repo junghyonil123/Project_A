@@ -17,7 +17,7 @@ public class MainCanvas : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else
         {

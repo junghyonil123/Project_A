@@ -38,12 +38,14 @@ public class Inventory : MonoBehaviour
     {
         ////생성과 동시에 실행되는 Awake는 이미 생성되어있는 싱글톤 오브젝트가 있는지 검사하고 있다면 지금 생성된 오브젝트를 파괴
 
-        //var objs = FindObjectsOfType<Player>();
-        //if (objs.Length != 1)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
+        var objs = FindObjectsOfType<Inventory>();
+        Debug.Log(objs[0]);
+        Debug.Log(objs[1]);
+        if (objs.Length != 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
     }
     #endregion
@@ -155,10 +157,8 @@ public class Inventory : MonoBehaviour
     public void EquipItem()
     {
         //아이템 장착
-        equipmentWindow.SetActive(true);
         equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
         ItemExplanation(nowSelectSlot.item , true);
-        explanationWindow.SetActive(true);
         nowSelectSlot.DeleteItem();
         nowSelectSlot = equipSlot;
     }
