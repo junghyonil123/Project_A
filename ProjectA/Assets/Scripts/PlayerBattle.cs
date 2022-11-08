@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerBattle : MonoBehaviour
 {
     public GameObject enemy;
-    Rigidbody2D playerRigid;
+    public Rigidbody2D playerRigid;
     IEnumerator playerknockback;
     IEnumerator enemyknockback;
+
+    public static PlayerBattle instance;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,59 +30,50 @@ public class PlayerBattle : MonoBehaviour
             }
             else
             {
-                if ((!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie))
-                {
-                    StartCoroutine(_PlayerKnockBack(playerRigid));
-                    StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
-                }
                 GetComponent<AudioSource>().Play();
                 Player.Instance.GetDamage(enemy.GetComponent<Enemy>().atk);
                 enemy.GetComponent<Enemy>().GetDamage(Player.Instance.atk);
 
-
+                if (BattleManager.Instance.isBattle)
+                {
+                    StartCoroutine(_PlayerKnockBack(playerRigid));
+                    StartCoroutine(EnemyKnockBack(enemy.GetComponent<Rigidbody2D>()));
+                }
             }
         }
     }
     private void Awake()
     {
+        instance = this;
         playerRigid = GetComponent<Rigidbody2D>();
         playerknockback = _PlayerKnockBack(playerRigid);
     }
 
     IEnumerator _PlayerKnockBack(Rigidbody2D rigid)
     {
-        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
-        {
-            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
+        rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
 
-            rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+        rigid.AddForce(Vector2.left * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
 
-            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+        yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
 
-            //if (Player.Instance.isDie || enemy.GetComponent<Enemy>().isDie)
-            //{
-            //    StopCoroutine(playerknockback);
-            //}
+        rigid.velocity = Vector2.zero; //힘을제로로
 
-            rigid.velocity = Vector2.zero; //힘을제로로
-
-            rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
-            
-        }
+        rigid.AddForce(Vector2.right * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
     }
 
     IEnumerator EnemyKnockBack(Rigidbody2D rigid)
     {
-        if (!Player.Instance.isDie || !enemy.GetComponent<Enemy>().isDie)
+        rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
+
+        rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
+            
+        yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
+
+        if (enemy != null)
         {
-            rigid.velocity = Vector2.zero; //부딪힌순간 힘을 제로로
-
-            rigid.AddForce(Vector2.right * 30, ForceMode2D.Impulse); //밀리는 방향으로 힘을줌
-            
-            yield return new WaitForSeconds(0.3f); //0.3초동안 밀리고
-
             rigid.velocity = Vector2.zero; //힘을제로로
-            
+
             rigid.AddForce(Vector2.left * 50, ForceMode2D.Impulse); //적방향으로 힘을받음
         }
     }

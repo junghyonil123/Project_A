@@ -32,6 +32,7 @@ public class Enemy : Unit
         {
             Debug.Log("die" + gameObject);
             Drop();
+            PlayerBattle.instance.playerRigid.velocity = Vector2.zero;
             Destroy(gameObject);
         }
 

@@ -44,7 +44,6 @@ public class Unit : MonoBehaviour
         {
             BattleManager.Instance.FinishCanvasOn();
             Player.Instance.isCanMove = false;
-            Debug.Log("iscanmove false");
             isDie = true;
             Time.timeScale = 0;
         }

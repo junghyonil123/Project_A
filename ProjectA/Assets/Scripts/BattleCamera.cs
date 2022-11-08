@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class BattleCamera : MonoBehaviour
 {
-    public Camera camera;
+    public Camera _camera;
 
     private void Awake()
     {
-        camera = GetComponent<Camera>();
+        _camera = GetComponent<Camera>();
     }
 
     void Update()
     {
         if (BattleManager.Instance.isBattle)
         {
-            camera.depth = 2;
+            _camera.depth = 2;
         }
         else
         {
-            camera.depth = -1;
+            _camera.depth = -1;
         }
     }
 }
