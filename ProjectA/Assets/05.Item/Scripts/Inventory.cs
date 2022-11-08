@@ -57,6 +57,7 @@ public class Inventory : MonoBehaviour
     public GameObject dropItemButton;
     public GameObject equipItemButton;
     public GameObject unEpuipItemButton;
+    public GameObject explanationCanvas;
 
     public Image itemImage;
     public TextMeshProUGUI nameText;
@@ -81,6 +82,7 @@ public class Inventory : MonoBehaviour
     public void DropItem()
     {
         nowSelectSlot.DeleteItem();
+        explanationCanvas.SetActive(false);
     }
 
     public string ReturnItemType(ItemType itemtype)
@@ -161,6 +163,7 @@ public class Inventory : MonoBehaviour
         ItemExplanation(nowSelectSlot.item , true);
         nowSelectSlot.DeleteItem();
         nowSelectSlot = equipSlot;
+        explanationCanvas.SetActive(false);
     }
 
     public void UnEquipItem()
@@ -170,5 +173,6 @@ public class Inventory : MonoBehaviour
         explanationWindow.SetActive(true);
         nowSelectSlot.DeleteItem();
         nowSelectSlot = unEquipSlot;
+        explanationCanvas.SetActive(false);
     }
 }

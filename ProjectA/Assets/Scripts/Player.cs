@@ -6,7 +6,7 @@ public class Player : Unit
 {
     public StatusCanvas statuscanvas;
 
-    private bool isCanMove=true;
+    public bool isCanMove=true;
     public bool isFinishBattle = false;
     public bool isFight = false;
 

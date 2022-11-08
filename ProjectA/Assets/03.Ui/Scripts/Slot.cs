@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    public Image itemImage = null;
+   public Image itemImage = null;
     public Item item = null;
 
     private void Awake()

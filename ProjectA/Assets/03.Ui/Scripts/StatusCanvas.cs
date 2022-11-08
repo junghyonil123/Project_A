@@ -20,12 +20,14 @@ public class StatusCanvas : MonoBehaviour
 
     public List<GameObject> uiWindowList = new List<GameObject>();
 
+    public GameObject explanationCanvas;
+
     public bool isOpenCanvas = true;
 
 
     private void Start()
     {
-        statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+        statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-500, 0, 0));
     }
 
     public void WindowOnOff(string name)
@@ -36,14 +38,14 @@ public class StatusCanvas : MonoBehaviour
             {
                 if (uiWindowList[i].GetComponent<RectTransform>().position.x < 0)
                 {
-                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(+350, 0, 0));
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(+485, 0, 0));
                 }
             }
             else
             {
                 if (uiWindowList[i].GetComponent<RectTransform>().position.x > 0)
                 {
-                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(-350, 0, 0));
+                    uiWindowList[i].GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
                 }
             }
         }
@@ -74,15 +76,17 @@ public class StatusCanvas : MonoBehaviour
     {
         Debug.Log(statusWindow.GetComponent<RectTransform>().position.x);
 
-        if (statusWindow.GetComponent<RectTransform>().position.x == 73.5)
+        if (!isOpenCanvas)
         {
             //켜져있다면
-            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-400, 0, 0));
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
             isOpenCanvas = true;
+            explanationCanvas.SetActive(false);
+
         }
         else
         {
-            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(400, 0, 0));
+            statusWindow.GetComponent<RectTransform>().Translate(new Vector3(485, 0, 0));
             isOpenCanvas = false;
         }
         SetStatusWindow();

@@ -30,10 +30,11 @@ public class Unit : MonoBehaviour
           nowHp = nowHp - (damage - def);
         }
 
-        if(nowHp < 0)
+        if(nowHp <= 0)
         {
             nowHp = 0;
             Die();
+            BattleManager.Instance.isBattle = false;
         }
     }
 
@@ -42,8 +43,9 @@ public class Unit : MonoBehaviour
         if(nowHp <= 0)
         {
             BattleManager.Instance.FinishCanvasOn();
-            Time.timeScale = 0;
+            Player.Instance.isCanMove = false;
             isDie = true;
+            Time.timeScale = 0;
         }
     }
 }
