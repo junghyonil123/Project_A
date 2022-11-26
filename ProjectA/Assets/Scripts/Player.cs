@@ -4,6 +4,35 @@ using UnityEngine;
 
 public class Player : Unit
 {
+    #region singleton
+    private static Player instance = null;
+
+    private void Awake()
+    {
+        statuscanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
+        if (null == instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    public static Player Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
+  
     public StatusCanvas statuscanvas;
 
     public bool isCanMove=true;
@@ -21,6 +50,7 @@ public class Player : Unit
     public float dex;
     public float con;
     public float statusPoint;
+    public int lv;
 
     public Animator playerAnimator;
 
@@ -56,34 +86,6 @@ public class Player : Unit
         nowActivePoint = maxActivePoint;
     }
 
-    #region singleton
-    private static Player instance = null;
-
-    private void Awake()
-    {
-        statuscanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
-        if (null == instance)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-    public static Player Instance
-    {
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
-            return instance;
-        }
-    }
-    #endregion
 
     public override void Start()
     {
@@ -97,11 +99,7 @@ public class Player : Unit
     private void Update()
     {
         Debug.Log(GetComponent<Rigidbody2D>().velocity);
-        if (!BattleManager.Instance.isBattle)
-        {
-            PlayerMove();
-        }
-        Die();
+        PlayerMove();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -194,10 +192,6 @@ public class Player : Unit
         }
     }
 
-    public override void GetDamage(float damage)
-    {
-        base.GetDamage(damage);
-    }
 
     public void PlayerPosionRay()
     {
@@ -208,12 +202,4 @@ public class Player : Unit
         nowStandingTile = hit.transform;
     }
 
-    public override void Die()
-    {
-        if (nowHp <= 0)
-        {
-            GameObject.Find("PlayerBattle").SetActive(false);
-        }
-        base.Die();
-    }
 }

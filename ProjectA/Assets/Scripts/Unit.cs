@@ -10,42 +10,12 @@ public class Unit : MonoBehaviour
     public float maxHp;
     public float atk;
     public float def;
-    public int lv;
 
-    public bool isDie = false;
+    [HideInInspector] public bool isDie = false;
 
     virtual public void Start()
     {
-        nowHp = maxHp;
     }
 
-    virtual public void GetDamage(float damage)
-    {
-        if(damage - def <= 1)
-        {
-            nowHp--;
-        }
-        else
-        {
-          nowHp = nowHp - (damage - def);
-        }
 
-        if(nowHp <= 0)
-        {
-            nowHp = 0;
-            Die();
-            BattleManager.Instance.isBattle = false;
-        }
-    }
-
-    virtual public void Die()
-    {
-        if(nowHp <= 0)
-        {
-            BattleManager.Instance.FinishCanvasOn();
-            Player.Instance.isCanMove = false;
-            isDie = true;
-            Time.timeScale = 0;
-        }
-    }
 }

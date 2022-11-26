@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : Unit
 {
-    public SpriteRenderer spriteRenderer;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
 
     public int xp;
     public int gold;
@@ -23,32 +23,16 @@ public class Enemy : Unit
 
     private void Update()
     {
-        Die();
     }
-    public override void Die()
-    {
-        base.Die();
-        if(nowHp <= 0)
-        {
-            Debug.Log("die" + gameObject);
-            Drop();
-            PlayerBattle.instance.playerRigid.velocity = Vector2.zero;
-            Destroy(gameObject);
-        }
 
-    }
 
     public void Drop()
     {
-        FinishCanvas.Instance.xpTextMesh.text = ""+xp;
-        FinishCanvas.Instance.goldTextMesh.text = ""+gold;
 
         for (int i = 0; i < dropItem.Count; i++)
         {
             if (dropPer[i] >= Random.Range(1, 101))
             {
-                Debug.Log("µÎ¹ø ½ÇÇàµÊ" + dropItem[i]);
-                BattleManager.Instance.monsterItemDrop(dropItem[i]);
                 Inventory.Instance.GetItem(dropItem[i]);
             }
         }
