@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour
 {
     public string unitName;
-    public float nowHp;
-    public float maxHp;
-    public float atk;
-    public float def;
+    public int nowHp;
+    public int maxHp;
+    public int atk;
+    public int def;
 
-    [HideInInspector] public bool isDie = false;
+    public Sprite portrait;
 
-    virtual public void Start()
-    {
-    }
-
+    abstract public void Die();
 
 }

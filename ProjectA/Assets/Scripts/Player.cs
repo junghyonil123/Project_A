@@ -4,35 +4,47 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    #region singleton
-    private static Player instance = null;
-
-    private void Awake()
-    {
-        statuscanvas = GameObject.Find("StatusCanvas").GetComponent<StatusCanvas>();
-        if (null == instance)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    #region Singleton
+    private static Player instance;
     public static Player Instance
     {
         get
         {
-            if (null == instance)
+            if (instance == null) //instance 가 존재하지않는다면
             {
-                return null;
+                var obj = FindObjectOfType<Player>(); //Player 타입이 존재하는지 확인
+                if (obj != null)
+                {
+                    instance = obj; //null이 아니라면 instance에 넣어줌
+                }
+                else
+                {
+                    var newPlayer = new GameObject("Player").AddComponent<Player>(); //null이라면 새로만들어줌
+                    instance = newPlayer;
+                }
             }
             return instance;
         }
+        private set
+        {
+            instance = value;
+        }
+    }
+
+    private void Awake()
+    {
+        ////생성과 동시에 실행되는 Awake는 이미 생성되어있는 싱글톤 오브젝트가 있는지 검사하고 있다면 지금 생성된 오브젝트를 파괴
+
+        var objs = FindObjectsOfType<Player>();
+        if (objs.Length != 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
     }
     #endregion
-  
+
     public StatusCanvas statuscanvas;
 
     public bool isCanMove=true;
@@ -43,14 +55,18 @@ public class Player : Unit
     
     public float speed;
 
-    public float maxActivePoint = 10;
-    public float nowActivePoint;
+    public int maxActivePoint = 10;
+    public int nowActivePoint;
 
-    public float str;
-    public float dex;
-    public float con;
-    public float statusPoint;
+    public int str;
+    public int dex;
+    public int con;
+    public int statusPoint;
     public int lv;
+
+    private int maxExp = 10;
+    private int curExp;
+    private int gold;
 
     public Animator playerAnimator;
 
@@ -58,7 +74,7 @@ public class Player : Unit
 
     public Transform nowStandingTile;
 
-    public void GetITem(Item item) //아이템을 얻는 함수
+    public void GetItem(Item item) //아이템을 얻는 함수
     {
         Inventory.Instance.GetItem(item);
     }
@@ -68,28 +84,45 @@ public class Player : Unit
         atk = str * 2;
         def = dex * 1;
         maxHp = con * 5;
-    }
+    } //스텟을 기반으로 능력치를 계산해주는 함수
 
     public void LvUp()
     {
         lv += 1;
         statusPoint += 5;
+        curExp = lv * 10;
+
+    } //레벨업
+
+    public void GetGold(int _gold) //골드를 얻는 함수
+    {
+        gold += _gold; 
     }
+
+    public void GetExp(int _exp)
+    {
+        curExp += _exp;
+
+        if (curExp >= maxExp)
+        {
+            curExp = (curExp - maxExp);
+            LvUp();
+        }
+    }
+
 
     public void ResetHp()
     {
         this.nowHp = this.maxHp;
-    }
+    } //체력 초기화
 
     public void ResetActivePoint()
     {
         nowActivePoint = maxActivePoint;
-    }
+    } //행동력 초기화
 
-
-    public override void Start()
+    public void Start()
     {
-        base.Start();
         SetStatus();
         ResetHp();
         PlayerPosionRay();
@@ -98,7 +131,6 @@ public class Player : Unit
 
     private void Update()
     {
-        Debug.Log(GetComponent<Rigidbody2D>().velocity);
         PlayerMove();
     }
 
@@ -106,8 +138,14 @@ public class Player : Unit
     {
         if (collision.CompareTag("Item"))
         {
-            GetITem(collision.GetComponent<Item>());
+            GetItem(collision.GetComponent<Item>());
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("실행댓습니다");
+            BattleManager.Instance.BattelStart(collision.gameObject.GetComponent<Enemy>());
         }
     }
 
@@ -190,8 +228,7 @@ public class Player : Unit
                 isCanSave = false;
             }
         }
-    }
-
+    } //플레이어 움직이기
 
     public void PlayerPosionRay()
     {
@@ -200,6 +237,10 @@ public class Player : Unit
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
-    }
+    } //플레이어의 현재위치 체크
 
+    public override void Die()
+    {
+        Debug.Log("주것습니다.");
+    } //Die
 }

@@ -10,16 +10,16 @@ public class PlayerData
     
     public int lv;
     
-    public float nowHp;
-    public float maxHp;
-    public float atk;
-    public float def;
-    public float maxActivePoint;
-    public float nowActivePoint;
-    public float str;
-    public float dex;
-    public float con;
-    public float statusPoint;
+    public int nowHp;
+    public int maxHp;
+    public int atk;
+    public int def;
+    public int maxActivePoint;
+    public int nowActivePoint;
+    public int str;
+    public int dex;
+    public int con;
+    public int statusPoint;
     
     public Vector3 playerTransform;
 

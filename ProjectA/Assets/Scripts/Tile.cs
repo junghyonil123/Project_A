@@ -18,7 +18,7 @@ public class Tile : MonoBehaviour
 
     public int numberOfNextBlock;
 
-    public float requiredActivePoint;
+    public int requiredActivePoint;
 
     private void Awake()
     {
