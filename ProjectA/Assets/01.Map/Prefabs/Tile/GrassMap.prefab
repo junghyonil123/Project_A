@@ -118,8 +118,14 @@ MonoBehaviour:
   leftMap: {fileID: 0}
   rightMap: {fileID: 0}
   thisMap: {fileID: 0}
+  tileType: 0
+  tileCreatPercent: 0
+  specialTile: 0
   numberOfNextBlock: 0
   requiredActivePoint: 1
+  spawnMonsterInfoList:
+  - spawnMonster: {fileID: 1077467868353149613, guid: 0ee43ea3adcce8942a62349c7656548b, type: 3}
+    spawnPer: 3
 --- !u!61 &7298704195440187022
 BoxCollider2D:
   m_ObjectHideFlags: 0

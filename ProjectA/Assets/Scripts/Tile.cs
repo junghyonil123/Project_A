@@ -1,6 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+[Serializable]
+public struct SpawnMonsterInfo
+{
+    public GameObject spawnMonster;
+    public float spawnPer;
+}
 
 public class Tile : MonoBehaviour
 {
@@ -20,9 +28,12 @@ public class Tile : MonoBehaviour
 
     public int requiredActivePoint;
 
+    public List<SpawnMonsterInfo> spawnMonsterInfoList = new List<SpawnMonsterInfo>();
+
     private void Awake()
     {
         thisMap = gameObject;
+        MonsterSpawn();
     }
 
     private void Update()
@@ -38,6 +49,18 @@ public class Tile : MonoBehaviour
     //        gameObject.SetActive(false);
     //    }
     //}
+
+    public void MonsterSpawn()
+    {
+        for (int i = 0; i < spawnMonsterInfoList.Count; i++)
+        { 
+            if (spawnMonsterInfoList[i].spawnPer >= UnityEngine.Random.Range(1 , 101))
+            {
+                Debug.Log("½ºÆùµÊ");
+                Instantiate(spawnMonsterInfoList[i].spawnMonster, this.transform);  
+            }
+        }
+    }
 
     public float returnDeltaX()
     {
