@@ -174,8 +174,8 @@ public class BattleManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 GiveDropItemToPlayer();
-
                 battleCanvas.SetActive(false);
+                yield break;
             }
 
             yield return null;
