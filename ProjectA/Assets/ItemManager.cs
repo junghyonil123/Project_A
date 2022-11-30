@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct ItemEffect{
+
+}
+
 public class ItemManager : MonoBehaviour
 {
 
@@ -57,5 +61,19 @@ public class ItemManager : MonoBehaviour
 
     public List<Item> itemLibrary = new List<Item>();
 
+    #region WeaponEffectList
 
+    public int WeaponEffect_0(ref int atk)
+    {
+        Debug.Log("WeaponEffect_1 발동");
+        return atk += 2;
+    }
+
+    public int WeaponEffect_1(ref int atk)
+    {
+        Debug.Log("SkillEffect_2 발동");
+        return atk + 3;
+    }
+
+    #endregion
 }

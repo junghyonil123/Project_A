@@ -602,6 +602,7 @@ Transform:
   - {fileID: 1196318144}
   - {fileID: 1075351554}
   - {fileID: 93527161}
+  - {fileID: 950067122}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7121,6 +7122,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935109353}
   m_CullTransparentMesh: 1
+--- !u!1 &950067121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 950067122}
+  - component: {fileID: 950067123}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &950067122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950067121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 128859268}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &950067123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950067121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332f4d7ce7d1a704c86ddf457adc3002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemLibrary: []
 --- !u!1 &959236028
 GameObject:
   m_ObjectHideFlags: 0
@@ -14658,7 +14703,13 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 834a1a067beadae4d8548fd97179cadd, type: 3}
   itmeType: 0
   itemNumber: 0
-  itemStatus: 0
+  itemStatus:
+    itemAtk: 0
+    itemDef: 0
+    itemHp: 0
+    itemStr: 0
+    itemDex: 0
+    itemCon: 0
   itmeExplanation: "\uD3C9\uBC94\uD55C\uAC80\uC774\uB2E4 \uC0AC\uB78C\uC744 \uB4A4\uC5D0\uC11C\uCC0C\uB974\uBA74
     \uD55C\uBC29\uC5D0 \uBCF4\uB0BC \uC218 \uB3C4\uC788\uACE0 \uBABB\uBCF4\uB0BC
     \uC218 \uB3C4 \uC788\uB530."

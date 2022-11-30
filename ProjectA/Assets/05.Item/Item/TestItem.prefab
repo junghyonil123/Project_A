@@ -96,10 +96,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29dc5517e46fa7c4a906a5ea88b220b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itmeName: 
+  itmeName: "\uD3C9\uBC94\uD55C\uAC80"
   itemSprite: {fileID: 21300000, guid: 834a1a067beadae4d8548fd97179cadd, type: 3}
   itmeType: 0
-  itemStatus: 0
+  itemNumber: 0
+  itemStatus:
+    itemAtk: 5
+    itemDef: 0
+    itemHp: 0
+    itemStr: 0
+    itemDex: 0
+    itemCon: 0
   itmeExplanation: "\uD3C9\uBC94\uD55C\uAC80\uC774\uB2E4 \uC0AC\uB78C\uC744 \uB4A4\uC5D0\uC11C\uCC0C\uB974\uBA74
     \uD55C\uBC29\uC5D0 \uBCF4\uB0BC \uC218 \uB3C4\uC788\uACE0 \uBABB\uBCF4\uB0BC
     \uC218 \uB3C4 \uC788\uB530."

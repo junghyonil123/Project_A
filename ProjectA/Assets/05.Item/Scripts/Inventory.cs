@@ -128,7 +128,7 @@ public class Inventory : MonoBehaviour
         itemImage.sprite = item.itemSprite;
         nameText.text = item.itmeName;
         typeText.text = ReturnItemType(item.itmeType);
-        abilityText.text = "공격력: " + item.itemStatus;
+        abilityText.text = "공격력: " + item.itemStatus.itemAtk;
         explanationText.text = item.itmeExplanation;
     }
 
@@ -158,7 +158,8 @@ public class Inventory : MonoBehaviour
     {
         //아이템 장착
         equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
-        ItemExplanation(nowSelectSlot.item , true);
+        nowSelectSlot.item.AddStatus();
+        ItemExplanation(nowSelectSlot.item, true);
         nowSelectSlot.DeleteItem();
         nowSelectSlot = equipSlot;
         explanationCanvas.SetActive(false);
@@ -167,6 +168,7 @@ public class Inventory : MonoBehaviour
     public void UnEquipItem()
     {
         GetItem(nowSelectSlot.item);
+        nowSelectSlot.item.SubtractStatus();
         ItemExplanation(nowSelectSlot.item, false);
         explanationWindow.SetActive(true);
         nowSelectSlot.DeleteItem();
