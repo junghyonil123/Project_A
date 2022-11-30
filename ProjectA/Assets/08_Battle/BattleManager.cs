@@ -124,7 +124,7 @@ public class BattleManager : MonoBehaviour
 
     private void PlayerAttack()
     {
-        int damage = player.atk - enemy.def;
+        int damage = player.GetPlayerAtk() - enemy.def;
 
         if (damage <= 0)
         {

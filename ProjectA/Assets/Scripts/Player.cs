@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : Unit
 {
@@ -45,7 +46,11 @@ public class Player : Unit
     }
     #endregion
 
-    public StatusCanvas statuscanvas;
+    public delegate int AttackSkill(ref int atk);
+    public AttackSkill AttackSkillDelegate;
+    
+    
+    public StatusCanvas statusCanvs;
 
     public bool isCanMove=true;
     public bool isFinishBattle = false;
@@ -123,8 +128,8 @@ public class Player : Unit
 
     public void Start()
     {
-        SetStatus();
         ResetHp();
+        SetStatus();
         PlayerPosionRay();
         ResetActivePoint();
     }
@@ -148,10 +153,10 @@ public class Player : Unit
             BattleManager.Instance.BattelStart(collision.gameObject.GetComponent<Enemy>());
         }
     }
-
+        
     void PlayerMove()
     {
-        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statuscanvas.isOpenCanvas)
+        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statusCanvs.isOpenCanvas)
         {
             isCanSave = true;
             isCanMove = false;
@@ -243,4 +248,19 @@ public class Player : Unit
     {
         Debug.Log("주것습니다.");
     } //Die
+
+    public int battelAtk;
+
+    public int GetPlayerAtk()
+    {
+        battelAtk = atk; 
+        Debug.Log(AttackSkillDelegate);
+        
+        if (AttackSkillDelegate != null)
+        {
+            AttackSkillDelegate(ref battelAtk); //battleAtk에 모든 스킬을 적용 시킨후 리턴함
+        }
+
+        return battelAtk;
+    }
 }
