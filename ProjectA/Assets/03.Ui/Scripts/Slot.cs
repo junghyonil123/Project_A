@@ -23,7 +23,6 @@ public class Slot : MonoBehaviour
 
     public virtual void DeleteItem()
     {
-        Debug.Log("지워졌습니다");
         itemImage.sprite = null;
         itemImage.gameObject.SetActive(false);
         item = null;

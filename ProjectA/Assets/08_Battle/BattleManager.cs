@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour
     public GameObject playerBattleHpBar;
     public GameObject EnemyBattleHpBar;
 
+    public DamageText damageText;
+
     public List<Slot> finishCanvasSlotList = new List<Slot>();
 
     #region Singleton
@@ -126,12 +128,15 @@ public class BattleManager : MonoBehaviour
     {
         int damage = player.GetPlayerAtk() - enemy.def;
 
+
         if (damage <= 0)
         {
             damage = 1;
         }
 
         enemy.nowHp -= damage;
+
+        damageText.PlayerDamageTextFallDown(damage);
 
         SetBattleHpBar();
 
@@ -148,6 +153,8 @@ public class BattleManager : MonoBehaviour
 
         player.nowHp -= damage;
 
+        damageText.EnemyDamageTextFallDown(damage);
+
         SetBattleHpBar();
 
     } //몬스터의 공격
@@ -161,7 +168,6 @@ public class BattleManager : MonoBehaviour
             StartCoroutine(BattleFinish());
             return true;
         }
-
         return false;
     } //_unit이 죽었는지 확인
 
@@ -208,7 +214,7 @@ public class BattleManager : MonoBehaviour
     
     public void GiveDropItemToPlayer()
     {
-        foreach (var slot in finishCanvasSlotList)
+        foreach (var slot in finishCanvasSlotList) //인벤토리에 모든 아이템을 집어넣음
         {
             if (slot.item != null)
             {
@@ -216,6 +222,15 @@ public class BattleManager : MonoBehaviour
                 Player.Instance.GetItem(slot.item);
             }
         }
+
+        foreach (var slot in finishCanvasSlotList) //BattelCanvas의 Slot에 있는 아이템들은 모두 삭제함
+        {
+            if (slot.item != null)
+            {
+                slot.DeleteItem();
+            }
+        }
+
     } //FinishCanvas의 아이템을 플레이어 인벤토리로 넣어줌
 }
     

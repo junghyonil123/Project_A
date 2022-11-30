@@ -149,6 +149,8 @@ MonoBehaviour:
   specialTile: 0
   numberOfNextBlock: 0
   requiredActivePoint: 1
+  canNotSpawnMonster: 0
+  spawnMonsterInfoList: []
 --- !u!114 &95124099305742165
 MonoBehaviour:
   m_ObjectHideFlags: 0

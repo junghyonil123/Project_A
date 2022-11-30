@@ -128,8 +128,8 @@ public class Player : Unit
 
     public void Start()
     {
-        ResetHp();
         SetStatus();
+        ResetHp();
         PlayerPosionRay();
         ResetActivePoint();
     }
@@ -247,6 +247,7 @@ public class Player : Unit
     public override void Die()
     {
         Debug.Log("주것습니다.");
+        GameManager.Instance.GameOver();
     } //Die
 
     public int battelAtk;
@@ -260,6 +261,8 @@ public class Player : Unit
         {
             AttackSkillDelegate(ref battelAtk); //battleAtk에 모든 스킬을 적용 시킨후 리턴함
         }
+
+        Debug.Log(battelAtk);
 
         return battelAtk;
     }

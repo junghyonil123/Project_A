@@ -148,3 +148,5 @@ MonoBehaviour:
   specialTile: 1
   numberOfNextBlock: 0
   requiredActivePoint: 2
+  canNotSpawnMonster: 0
+  spawnMonsterInfoList: []

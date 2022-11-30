@@ -47,6 +47,7 @@ public class Enemy : Unit
     public override void Die()
     {
         Debug.Log("적이 죽었습니다");
-        Drop();
+        Drop(); //아이템드롭
+        Destroy(this.gameObject); //삭제
     }
 }

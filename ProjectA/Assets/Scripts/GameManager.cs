@@ -32,4 +32,11 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    [SerializeField]
+    private GameObject GameOverCanvas;
+
+    public void GameOver()
+    {
+        GameOverCanvas.SetActive(true);
+    }
 }

@@ -123,6 +123,7 @@ MonoBehaviour:
   specialTile: 0
   numberOfNextBlock: 0
   requiredActivePoint: 1
+  canNotSpawnMonster: 0
   spawnMonsterInfoList:
   - spawnMonster: {fileID: 1077467868353149613, guid: 0ee43ea3adcce8942a62349c7656548b, type: 3}
     spawnPer: 3

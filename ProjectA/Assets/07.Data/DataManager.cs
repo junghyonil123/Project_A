@@ -86,12 +86,12 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    public bool isLoadFinish = false; //로딩이 끝나면 true가되는 플래그
+    public bool isLoadFinish = true; //로딩이 끝나면 true가되는 플래그
 
     void Start()
     {
-        isLoadFinish = false;
-        LoadData();
+        //isLoadFinish = false;
+        //LoadData();
     }
 
     #region playerData

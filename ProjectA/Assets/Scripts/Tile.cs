@@ -12,11 +12,11 @@ public struct SpawnMonsterInfo
 
 public class Tile : MonoBehaviour
 {
-    public GameObject topMap;
-    public GameObject bottomMap;
-    public GameObject leftMap;
-    public GameObject rightMap;
-    public GameObject thisMap;
+    [HideInInspector] public GameObject topMap;
+    [HideInInspector] public GameObject bottomMap;
+    [HideInInspector] public GameObject leftMap;
+    [HideInInspector] public GameObject rightMap;
+    [HideInInspector] public GameObject thisMap;
 
     public int tileType;
 
@@ -28,30 +28,53 @@ public class Tile : MonoBehaviour
 
     public int requiredActivePoint;
 
+    public bool canNotSpawnMonster;
+
     public List<SpawnMonsterInfo> spawnMonsterInfoList = new List<SpawnMonsterInfo>();
 
     private void Awake()
     {
         thisMap = gameObject;
         MonsterSpawn();
+        //TileLock();
     }
 
     private void Update()
     {
-        //SetMapActive();
+        //TileUnLock();
         CreatMap();
     }
 
-    //public void SetMapActive()
+    private SpriteRenderer[] spriteRenderer;
+
+    //public void TileLock()
     //{
-    //    if (returnDeltaX() >= 20 || returnDeltaY() >= 20)
+    //    spriteRenderer = gameObject.GetComponentsInChildren<SpriteRenderer>();
+
+    //    for (int i = 0; i < spriteRenderer.Length; i++)
     //    {
-    //        gameObject.SetActive(false);
+    //        spriteRenderer[i].color = new Color(0f, 0f, 0f);
+    //    }
+    //}
+
+    //public void TileUnLock()
+    //{
+    //    if (returnDeltaX() <= 5 && returnDeltaY() <= 5)
+    //    {
+    //        for (int i = 0; i < spriteRenderer.Length; i++)
+    //        {
+    //            spriteRenderer[i].color = new Color(255f, 255f, 255f);
+    //        }
     //    }
     //}
 
     public void MonsterSpawn()
     {
+        if (canNotSpawnMonster)
+        {
+            return;
+        }
+
         for (int i = 0; i < spawnMonsterInfoList.Count; i++)
         { 
             if (spawnMonsterInfoList[i].spawnPer >= UnityEngine.Random.Range(1 , 101))
