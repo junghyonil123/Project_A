@@ -10,6 +10,13 @@ public struct SpawnMonsterInfo
     public float spawnPer;
 }
 
+[Serializable]
+public struct NightMonsterInfo
+{
+    public GameObject spawnMonster;
+    public float spawnPer;
+}
+
 public class Tile : MonoBehaviour
 {
     [HideInInspector] public GameObject topMap;
@@ -31,6 +38,7 @@ public class Tile : MonoBehaviour
     public bool canNotSpawnMonster;
 
     public List<SpawnMonsterInfo> spawnMonsterInfoList = new List<SpawnMonsterInfo>();
+    public List<NightMonsterInfo> nightMonsterInfoList = new List<NightMonsterInfo>();
 
     private void Awake()
     {
@@ -81,6 +89,32 @@ public class Tile : MonoBehaviour
             {
                 Debug.Log("Ω∫∆˘µ ");
                 Instantiate(spawnMonsterInfoList[i].spawnMonster, this.transform);  
+            }
+        }
+    }
+
+    public void NightMonsterSpawn()
+    {
+        Debug.Log("π„¿Ã¥Ÿπ„¿Ãæﬂ≤•æ∆æ«");
+
+        if (gameObject.GetComponentInChildren<Enemy>() != null)
+        {
+            Debug.Log(gameObject.GetComponentInChildren<Enemy>());
+            //≈∏¿œø° ∏ÛΩ∫≈Õ∞° ¡∏¿Á«‘
+            return;
+        }
+
+        if (canNotSpawnMonster)
+        {
+            return;
+        }
+
+        for (int i = 0; i < nightMonsterInfoList.Count; i++)
+        {
+            if (nightMonsterInfoList[i].spawnPer >= UnityEngine.Random.Range(1, 101))
+            {
+                Debug.Log("Ω∫∆˘µ ");
+                Instantiate(nightMonsterInfoList[i].spawnMonster, this.transform);
             }
         }
     }

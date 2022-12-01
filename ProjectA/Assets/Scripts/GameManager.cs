@@ -72,6 +72,18 @@ public class GameManager : MonoBehaviour
         
     }
 
+    Tile[] maps;
+
+    private void SpawnNightMonster()
+    {
+        maps = MapManager.Instance.transform.GetComponentsInChildren<Tile>();
+
+        for (int i = 0; i < maps.Length; i++)
+        {
+            maps[i].SendMessage("NightMonsterSpawn");
+        }
+    }
+
     public void Be_A_Night()
     {
         isNight = true;
@@ -96,6 +108,7 @@ public class GameManager : MonoBehaviour
             nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i/200f);
             yield return nightTransferTime;
         }
+        SpawnNightMonster();
     }// sprite의 알파값을 조정해 2초에 걸쳐 밤으로 만들어 주는 코루틴
 
     IEnumerator ItsMorning()
