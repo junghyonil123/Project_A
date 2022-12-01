@@ -115,7 +115,6 @@ public class Player : Unit
         }
     }
 
-
     public void ResetHp()
     {
         this.nowHp = this.maxHp;
@@ -153,7 +152,10 @@ public class Player : Unit
             BattleManager.Instance.BattelStart(collision.gameObject.GetComponent<Enemy>());
         }
     }
-        
+
+    RaycastHit2D hitObject;
+    Tile hitTile;
+
     void PlayerMove()
     {
         if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statusCanvs.isOpenCanvas)
@@ -161,53 +163,26 @@ public class Player : Unit
             isCanSave = true;
             isCanMove = false;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);    //마우스 위치로 ray발사
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
-            Tile hitTile = hit.transform.GetComponent<Tile>();
-            if (!hit)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
-                return;
+            ClickTile();
 
-            if (hit.transform.position.x < transform.position.x)
-            {
-                //플레이어가 왼쪽으로 간다면 플레이어를 왼쪽을 바라보도록 뒤집어줌
-                if (transform.localScale.x > 0)
-                {
-                    transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-                }
-            }
-            else
-            {
-                if (transform.localScale.x < 0)
-                {
-                    transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-                }
-            }
+            PlayerFlip();
 
-            if (hit.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
+            if (hitObject.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
             {
-                nowStandingTile = hit.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
-                playerAnimator.SetBool("Walk", true);
-                nowActivePoint -= hitTile.requiredActivePoint;
+                SetMoveTile();
             }
-            else if (hit.transform == nowStandingTile.GetComponent<Tile>().bottomMap.transform)
+            else if (hitObject.transform == nowStandingTile.GetComponent<Tile>().bottomMap.transform)
             {
-                nowStandingTile = hit.transform;  
-                playerAnimator.SetBool("Walk", true);
-                nowActivePoint -= hitTile.requiredActivePoint;
+                SetMoveTile();
             }
-            else if(hit.transform == nowStandingTile.GetComponent<Tile>().leftMap.transform)
+            else if(hitObject.transform == nowStandingTile.GetComponent<Tile>().leftMap.transform)
             {
-                nowStandingTile = hit.transform; 
-                playerAnimator.SetBool("Walk", true);
-                nowActivePoint -= hitTile.requiredActivePoint;
+                SetMoveTile();
             }
-            else if(hit.transform == nowStandingTile.GetComponent<Tile>().rightMap.transform)
+            else if(hitObject.transform == nowStandingTile.GetComponent<Tile>().rightMap.transform)
             {
-                nowStandingTile = hit.transform;  
-                playerAnimator.SetBool("Walk", true);
-                nowActivePoint -= hitTile.requiredActivePoint;
+                SetMoveTile();
             }
-
         }
         else if (nowStandingTile == null)
         {
@@ -219,7 +194,7 @@ public class Player : Unit
                 isCanMove = true;
         }
 
-            transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
         if (transform.position == nowStandingTile.position)
         { //이동이끝났음
@@ -235,6 +210,40 @@ public class Player : Unit
         }
     } //플레이어 움직이기
 
+    void ClickTile()
+    {
+        hitObject = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
+        hitTile = hitObject.transform.GetComponent<Tile>();
+        if (!hitObject)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
+            return;
+    }
+
+    void PlayerFlip()
+    {
+        if (hitObject.transform.position.x < transform.position.x)
+        {
+            //플레이어가 왼쪽으로 간다면 플레이어를 왼쪽을 바라보도록 뒤집어줌
+            if (transform.localScale.x > 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            }
+        }
+        else
+        {
+            if (transform.localScale.x < 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            }
+        }
+    }
+
+    void SetMoveTile()
+    {
+        nowStandingTile = hitObject.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
+        playerAnimator.SetBool("Walk", true);
+        nowActivePoint -= hitTile.requiredActivePoint;
+    }
+
     public void PlayerPosionRay()
     {
         RaycastHit2D hitInfo;
@@ -243,6 +252,8 @@ public class Player : Unit
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
     } //플레이어의 현재위치 체크
+
+
 
     public override void Die()
     {
