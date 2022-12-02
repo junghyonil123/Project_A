@@ -5,9 +5,11 @@ using UnityEngine;
 public class MainCanvas : MonoBehaviour
 {
     public GameObject playerActivePoint;
-    public GameObject playerHp;
+    public GameObject playerHpPoint;
+    public GameObject playerExpPoint;
     private float playerActivePointPer;
     private float playerHpPer;
+    private float playerExpPer;
 
     #region singleton
     private static MainCanvas instance = null;
@@ -42,7 +44,11 @@ public class MainCanvas : MonoBehaviour
         //플레이어의 행동력을 Ui형태로 보여줌
         playerActivePointPer = (float)Player.Instance.nowActivePoint / Player.Instance.maxActivePoint;
         playerActivePoint.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 150 * playerActivePointPer);
+
         playerHpPer = (float)Player.Instance.nowHp / Player.Instance.maxHp;
-        playerHp.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 150 * playerHpPer);
+        playerHpPoint.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 150 * playerHpPer);
+        
+        playerExpPer = (float)Player.Instance.curExp / Player.Instance.maxExp;
+        playerExpPoint.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(0, 252 * playerExpPer);
     }
 }

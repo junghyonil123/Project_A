@@ -104,7 +104,7 @@ MonoBehaviour:
   def: 1
   portrait: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  dropExp: 10
+  dropExp: 3
   dropGold: 100
   number: 0
   dropItemInfo:

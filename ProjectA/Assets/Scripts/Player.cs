@@ -69,8 +69,8 @@ public class Player : Unit
     public int statusPoint;
     public int lv;
 
-    private int maxExp = 10;
-    private int curExp;
+    public int maxExp = 10;
+    public int curExp = 0;
     private int gold;
 
     public Animator playerAnimator;
