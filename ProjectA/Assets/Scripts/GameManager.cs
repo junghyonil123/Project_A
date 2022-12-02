@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum InfoType
+{
+    moveCount,
+    monsterKillCount,
+}
+
 public class GameManager : MonoBehaviour
-{ 
+{
     #region singleton
     private static GameManager instance = null;
 
@@ -13,7 +19,6 @@ public class GameManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
@@ -40,9 +45,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine("CheckPlayerActivePoint");
     }
 
-    [SerializeField]
-    private SpriteRenderer nightSprite;
-    
+    public int openedUiCount = 0;
 
     [SerializeField]
     private GameObject gameOverCanvas;
@@ -51,6 +54,11 @@ public class GameManager : MonoBehaviour
     {
         gameOverCanvas.SetActive(true);
     }
+
+    #region SetDay
+
+    [SerializeField]
+    private SpriteRenderer nightSprite;
 
     IEnumerator CheckPlayerActivePoint()
     {
@@ -69,7 +77,7 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
-        
+
     }
 
     Tile[] maps;
@@ -104,8 +112,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i <= 200; i++)
         {
-            Debug.Log("itsNoght!");
-            nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i/200f);
+            nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i / 200f);
             yield return nightTransferTime;
         }
         SpawnNightMonster();
@@ -115,10 +122,37 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 200; i >= 0; i--)
         {
-            Debug.Log("itsMorning!" + i);
-            nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i/200f);
+            nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i / 200f);
             yield return nightTransferTime;
         }
     }// sprite의 알파값을 조정해 2초에 걸쳐 낮으로 만들어 주는 코루틴
 
+    #endregion
+
+    #region PlayerInfo
+
+    public void getInfo(InfoType infoType, int value)
+    {
+        switch (infoType)
+        {
+            case InfoType.moveCount:
+                _moveCount += value;
+                break;
+            case InfoType.monsterKillCount:
+                _monsterKillCount += value;
+                break;
+            default:
+                break;
+        }
+
+        SkillManager.Instance.CheckSkillUnlock(); //정보 저장이 끝나면 스킬이 개방 되었나확인
+    }
+
+    private int _moveCount;
+    public int moveCount { get { return _moveCount; } }
+
+    private int _monsterKillCount;
+    public int monsterKillCount { get { return _monsterKillCount; } }
+    
+    #endregion
 }

@@ -87,7 +87,6 @@ public class Tile : MonoBehaviour
         { 
             if (spawnMonsterInfoList[i].spawnPer >= UnityEngine.Random.Range(1 , 101))
             {
-                Debug.Log("½ºÆùµÊ");
                 Instantiate(spawnMonsterInfoList[i].spawnMonster, this.transform);  
             }
         }

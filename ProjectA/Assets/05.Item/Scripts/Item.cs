@@ -8,8 +8,9 @@ public enum ItemType
 {
     Weapon,
     Head,
-    Glove,
+    SubWeapon,
     Armo,
+    Shoes,
     ConsumableItme,
     Material
 }
@@ -35,9 +36,7 @@ public class Item : MonoBehaviour
     public ItemStatus itemStatus;
     public string itmeExplanation;
      
-    
-
-    public void AddStatus()
+    public void EquiptItem()
     {
         //플레이어의 공격력만 더해줌
         Player.Instance.atk += itemStatus.itemAtk;
@@ -46,9 +45,10 @@ public class Item : MonoBehaviour
         Player.Instance.str += itemStatus.itemStr;
         Player.Instance.def += itemStatus.itemDef;
         Player.Instance.con += itemStatus.itemCon;
+        StatusCanvas.Instance.SetStatus();
     }
 
-    public void SubtractStatus()
+    public void UnEquiptItem()
     {
         Player.Instance.atk -= itemStatus.itemAtk;
         Player.Instance.def -= itemStatus.itemDef;
@@ -56,6 +56,7 @@ public class Item : MonoBehaviour
         Player.Instance.str -= itemStatus.itemStr;
         Player.Instance.def -= itemStatus.itemDef;
         Player.Instance.con -= itemStatus.itemCon;
+        StatusCanvas.Instance.SetStatus();
     }
 }
 

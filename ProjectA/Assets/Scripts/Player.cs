@@ -158,12 +158,15 @@ public class Player : Unit
 
     void PlayerMove()
     {
-        if (Input.GetMouseButtonUp(0) && isCanMove && nowActivePoint != 0 && statusCanvs.isOpenCanvas)
+        if (GameManager.Instance.openedUiCount == 0 && Input.GetMouseButtonDown(0) && isCanMove && nowActivePoint != 0)
         {
             isCanSave = true;
             isCanMove = false;
 
-            ClickTile();
+            if (!ClickTile())
+            {
+                return;
+            }
 
             PlayerFlip();
 
@@ -183,10 +186,13 @@ public class Player : Unit
             {
                 SetMoveTile();
             }
-        }
-        else if (nowStandingTile == null)
-        {
-            return;
+            else
+            {
+                return;
+            }
+
+            StartCoroutine("Move");
+
         }
         else
         {
@@ -194,28 +200,37 @@ public class Player : Unit
                 isCanMove = true;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, nowStandingTile.position, speed * Time.deltaTime);
 
-        if (transform.position == nowStandingTile.position)
-        { //이동이끝났음
-            playerAnimator.SetBool("Walk", false);
-
-            if (isCanSave)
-            {
-                //한번 이동할 때 마다 데이터를 저장해줌
-                DataManager.Instance.SaveData();
-
-                isCanSave = false;
-            }
-        }
     } //플레이어 움직이기
 
-    void ClickTile()
+    IEnumerator Move()
+    {
+        while (transform.position != nowStandingTile.position)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, hitObject.transform.position, speed * Time.deltaTime);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        MoveFinish();
+    }
+
+    void MoveFinish()
+    {
+        playerAnimator.SetBool("Walk", false);
+        GameManager.Instance.getInfo(InfoType.moveCount , 1);
+        DataManager.Instance.SaveData();
+    }
+
+    bool ClickTile()
     {
         hitObject = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
         hitTile = hitObject.transform.GetComponent<Tile>();
-        if (!hitObject)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
-            return;
+
+
+        if (!hitObject || hitTile.transform.position == nowStandingTile.position)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
+            return false;
+
+        return true;
     }
 
     void PlayerFlip()

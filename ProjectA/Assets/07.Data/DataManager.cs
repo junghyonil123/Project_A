@@ -78,7 +78,6 @@ public class DataManager : MonoBehaviour
             return;
         }
 
-        DontDestroyOnLoad(gameObject); //씬을 전환할때 파괴되는것을 막음
 
         playerDataPath = Application.persistentDataPath + "/" + "PlayerData";
         mapDataPath = Application.persistentDataPath + "/" + "mapData";

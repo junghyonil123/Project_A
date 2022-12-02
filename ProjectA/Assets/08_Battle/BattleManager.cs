@@ -88,6 +88,7 @@ public class BattleManager : MonoBehaviour
 
         battelPlayer.transform.GetChild(0).GetComponent<Image>().sprite = player.GetComponent<SpriteRenderer>().sprite; //움직이는 분신 세팅
         battelEnemy.transform.GetChild(0).GetComponent<Image>().sprite = enemy.GetComponent<SpriteRenderer>().sprite;
+        battelEnemy.transform.GetChild(0).GetComponent<Image>().color = enemy.GetComponent<SpriteRenderer>().color;
     }
 
     IEnumerator Battle()

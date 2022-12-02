@@ -55,32 +55,33 @@ public class Inventory : MonoBehaviour
     public GameObject dropItemButton;
     public GameObject equipItemButton;
     public GameObject unEpuipItemButton;
-    public GameObject explanationCanvas;
 
     public Image itemImage;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI typeText;
     public TextMeshProUGUI abilityText;
     public TextMeshProUGUI explanationText;
-
+    
     public Slot nowSelectSlot;
-
-    public void GetItem(Item item)
+     
+    public Slot GetItem(Item item)
     {
         foreach (GameObject slot in inventoryList)
         {
             if (slot.GetComponent<Slot>().item == null)
             {
                 slot.GetComponent<Slot>().SetItem(item);
-                break;
+                return slot.GetComponent<Slot>();
             }
         }
+
+        return null;
     }
 
     public void DropItem()
     {
         nowSelectSlot.DeleteItem();
-        explanationCanvas.SetActive(false);
+        explanationWindow.SetActive(false);
     }
 
     public string ReturnItemType(ItemType itemtype)
@@ -91,10 +92,12 @@ public class Inventory : MonoBehaviour
                 return "Weapon";
             case ItemType.Head:
                 return "Head";
-            case ItemType.Glove:
-                return "Glove";
+            case ItemType.SubWeapon:
+                return "SubWeapon";
             case ItemType.Armo:
                 return "Armo";
+            case ItemType.Shoes:
+                return "Shoes";
             case ItemType.ConsumableItme:
                 return "ConsumableItme";
             case ItemType.Material:
@@ -157,22 +160,16 @@ public class Inventory : MonoBehaviour
     public void EquipItem()
     {
         //아이템 장착
-        equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item);
-        nowSelectSlot.item.AddStatus();
-        ItemExplanation(nowSelectSlot.item, true);
-        nowSelectSlot.DeleteItem();
-        nowSelectSlot = equipSlot;
-        explanationCanvas.SetActive(false);
+        equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item); //아이템을 장착해줌
+        ItemExplanation(nowSelectSlot.item, true); //아이템 설명
+        nowSelectSlot.DeleteItem(); //현재위치의 아이템을 지움
+        nowSelectSlot = equipSlot; //현재위치를 장착한곳으로 변경
     }
 
     public void UnEquipItem()
     {
-        GetItem(nowSelectSlot.item);
-        nowSelectSlot.item.SubtractStatus();
-        ItemExplanation(nowSelectSlot.item, false);
-        explanationWindow.SetActive(true);
-        nowSelectSlot.DeleteItem();
-        nowSelectSlot = unEquipSlot;
-        explanationCanvas.SetActive(false);
+        nowSelectSlot = GetItem(nowSelectSlot.item); //아이템을 얻음
+        EquipmentWindow.Instance.UnEquipItem(nowSelectSlot.item.itmeType);
+        ItemExplanation(nowSelectSlot.item, false); //아이템 설명
     }
 }

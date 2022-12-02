@@ -8,11 +8,14 @@ public enum SkillType{
     OnlyDefence
 }
 
-public class Skill : MonoBehaviour
+public abstract class Skill : MonoBehaviour
 {
     public string skillName;
     public Sprite skillSprite;
     public string skillExplanation;
-    public int skillNumber;
     public SkillType skillType;
+    public bool isUnlock;
+
+    public abstract void SkillEffect();
+    public abstract void SkillUnLock();
 }

@@ -46,90 +46,46 @@ public class SkillManager : MonoBehaviour
     }
     #endregion
 
-    
     public GameObject content;
     public GameObject skillSlot;
     private GameObject newSkill;
 
-
-    public List<Skill> skillList = new List<Skill>();
+    public List<Skill> allSkillList = new List<Skill>();
+    public List<Skill> playerSkillList = new List<Skill>();
 
     public void getSkill(Skill skill)
     {
-        newSkill = Instantiate(skillSlot, content.transform);
-        newSkill.GetComponent<SkillSlot>().SetItem(skill);
+        NoticeCanvas.Instance.NoticeSkill(skill); //스킬 획득 창을 띄움
+        newSkill = Instantiate(skillSlot, content.transform); //스킬슬롯을 스킬창에 하나 추가
+        newSkill.GetComponent<SkillSlot>().SetItem(skill); //추가한 스킬슬롯에 스킬을 저장
 
         switch (skill.skillType)
         {
             case SkillType.Always:
-
-                switch (skill.skillNumber)
-                {
-                    case 1:
-                        break;
-
-                    case 2:
-                        break;
-
-                    default:
-                        break;
-                }
+                skill.SkillEffect();
+                StatusCanvas.Instance.SetStatus();
                 break;
-
             case SkillType.OnlyAttack:
-
-                switch (skill.skillNumber)
-                {
-                    case 0:
-                        Player.Instance.AttackSkillDelegate += SkillEffect_0;
-                        break;
-
-                    case 1:
-                        Player.Instance.AttackSkillDelegate += SkillEffect_1;
-                        break;
-
-                    default:
-                        break;
-                }
                 break;
-
             case SkillType.OnlyDefence:
-
                 break;
             default:
                 break;
         }
+
+        playerSkillList.Add(skill);
     }
 
-    private void Start()
+    public void CheckSkillUnlock()
     {
-        getSkill(skillList[0]);
-    }
-
-
-    private void Update()
-    {
-        
-    }
-
-    private void CheckSkillUnlock()
-    {
-
-    }
-
-    #region AttackSkillList
-
-    public int SkillEffect_0(ref int atk)
-    {
-        Debug.Log("SkillEffect_1 발동");
-        return atk += 2;
-    }
-    
-    public int SkillEffect_1(ref int atk)
-    {
-        Debug.Log("SkillEffect_2 발동");
-        return atk + 3;
-    }
-
-    #endregion
+        //gameManager에 정보가 업데이트 될때마다 체크
+        for (int i = 0; i < allSkillList.Count; i++)
+        {
+            if (playerSkillList.Contains(allSkillList[i]))
+            {
+                continue;
+            }
+            allSkillList[i].SkillUnLock();
+        }
+    }   
 }

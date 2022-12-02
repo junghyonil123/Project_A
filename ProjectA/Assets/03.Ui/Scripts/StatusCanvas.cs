@@ -5,6 +5,48 @@ using TMPro;
 
 public class StatusCanvas : MonoBehaviour
 {
+
+    #region Singleton
+    private static StatusCanvas instance;
+    public static StatusCanvas Instance
+    {
+        get
+        {
+            if (instance == null) //instance 가 존재하지않는다면
+            {
+                var obj = FindObjectOfType<StatusCanvas>(); //Player 타입이 존재하는지 확인
+                if (obj != null)
+                {
+                    instance = obj; //null이 아니라면 instance에 넣어줌
+                }
+                else
+                {
+                    var newBattleManager = new GameObject("StatusCanvas").AddComponent<StatusCanvas>(); //null이라면 새로만들어줌
+                    instance = newBattleManager;
+                }
+            }
+            return instance;
+        }
+        private set
+        {
+            instance = value;
+        }
+    }
+
+    private void Awake()
+    {
+        ////생성과 동시에 실행되는 Awake는 이미 생성되어있는 싱글톤 오브젝트가 있는지 검사하고 있다면 지금 생성된 오브젝트를 파괴
+
+        var objs = FindObjectsOfType<StatusCanvas>();
+        if (objs.Length != 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+    }
+    #endregion
+
     public GameObject statusWindow;
 
     public TextMeshProUGUI jobText;
@@ -49,6 +91,7 @@ public class StatusCanvas : MonoBehaviour
                 }
             }
         }
+        SetStatus();
     }
 
     public void ProfilWindowOnOff()
@@ -66,7 +109,6 @@ public class StatusCanvas : MonoBehaviour
         WindowOnOff("SkillWindow");
     }
 
-
     public void InventoryWindowOnOff()
     {
         WindowOnOff("InventoryWindow");
@@ -74,11 +116,10 @@ public class StatusCanvas : MonoBehaviour
 
     public void OnOffStatusWindow()
     {
-        Debug.Log(statusWindow.GetComponent<RectTransform>().position.x);
-
         if (!isOpenCanvas)
         {
-            //켜져있다면
+            //켜져있다면 끈다
+            GameManager.Instance.openedUiCount -= 1;
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
             isOpenCanvas = true;
             explanationCanvas.SetActive(false);
@@ -86,18 +127,19 @@ public class StatusCanvas : MonoBehaviour
         }
         else
         {
+            GameManager.Instance.openedUiCount += 1;
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(485, 0, 0));
             isOpenCanvas = false;
         }
-        SetStatusWindow();
+        SetStatus();
     }
 
-    public void SetStatusWindow()
+    public void SetStatus()
     {
-        Player.Instance.SetStatus(); //플레이어의 스탯수치를 계산해줌
+         //플레이어의 스탯수치를 갱신해줌
 
         jobText.text = Player.Instance.job;
-        atkText.text = "공격력 :"+Player.Instance.atk;
+        atkText.text = "공격력 :" +Player.Instance.atk;
         defText.text = "방어력 :" + Player.Instance.def;
         hpText.text = "체력 :" + Player.Instance.nowHp+ "/" + Player.Instance.maxHp;
 
@@ -116,8 +158,9 @@ public class StatusCanvas : MonoBehaviour
         {
             Debug.Log("이프문들어옴");
             Player.Instance.str += 1;
+            Player.Instance.atk += 2;
             Player.Instance.statusPoint -= 1;
-            SetStatusWindow();
+            SetStatus();
         }
     }
 
@@ -126,8 +169,9 @@ public class StatusCanvas : MonoBehaviour
         if (Player.Instance.statusPoint > 0)
         {
             Player.Instance.dex += 1;
+            Player.Instance.def += 1;
             Player.Instance.statusPoint -= 1;
-            SetStatusWindow();
+            SetStatus();
         }
     }
 
@@ -136,8 +180,9 @@ public class StatusCanvas : MonoBehaviour
         if (Player.Instance.statusPoint > 0)
         {
             Player.Instance.con += 1;
+            Player.Instance.maxHp += 5;
             Player.Instance.statusPoint -= 1;
-            SetStatusWindow();
+            SetStatus();
         }
     }
 }

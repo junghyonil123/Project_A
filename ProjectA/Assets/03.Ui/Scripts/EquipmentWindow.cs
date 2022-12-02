@@ -62,8 +62,39 @@ public class EquipmentWindow : MonoBehaviour
         mainWeaponSlot.SetItem(item);
         mainWeaponSlot.itemImage.color = new Color(255, 255, 255, 255);
         mainWeaponSlot.isEquipped = true;
-        item.AddStatus();
+        item.EquiptItem();
         return mainWeaponSlot;
+    }
+
+    public void UnEquipItem(ItemType itemType)
+    {
+
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                mainWeaponSlot.item.UnEquiptItem();
+                mainWeaponSlot.DeleteItem();
+                break;
+            case ItemType.Head:
+                SubWeaponSlot.item.UnEquiptItem();
+                SubWeaponSlot.DeleteItem();
+                break;
+            case ItemType.SubWeapon:
+                mainWeaponSlot.item.UnEquiptItem();
+                mainWeaponSlot.DeleteItem();
+                break;
+            case ItemType.Armo:
+                ArmoSlot.item.UnEquiptItem();
+                ArmoSlot.DeleteItem();
+                break;
+            case ItemType.Shoes:
+                ShoesSlot.item.UnEquiptItem();
+                ShoesSlot.DeleteItem();
+                break;
+            default:
+                break;
+        }
+
     }
 
 }

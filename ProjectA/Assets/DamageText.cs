@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DamageText : MonoBehaviour
+public class DamageText : MonoBehaviour 
 {
-    public TextMeshProUGUI playerDamageText;
     public TextMeshProUGUI enemyDamageText;
+    public TextMeshProUGUI playerDamageText;
 
     public void PlayerDamageTextFallDown(int damage)
     {
