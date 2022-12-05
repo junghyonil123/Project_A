@@ -119,7 +119,7 @@ public class StatusCanvas : MonoBehaviour
         if (!isOpenCanvas)
         {
             //켜져있다면 끈다
-            GameManager.Instance.openedUiCount -= 1;
+            GameManager.Instance.AddUiCount(-1);
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(-485, 0, 0));
             isOpenCanvas = true;
             explanationCanvas.SetActive(false);
@@ -127,7 +127,7 @@ public class StatusCanvas : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.openedUiCount += 1;
+            GameManager.Instance.AddUiCount(1);
             statusWindow.GetComponent<RectTransform>().Translate(new Vector3(485, 0, 0));
             isOpenCanvas = false;
         }

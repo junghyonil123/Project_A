@@ -142,24 +142,25 @@ public class Player : Unit
     {
         if (collision.CompareTag("Item"))
         {
-            GetItem(collision.GetComponent<Item>());
             Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("실행댓습니다");
             BattleManager.Instance.BattelStart(collision.gameObject.GetComponent<Enemy>());
         }
     }
-
+    
     RaycastHit2D hitObject;
+    [SerializeField]
     Tile hitTile;
 
     void PlayerMove()
     {
-        if (GameManager.Instance.openedUiCount == 0 && Input.GetMouseButtonDown(0) && isCanMove && nowActivePoint != 0)
+        if (GameManager.Instance.openedUiCount <= 0 && Input.GetMouseButtonDown(0) && isCanMove && nowActivePoint != 0)
         {
+            Debug.Log(Input.GetMouseButtonDown(0));
+
             isCanSave = true;
             isCanMove = false;
 
@@ -170,19 +171,19 @@ public class Player : Unit
 
             PlayerFlip();
 
-            if (hitObject.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
+            if (hitTile.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
             {
                 SetMoveTile();
             }
-            else if (hitObject.transform == nowStandingTile.GetComponent<Tile>().bottomMap.transform)
+            else if (hitTile.transform == nowStandingTile.GetComponent<Tile>().bottomMap.transform)
             {
                 SetMoveTile();
             }
-            else if(hitObject.transform == nowStandingTile.GetComponent<Tile>().leftMap.transform)
+            else if(hitTile.transform == nowStandingTile.GetComponent<Tile>().leftMap.transform)
             {
                 SetMoveTile();
             }
-            else if(hitObject.transform == nowStandingTile.GetComponent<Tile>().rightMap.transform)
+            else if(hitTile.transform == nowStandingTile.GetComponent<Tile>().rightMap.transform)
             {
                 SetMoveTile();
             }
@@ -218,17 +219,29 @@ public class Player : Unit
     {
         playerAnimator.SetBool("Walk", false);
         GameManager.Instance.getInfo(InfoType.moveCount , 1);
+        GameManager.Instance.CheckPlayerActivePoint();
+
+
+
         DataManager.Instance.SaveData();
     }
 
     bool CheckClick()
     {
         hitObject = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
-        Debug.Log(hitObject);
+        Debug.Log(hitObject.transform);
 
-        hitTile = hitObject.transform.GetComponent<Tile>();
+        if (hitObject.transform.CompareTag("Tile"))
+        {
+            hitTile = hitObject.transform.GetComponent<Tile>();
+        }
+        else
+        {
+            Debug.Log("들어왓어요");
+            hitTile = hitObject.transform.parent.GetComponent<Tile>();
+        }
 
-        if (hitObject.transform.CompareTag("Box") && hitObject.transform.parent == nowStandingTile)
+        if (hitObject.transform.CompareTag("Box") && hitTile.transform == nowStandingTile)
         {
             hitObject.transform.GetComponent<Box>().OpenBox();
         }
@@ -261,6 +274,7 @@ public class Player : Unit
 
     void SetMoveTile()
     {
+        Debug.Log("움직입니다");
         nowStandingTile = hitObject.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
         playerAnimator.SetBool("Walk", true);
         nowActivePoint -= hitTile.requiredActivePoint;
@@ -274,8 +288,6 @@ public class Player : Unit
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1f,0f,0f), transform.forward,0.1f);   //ray에 걸리는 물체 hit에 저장
         nowStandingTile = hit.transform;
     } //플레이어의 현재위치 체크
-
-
 
     public override void Die()
     {
@@ -294,8 +306,6 @@ public class Player : Unit
         {
             AttackSkillDelegate(ref battelAtk); //battleAtk에 모든 스킬을 적용 시킨후 리턴함
         }
-
-        Debug.Log(battelAtk);
 
         return battelAtk;
     }

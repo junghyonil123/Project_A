@@ -67,7 +67,7 @@ public class NoticeCanvas : MonoBehaviour
         {
             if (!noticeBoardList[i].noticeBoard.activeSelf) //가장 첫번째 보드부터 확인해서 꺼져있다면 킴
             {
-                GameManager.Instance.openedUiCount += 1; //Ui가 켜질때 Ui카운트를 하나올림
+                GameManager.Instance.AddUiCount(1);  //Ui가 켜질때 Ui카운트를 하나올림
                 noticeBoardList[i].noticeBoard.SetActive(true);
                 noticeBoardList[i].itemImage.sprite = skill.skillSprite;
                 noticeBoardList[i].itemName.text = skill.skillName;
@@ -87,7 +87,7 @@ public class NoticeCanvas : MonoBehaviour
                 
                 if (i == 0)
                 {
-                    GameManager.Instance.openedUiCount -= 1;
+                    GameManager.Instance.AddUiCount(-1);
                 }
 
                 break;

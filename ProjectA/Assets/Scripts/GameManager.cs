@@ -45,7 +45,27 @@ public class GameManager : MonoBehaviour
         StartCoroutine("CheckPlayerActivePoint");
     }
 
-    public int openedUiCount = 0;
+    [SerializeField]
+    private int _openedUiCount = 0;
+
+    public int openedUiCount
+    {
+        get { return _openedUiCount; }
+    }
+
+    public void AddUiCount(int amount)
+    {
+        _openedUiCount += amount;
+
+        if (_openedUiCount > 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
 
     [SerializeField]
     private GameObject gameOverCanvas;
@@ -60,22 +80,18 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer nightSprite;
 
-    IEnumerator CheckPlayerActivePoint()
+    public void CheckPlayerActivePoint()
     {
-        while (true)
+        if (Player.Instance.nowActivePoint <= 0)
         {
-            if (Player.Instance.nowActivePoint <= 0)
+            if (isNight)
             {
-                if (isNight)
-                {
-                    Be_A_Morning();
-                }
-                else if (!isNight)
-                {
-                    Be_A_Night();
-                }
+                Be_A_Morning();
             }
-            yield return null;
+            else if (!isNight)
+            {
+                Be_A_Night();
+            }
         }
 
     }

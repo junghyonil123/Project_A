@@ -19,10 +19,10 @@ public struct NightMonsterInfo
 
 public class Tile : MonoBehaviour
 {
-    [HideInInspector] public GameObject topMap;
-    [HideInInspector] public GameObject bottomMap;
-    [HideInInspector] public GameObject leftMap;
-    [HideInInspector] public GameObject rightMap;
+    public GameObject topMap;
+    public GameObject bottomMap;
+    public GameObject leftMap;
+    public GameObject rightMap;
     [HideInInspector] public GameObject thisMap;
 
     public int tileType;
@@ -45,12 +45,13 @@ public class Tile : MonoBehaviour
         thisMap = gameObject;
         MonsterSpawn();
         //TileLock();
+        CreatMap();
     }
 
     private void Update()
     {
         //TileUnLock();
-        CreatMap();
+        //CreatMap();
     }
 
     private SpriteRenderer[] spriteRenderer;
@@ -94,7 +95,6 @@ public class Tile : MonoBehaviour
 
     public void NightMonsterSpawn()
     {
-        Debug.Log("밤이다밤이야꺄아악");
 
         if (gameObject.GetComponentInChildren<Enemy>() != null)
         {
@@ -112,7 +112,6 @@ public class Tile : MonoBehaviour
         {
             if (nightMonsterInfoList[i].spawnPer >= UnityEngine.Random.Range(1, 101))
             {
-                Debug.Log("스폰됨");
                 Instantiate(nightMonsterInfoList[i].spawnMonster, this.transform);
             }
         }
@@ -143,104 +142,55 @@ public class Tile : MonoBehaviour
         return deltaY;
     }
 
+
+    private RaycastHit2D hitInfo;
+    private Tile otherTile;
+   
     private void CreatMap()
     {
         if (returnDeltaX() <= 15 && returnDeltaY() <= 10)
         {
             //플레이어와 맵의 위치 차이가 x,y 축으로 20이상 나지 않는다면 맵을 생성
-            CreatTopMap();
-            CreatBottomMap();
-            CreatRightMap();
-            CreatLeftMap();
+            CreatXMap(ref leftMap, -3, 0);
+            CreatXMap(ref rightMap, 3, 0);
+            CreatXMap(ref topMap, 0, 3);
+            CreatXMap(ref bottomMap, 0, -3);
         }
     }
 
-    private void CreatTopMap()
+    public void CreatXMap(ref GameObject xMap , int xAdd , int yAdd) // xMap에 맵을 저장 혹은 생성
     {
-
-        RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 3), this.transform.up, 0.1f);
-
-        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
+        if (CheckTile(xAdd, yAdd))
         {
             // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
-            topMap = hitInfo.transform.gameObject;
+            xMap = hitInfo.transform.gameObject;
         }
-        else if(topMap != null)
+        //else if(xMap != null)
+        //{   // 맵은 비어있지만 topMap 저장된 타일이 있다면 (현재는 플레이어가 멀어져도 맵을 지우지 않기에 사용하지 않는 기능)
+        //    xMap.SetActive(true);   
+        //}
+        else
         {
-            // 맵은 비어있지만 topMap 저장된 타일이 있다면
-            topMap.SetActive(true);
+            xMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x + xAdd, transform.position.y + yAdd), numberOfNextBlock, thisMap);
+        }
+    }
+
+    public bool CheckTile(int xAdd, int yAdd) // 타일이 있다면 true 없다면 false
+    {
+        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x + xAdd, transform.position.y + yAdd), this.transform.up, 0.1f);
+
+        if (!hitInfo) return false;
+
+        if (!hitInfo.transform.CompareTag("Tile"))
+        {
+            Debug.Log(hitInfo.transform.parent);
+            otherTile = hitInfo.transform.parent.GetComponent<Tile>();
         }
         else
         {
-            //맵을 만든다
-            topMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y + 3), numberOfNextBlock, thisMap);
+            otherTile = hitInfo.transform.GetComponent<Tile>();
         }
+
+        return true;
     }
-
-    private void CreatBottomMap()
-    {
-
-        RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 3), this.transform.up, 0.1f);
-
-        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
-        {
-            // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
-            bottomMap = hitInfo.transform.gameObject;
-        }
-        else if (bottomMap != null)
-        {
-            // 맵은 비어있지만 topMap 저장된 타일이 있다면
-            bottomMap.SetActive(true);
-        }
-        else
-        {
-            //Debug.Log("바텀맵만들어짐");
-            bottomMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x, transform.position.y - 3), numberOfNextBlock, thisMap);
-        }
-    }
-
-    private void CreatLeftMap()
-    {
-        RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x - 3, transform.position.y), this.transform.up, 0.1f);
-
-        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
-        {
-            // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
-            leftMap = hitInfo.transform.gameObject;
-        }
-        else if (leftMap != null)
-        {
-            // 맵은 비어있지만 topMap 저장된 타일이 있다면
-            leftMap.SetActive(true);
-        }
-        else
-        {
-            leftMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x - 3, transform.position.y), numberOfNextBlock, thisMap);
-        }
-    }
-    
-    private void CreatRightMap()
-    {
-        RaycastHit2D hitInfo;
-        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x + 3, transform.position.y), this.transform.up, 0.1f);
-
-        if (hitInfo && hitInfo.transform.gameObject.CompareTag("Tile"))
-        {
-            // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
-            rightMap = hitInfo.transform.gameObject;
-        }
-        else if (rightMap != null)
-        {
-            // 맵은 비어있지만 topMap 저장된 타일이 있다면
-            rightMap.SetActive(true);
-        }
-        else
-        {
-            rightMap = MapManager.Instance.CreatMap(new Vector2(transform.position.x + 3, transform.position.y), numberOfNextBlock, thisMap);
-        }
-    }
-
 }
