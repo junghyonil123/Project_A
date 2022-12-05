@@ -1,1 +1,0 @@
-https://www.youtube.com/watch?v=4Z3ofI_sCiY&ab_channel=%EC%99%81%ED%83%80%EB%B2%84%EC%8A%A4WAKTAVERSE
