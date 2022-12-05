@@ -163,7 +163,7 @@ public class Player : Unit
             isCanSave = true;
             isCanMove = false;
 
-            if (!ClickTile())
+            if (!CheckClick())
             {
                 return;
             }
@@ -221,10 +221,17 @@ public class Player : Unit
         DataManager.Instance.SaveData();
     }
 
-    bool ClickTile()
+    bool CheckClick()
     {
         hitObject = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
+        Debug.Log(hitObject);
+
         hitTile = hitObject.transform.GetComponent<Tile>();
+
+        if (hitObject.transform.CompareTag("Box") && hitObject.transform.parent == nowStandingTile)
+        {
+            hitObject.transform.GetComponent<Box>().OpenBox();
+        }
 
 
         if (!hitObject || hitTile.transform.position == nowStandingTile.position)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return

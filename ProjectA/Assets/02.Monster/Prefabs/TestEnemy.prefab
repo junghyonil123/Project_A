@@ -112,6 +112,10 @@ MonoBehaviour:
     dropPer: 100
     dropAmountMin: 1
     dropAmountMax: 1
+  - dropItem: {fileID: 6660486459654502389, guid: 07b3c87e5488649488779b31038231f3, type: 3}
+    dropPer: 100
+    dropAmountMin: 1
+    dropAmountMax: 1
 --- !u!61 &1077467868353149612
 BoxCollider2D:
   m_ObjectHideFlags: 0

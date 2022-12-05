@@ -52,9 +52,11 @@ public class Inventory : MonoBehaviour
 
     public GameObject equipmentWindow;
     public GameObject explanationWindow;
+
     public GameObject dropItemButton;
     public GameObject equipItemButton;
     public GameObject unEpuipItemButton;
+    public GameObject consumeItemButton;
 
     public Image itemImage;
     public TextMeshProUGUI nameText;
@@ -113,17 +115,26 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
-
         if (isEquipped)
         {
             dropItemButton.SetActive(false);
             equipItemButton.SetActive(false);
-            unEpuipItemButton.SetActive(true);
+            consumeItemButton.SetActive(true);
+            unEpuipItemButton.SetActive(false);
+        }
+        else if (item.itmeType == ItemType.ConsumableItme)
+        {
+            consumeItemButton.SetActive(true);
+            dropItemButton.SetActive(true);
+
+            unEpuipItemButton.SetActive(false);
+            equipItemButton.SetActive(false);
         }
         else
         {
             dropItemButton.SetActive(true);
             equipItemButton.SetActive(true);
+            unEpuipItemButton.SetActive(false);
             unEpuipItemButton.SetActive(false);
         }
 
@@ -170,6 +181,13 @@ public class Inventory : MonoBehaviour
     {
         nowSelectSlot = GetItem(nowSelectSlot.item); //아이템을 얻음
         EquipmentWindow.Instance.UnEquipItem(nowSelectSlot.item.itmeType);
-        ItemExplanation(nowSelectSlot.item, false); //아이템 설명
+        ItemExplanation(nowSelectSlot.item, false); //아이템 설명 
+    }
+
+    public void ConsumeItem()
+    {
+        nowSelectSlot.item.Consume();
+        nowSelectSlot.DeleteItem();
+        explanationWindow.SetActive(false);
     }
 }

@@ -58,5 +58,7 @@ public class Item : MonoBehaviour
         Player.Instance.con -= itemStatus.itemCon;
         StatusCanvas.Instance.SetStatus();
     }
+
+    public virtual void Consume(){}
 }
 
