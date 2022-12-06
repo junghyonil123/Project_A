@@ -171,6 +171,8 @@ public class Player : Unit
 
             PlayerFlip();
 
+            Debug.Log("여기까지왓어요");
+
             if (hitTile.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
             {
                 SetMoveTile();

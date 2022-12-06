@@ -143,8 +143,7 @@ public class Tile : MonoBehaviour
     }
 
 
-    private RaycastHit2D hitInfo;
-    private Tile otherTile;
+    private RaycastHit2D[] hitInfo;
    
     private void CreatMap()
     {
@@ -160,10 +159,15 @@ public class Tile : MonoBehaviour
 
     public void CreatXMap(ref GameObject xMap , int xAdd , int yAdd) // xMap에 맵을 저장 혹은 생성
     {
-        if (CheckTile(xAdd, yAdd))
+        if (CheckTileObject(xAdd, yAdd))
         {
-            // 맵의 위에 다른맵이 있다면 그것을 topMap에 저장함
-            xMap = hitInfo.transform.gameObject;
+            foreach (var item in hitInfo)
+            {
+                if (item.transform.CompareTag("Tile")) //RayCast들중 타일을 찾아 저장;
+                {
+                    xMap = item.transform.gameObject;
+                }
+            }           
         }
         //else if(xMap != null)
         //{   // 맵은 비어있지만 topMap 저장된 타일이 있다면 (현재는 플레이어가 멀어져도 맵을 지우지 않기에 사용하지 않는 기능)
@@ -175,22 +179,13 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public bool CheckTile(int xAdd, int yAdd) // 타일이 있다면 true 없다면 false
+    public bool CheckTileObject(int xAdd, int yAdd) // 타일이 있는지 체크
     {
-        hitInfo = Physics2D.Raycast(new Vector2(transform.position.x + xAdd, transform.position.y + yAdd), this.transform.up, 0.1f);
+        hitInfo = Physics2D.RaycastAll(new Vector2(transform.position.x + xAdd, transform.position.y + yAdd), this.transform.up, 0.1f);
 
-        if (!hitInfo) return false;
-
-        if (!hitInfo.transform.CompareTag("Tile"))
-        {
-            Debug.Log(hitInfo.transform.parent);
-            otherTile = hitInfo.transform.parent.GetComponent<Tile>();
-        }
-        else
-        {
-            otherTile = hitInfo.transform.GetComponent<Tile>();
-        }
+        if (hitInfo.Length <= 0) return false;
 
         return true;
     }
+
 }
