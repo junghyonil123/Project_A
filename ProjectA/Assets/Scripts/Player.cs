@@ -213,11 +213,11 @@ public class Player : Unit
     {
         while (transform.position != nowStandingTile.position)
         {
-            if (GameManager.Instance.openedUiCount > 0)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-                continue;
-            }
+            //if (GameManager.Instance.openedUiCount > 0)
+            //{
+            //    yield return new WaitForSeconds(Time.deltaTime);
+            //    continue;
+            //}
 
             transform.position = Vector2.MoveTowards(transform.position, hitTile.transform.position, speed * Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime);
@@ -254,9 +254,8 @@ public class Player : Unit
             }
             else if (item.transform.CompareTag("Box") && hitTile.transform == nowStandingTile)
             {
-                item.transform.GetComponent<Box>().OpenBox();
+                item.transform.GetComponent<Box>().OpenCloseBox();
             }
-
         }
 
 

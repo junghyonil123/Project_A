@@ -40,6 +40,50 @@ public class GameManager : MonoBehaviour
 
     public bool isNight = false;
 
+    public bool isOpenBox = false;
+
+    private Slot _nowSelectSlot;
+
+    public Slot nowSelectSlot
+    {
+        get { return _nowSelectSlot; }
+
+        set { 
+                _lastSelectSlot = _nowSelectSlot;
+                _nowSelectSlot = value;
+            } 
+    }
+
+    private Slot _lastSelectSlot;
+
+    public Slot lastSelectSlot
+    {
+        get
+        {
+            if (_lastSelectSlot == null)
+            {
+                return new Slot();
+            }
+            else
+            {
+                return _lastSelectSlot;
+            } 
+        }
+
+        set
+        {
+            _lastSelectSlot = value;
+        }
+    }
+
+    private Box _lastOpendBox;
+
+    public Box lastOpendBox
+    {
+        //get { }
+        set { _lastOpendBox = value; }
+    }
+
     private void Start()
     {
         StartCoroutine("CheckPlayerActivePoint");
@@ -128,6 +172,12 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i <= 200; i++)
         {
+            if (BattleManager.Instance.isBattle && _openedUiCount <= 0)
+            {
+                yield return nightTransferTime;
+                i--;
+                continue;
+            }
             nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i / 200f);
             yield return nightTransferTime;
         }
@@ -138,6 +188,12 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 200; i >= 0; i--)
         {
+            if (BattleManager.Instance.isBattle && _openedUiCount <= 0)
+            {
+                yield return nightTransferTime;
+                i++;
+                continue;
+            }
             nightSprite.color = new Color(nightSprite.color.r, nightSprite.color.g, nightSprite.color.b, i / 200f);
             yield return nightTransferTime;
         }
@@ -161,7 +217,11 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        SkillManager.Instance.CheckSkillUnlock(); //정보 저장이 끝나면 스킬이 개방 되었나확인
+        if (!BattleManager.Instance.isBattle)
+        {
+           SkillManager.Instance.CheckSkillUnlock(); //정보 저장이 끝나면 스킬이 개방 되었나확인
+        }
+
     }
 
     private int _moveCount;

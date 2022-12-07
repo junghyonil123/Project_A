@@ -100,7 +100,6 @@ public class Tile : MonoBehaviour
 
         if (gameObject.GetComponentInChildren<Enemy>() != null)
         {
-            Debug.Log(gameObject.GetComponentInChildren<Enemy>());
             //타일에 몬스터가 존재함
             return;
         }

@@ -19,7 +19,7 @@ public class EquipSlot : Slot
 
     public override void OnClick()
     {
-        Inventory.Instance.nowSelectSlot = this;
+        GameManager.Instance.nowSelectSlot = this;
         Inventory.Instance.ItemExplanation(item, isEquipped);
     }
 }

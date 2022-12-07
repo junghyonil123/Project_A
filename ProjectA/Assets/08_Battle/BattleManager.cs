@@ -12,9 +12,9 @@ public class BattleManager : MonoBehaviour
     private Enemy enemy;
 
     public GameObject battlePlayer;
-    private Vector3 battlePlayerStartPos;
+    public Vector3 battlePlayerStartPos;
     public GameObject battleEnemy;
-    private Vector3 battleEnemyStartPos;
+    public Vector3 battleEnemyStartPos;
 
     public GameObject battleCanvas;
     public GameObject finishBattleCanvas;
@@ -25,6 +25,8 @@ public class BattleManager : MonoBehaviour
     public DamageText damageText;
 
     public List<Slot> finishCanvasSlotList = new List<Slot>();
+
+    public bool isBattle;
 
     #region Singleton
     private static BattleManager instance;
@@ -71,12 +73,15 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         player = Player.Instance;
-        battlePlayerStartPos = battlePlayer.transform.position;
-        battleEnemyStartPos = battleEnemy.transform.position;
+        battlePlayerStartPos = battlePlayer.GetComponent<RectTransform>().position;
+        battleEnemyStartPos = battleEnemy.GetComponent<RectTransform>().position;
+
     }
 
     public void BattelStart(Enemy _enemy)
     {
+        isBattle = true;
+
         enemy = _enemy; //몬스터 정보 저장
 
         battleCanvas.SetActive(true);
@@ -187,6 +192,9 @@ public class BattleManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                isBattle = false;
+                GameManager.Instance.getInfo(InfoType.monsterKillCount , 1);
+
                 GiveDropItemToPlayer();
                 ResetBattleCanvas();
                 battleCanvas.SetActive(false);
@@ -202,8 +210,8 @@ public class BattleManager : MonoBehaviour
     void ResetBattleCanvas()
     {
         finishBattleCanvas.SetActive(false);
-        battlePlayer.transform.Translate(battlePlayerStartPos);
-        battleEnemy.transform.Translate(battleEnemyStartPos);
+        battlePlayer.GetComponent<RectTransform>().position = battlePlayerStartPos;
+        battleEnemy.GetComponent<RectTransform>().position = battleEnemyStartPos;
     }
 
     private float battlePlayerHpPer;

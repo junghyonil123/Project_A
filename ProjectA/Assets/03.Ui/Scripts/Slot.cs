@@ -53,7 +53,23 @@ public class Slot : MonoBehaviour
 
     public virtual void OnClick()
     {
-        Inventory.Instance.nowSelectSlot = this;
+        GameManager.Instance.nowSelectSlot = this;
         Inventory.Instance.ItemExplanation(item, false);
+
+        if (GameManager.Instance.isOpenBox)
+        {
+            if (GameManager.Instance.nowSelectSlot.item != null)
+                return;
+
+            if (GameManager.Instance.lastSelectSlot == GameManager.Instance.nowSelectSlot && Inventory.Instance.StoreButton.activeSelf)
+            {
+                Inventory.Instance.StoreButton.SetActive(false);
+            }
+            else
+            {
+                Inventory.Instance.StoreButton.SetActive(true);
+            }
+            Inventory.Instance.StoreButton.GetComponent<RectTransform>().position = transform.position;
+        }
     }
 }

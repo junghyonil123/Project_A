@@ -64,8 +64,8 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI abilityText;
     public TextMeshProUGUI explanationText;
     
-    public Slot nowSelectSlot;
-     
+    public GameObject StoreButton;
+    
     public Slot GetItem(Item item)
     {
         foreach (GameObject slot in inventoryList)
@@ -92,7 +92,7 @@ public class Inventory : MonoBehaviour
 
     public void DropItem()
     {
-        nowSelectSlot.DeleteItem();
+        GameManager.Instance.nowSelectSlot.DeleteItem();
         explanationWindow.SetActive(false);
     }
 
@@ -156,6 +156,43 @@ public class Inventory : MonoBehaviour
         explanationText.text = item.itmeExplanation;
     }
 
+    //public void ItemExplanation_InBox(Item item)
+    //{
+    //    if (item == null)
+    //    {
+    //        return;
+    //    }
+    //    if (isEquipped)
+    //    {
+    //        dropItemButton.SetActive(false);
+    //        equipItemButton.SetActive(false);
+    //        consumeItemButton.SetActive(true);
+    //        unEpuipItemButton.SetActive(false);
+    //    }
+    //    else if (item.itmeType == ItemType.ConsumableItme)
+    //    {
+    //        consumeItemButton.SetActive(true);
+    //        dropItemButton.SetActive(true);
+
+    //        unEpuipItemButton.SetActive(false);
+    //        equipItemButton.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        dropItemButton.SetActive(true);
+    //        equipItemButton.SetActive(true);
+    //        unEpuipItemButton.SetActive(false);
+    //        unEpuipItemButton.SetActive(false);
+    //    }
+
+    //    explanationWindow.SetActive(!explanationWindow.activeSelf);
+    //    itemImage.sprite = item.itemSprite;
+    //    nameText.text = item.itmeName;
+    //    typeText.text = ReturnItemType(item.itmeType);
+    //    abilityText.text = "공격력: " + item.itemStatus.itemAtk;
+    //    explanationText.text = item.itmeExplanation;
+    //}
+
     public void SkillExplanation(Skill skill)
     {
         if (skill == null)
@@ -181,31 +218,31 @@ public class Inventory : MonoBehaviour
     public void EquipItem()
     {
         //아이템 장착
-        equipSlot = EquipmentWindow.Instance.EquipItem(nowSelectSlot.item); //아이템을 장착해줌
-        ItemExplanation(nowSelectSlot.item, true); //아이템 설명
-        nowSelectSlot.DeleteItem(); //현재위치의 아이템을 지움
-        nowSelectSlot = equipSlot; //현재위치를 장착한곳으로 변경
+        equipSlot = EquipmentWindow.Instance.EquipItem(GameManager.Instance.nowSelectSlot.item); //아이템을 장착해줌
+        ItemExplanation(GameManager.Instance.nowSelectSlot.item, true); //아이템 설명
+        GameManager.Instance.nowSelectSlot.DeleteItem(); //현재위치의 아이템을 지움
+        GameManager.Instance.nowSelectSlot = equipSlot; //현재위치를 장착한곳으로 변경
     }
 
     public void UnEquipItem()
     {
-        nowSelectSlot = GetItem(nowSelectSlot.item); //아이템을 얻음
-        EquipmentWindow.Instance.UnEquipItem(nowSelectSlot.item.itmeType);
-        ItemExplanation(nowSelectSlot.item, false); //아이템 설명 
+        GameManager.Instance.nowSelectSlot = GetItem(GameManager.Instance.nowSelectSlot.item); //아이템을 얻음
+        EquipmentWindow.Instance.UnEquipItem(GameManager.Instance.nowSelectSlot.item.itmeType);
+        ItemExplanation(GameManager.Instance.nowSelectSlot.item, false); //아이템 설명 
     }
 
     public void ConsumeItem()
     {
-        nowSelectSlot.item.Consume();
+        GameManager.Instance.nowSelectSlot.item.Consume();
 
-        if (nowSelectSlot.item.itemAmount > 1)
+        if (GameManager.Instance.nowSelectSlot.item.itemAmount > 1)
         {
-            nowSelectSlot.item.itemAmount -= 1;
-            nowSelectSlot.SetItemAmount();
+            GameManager.Instance.nowSelectSlot.item.itemAmount -= 1;
+            GameManager.Instance.nowSelectSlot.SetItemAmount();
         }
         else
         {
-            nowSelectSlot.DeleteItem();
+            GameManager.Instance.nowSelectSlot.DeleteItem();
         }
 
         explanationWindow.SetActive(false);
