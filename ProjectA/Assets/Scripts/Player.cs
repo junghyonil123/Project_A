@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class Player : Unit
 {
     #region Singleton
@@ -48,8 +49,10 @@ public class Player : Unit
 
     public delegate int AttackSkill(ref int atk);
     public AttackSkill AttackSkillDelegate;
-    
-    
+
+    public delegate void CreateMapDelegate();
+    public CreateMapDelegate createMapDelegete;
+
     public StatusCanvas statusCanvs;
 
     public bool isCanMove=true;
@@ -151,7 +154,7 @@ public class Player : Unit
         }
     }
     
-    RaycastHit2D hitObject;
+    RaycastHit2D[] hitObjects;
     [SerializeField]
     Tile hitTile;
 
@@ -210,7 +213,13 @@ public class Player : Unit
     {
         while (transform.position != nowStandingTile.position)
         {
-            transform.position = Vector2.MoveTowards(transform.position, hitObject.transform.position, speed * Time.deltaTime);
+            if (GameManager.Instance.openedUiCount > 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                continue;
+            }
+
+            transform.position = Vector2.MoveTowards(transform.position, hitTile.transform.position, speed * Time.deltaTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
@@ -223,33 +232,35 @@ public class Player : Unit
         GameManager.Instance.getInfo(InfoType.moveCount , 1);
         GameManager.Instance.CheckPlayerActivePoint();
 
-
-
+        AfterMoveFinish();
         DataManager.Instance.SaveData();
+    }
+
+    void AfterMoveFinish()
+    {
+        createMapDelegete();
     }
 
     bool CheckClick()
     {
-        hitObject = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity);   //ray에 걸리는 물체 hit에 저장
-        Debug.Log(hitObject.transform);
+        hitObjects = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);   //ray에 걸리는 물체 hit에 저장
+        //Debug.Log(hitObjects.transform);
 
-        if (hitObject.transform.CompareTag("Tile"))
+        foreach (var item in hitObjects)
         {
-            hitTile = hitObject.transform.GetComponent<Tile>();
-        }
-        else
-        {
-            Debug.Log("들어왓어요");
-            hitTile = hitObject.transform.parent.GetComponent<Tile>();
-        }
+            if (item.transform.CompareTag("Tile"))
+            {
+                hitTile = item.transform.GetComponent<Tile>();
+            }
+            else if (item.transform.CompareTag("Box") && hitTile.transform == nowStandingTile)
+            {
+                item.transform.GetComponent<Box>().OpenBox();
+            }
 
-        if (hitObject.transform.CompareTag("Box") && hitTile.transform == nowStandingTile)
-        {
-            hitObject.transform.GetComponent<Box>().OpenBox();
         }
 
 
-        if (!hitObject || hitTile.transform.position == nowStandingTile.position)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
+        if (hitObjects.Length <= 0 || hitTile.transform.position == nowStandingTile.position)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
             return false;
 
         return true;
@@ -257,7 +268,7 @@ public class Player : Unit
 
     void PlayerFlip()
     {
-        if (hitObject.transform.position.x < transform.position.x)
+        if (hitTile.transform.position.x < transform.position.x)
         {
             //플레이어가 왼쪽으로 간다면 플레이어를 왼쪽을 바라보도록 뒤집어줌
             if (transform.localScale.x > 0)
@@ -277,7 +288,7 @@ public class Player : Unit
     void SetMoveTile()
     {
         Debug.Log("움직입니다");
-        nowStandingTile = hitObject.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
+        nowStandingTile = hitTile.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
         playerAnimator.SetBool("Walk", true);
         nowActivePoint -= hitTile.requiredActivePoint;
     }
@@ -302,7 +313,6 @@ public class Player : Unit
     public int GetPlayerAtk()
     {
         battelAtk = atk; 
-        Debug.Log(AttackSkillDelegate);
         
         if (AttackSkillDelegate != null)
         {
@@ -311,4 +321,6 @@ public class Player : Unit
 
         return battelAtk;
     }
+
+    
 }

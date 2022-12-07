@@ -57,14 +57,14 @@ public class GameManager : MonoBehaviour
     {
         _openedUiCount += amount;
 
-        if (_openedUiCount > 0)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        //if (_openedUiCount > 0)
+        //{
+        //    Time.timeScale = 0;
+        //}
+        //else
+        //{
+        //    Time.timeScale = 1;
+        //}
     }
 
     [SerializeField]

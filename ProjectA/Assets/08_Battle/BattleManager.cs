@@ -11,8 +11,10 @@ public class BattleManager : MonoBehaviour
     private Player player;
     private Enemy enemy;
 
-    public GameObject battelPlayer;
-    public GameObject battelEnemy;
+    public GameObject battlePlayer;
+    private Vector3 battlePlayerStartPos;
+    public GameObject battleEnemy;
+    private Vector3 battleEnemyStartPos;
 
     public GameObject battleCanvas;
     public GameObject finishBattleCanvas;
@@ -56,6 +58,7 @@ public class BattleManager : MonoBehaviour
         ////생성과 동시에 실행되는 Awake는 이미 생성되어있는 싱글톤 오브젝트가 있는지 검사하고 있다면 지금 생성된 오브젝트를 파괴
 
         var objs = FindObjectsOfType<BattleManager>();
+
         if (objs.Length != 1)
         {
             Destroy(gameObject);
@@ -68,6 +71,8 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         player = Player.Instance;
+        battlePlayerStartPos = battlePlayer.transform.position;
+        battleEnemyStartPos = battleEnemy.transform.position;
     }
 
     public void BattelStart(Enemy _enemy)
@@ -78,6 +83,8 @@ public class BattleManager : MonoBehaviour
 
         ProfilSetting();
 
+        GameManager.Instance.AddUiCount(1);
+
         StartCoroutine("Battle");
     }
 
@@ -86,9 +93,9 @@ public class BattleManager : MonoBehaviour
         playerPortrait.sprite = player.portrait; //초상화 세팅
         enemyPortrait.sprite = enemy.portrait;
 
-        battelPlayer.transform.GetChild(0).GetComponent<Image>().sprite = player.GetComponent<SpriteRenderer>().sprite; //움직이는 분신 세팅
-        battelEnemy.transform.GetChild(0).GetComponent<Image>().sprite = enemy.GetComponent<SpriteRenderer>().sprite;
-        battelEnemy.transform.GetChild(0).GetComponent<Image>().color = enemy.GetComponent<SpriteRenderer>().color;
+        battlePlayer.transform.GetChild(0).GetComponent<Image>().sprite = player.GetComponent<SpriteRenderer>().sprite; //움직이는 분신 세팅
+        battleEnemy.transform.GetChild(0).GetComponent<Image>().sprite = enemy.GetComponent<SpriteRenderer>().sprite;
+        battleEnemy.transform.GetChild(0).GetComponent<Image>().color = enemy.GetComponent<SpriteRenderer>().color;
     }
 
     IEnumerator Battle()
@@ -100,8 +107,8 @@ public class BattleManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 //Player와 Enemy를 앞으로 움직임
-                battelPlayer.GetComponent<RectTransform>().Translate(new Vector2(300 / count, 0));
-                battelEnemy.GetComponent<RectTransform>().Translate(new Vector2(-300 / count, 0));
+                battlePlayer.GetComponent<RectTransform>().Translate(new Vector2(300 / count, 0));
+                battleEnemy.GetComponent<RectTransform>().Translate(new Vector2(-300 / count, 0));
 
                 yield return null;
             }
@@ -117,8 +124,8 @@ public class BattleManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 //Player와 Enemy를 뒤로 움직임
-                battelPlayer.GetComponent<RectTransform>().Translate(new Vector2(-300 / count, 0));
-                battelEnemy.GetComponent<RectTransform>().Translate(new Vector2(300 / count, 0));
+                battlePlayer.GetComponent<RectTransform>().Translate(new Vector2(-300 / count, 0));
+                battleEnemy.GetComponent<RectTransform>().Translate(new Vector2(300 / count, 0));
 
                 yield return null;
             }
@@ -181,7 +188,9 @@ public class BattleManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 GiveDropItemToPlayer();
+                ResetBattleCanvas();
                 battleCanvas.SetActive(false);
+                GameManager.Instance.AddUiCount(-1);
                 yield break;
             }
 
@@ -189,6 +198,13 @@ public class BattleManager : MonoBehaviour
         }
 
     } //전투를 종료시킴
+
+    void ResetBattleCanvas()
+    {
+        finishBattleCanvas.SetActive(false);
+        battlePlayer.transform.Translate(battlePlayerStartPos);
+        battleEnemy.transform.Translate(battleEnemyStartPos);
+    }
 
     private float battlePlayerHpPer;
     private float battleEnemyHpPer;

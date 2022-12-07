@@ -31,11 +31,13 @@ public class Enemy : Unit
 
     public void Drop()
     {
-        for (int i = 0; i < dropItemInfo.Count; i++)
+
+        foreach (var item in dropItemInfo)
         {
-            if (dropItemInfo[i].dropPer >= UnityEngine.Random.Range(1, 101))
+            if (item.dropPer >= UnityEngine.Random.Range(1, 101))
             {
-                BattleManager.Instance.ShowDropItemToFinishCanvas(dropItemInfo[i].dropItem);
+                item.dropItem.itemAmount = UnityEngine.Random.Range(item.dropAmountMin, item.dropAmountMax + 1);
+                BattleManager.Instance.ShowDropItemToFinishCanvas(item.dropItem);
             }
         }
 

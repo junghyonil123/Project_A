@@ -33,6 +33,8 @@ public class Item : MonoBehaviour
     public ItemType itmeType;
     public int itemNumber;
 
+    public int itemAmount;
+
     public ItemStatus itemStatus;
     public string itmeExplanation;
      

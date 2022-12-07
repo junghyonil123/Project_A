@@ -79,6 +79,11 @@ public class SkillManager : MonoBehaviour
     public void CheckSkillUnlock()
     {
         //gameManager에 정보가 업데이트 될때마다 체크
+        if (gameObject)
+        {
+
+        }
+
         for (int i = 0; i < allSkillList.Count; i++)
         {
             if (playerSkillList.Contains(allSkillList[i]))

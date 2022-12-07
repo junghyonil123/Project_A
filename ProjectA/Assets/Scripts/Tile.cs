@@ -46,6 +46,8 @@ public class Tile : MonoBehaviour
         MonsterSpawn();
         //TileLock();
         CreatMap();
+
+        Player.Instance.createMapDelegete += CreatMap;
     }
 
     private void Update()

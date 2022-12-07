@@ -70,10 +70,20 @@ public class Inventory : MonoBehaviour
     {
         foreach (GameObject slot in inventoryList)
         {
+            
             if (slot.GetComponent<Slot>().item == null)
             {
                 slot.GetComponent<Slot>().SetItem(item);
                 return slot.GetComponent<Slot>();
+            }
+            else if (item.itmeType == ItemType.ConsumableItme || item.itmeType == ItemType.Material)
+            {
+                if (slot.GetComponent<Slot>().item.itemNumber == item.itemNumber)// 만약 재료혹은 소비아이템일때 같은 아이템이 있다면 합침
+                {
+                    slot.GetComponent<Slot>().item.itemAmount += item.itemAmount;
+                    slot.GetComponent<Slot>().SetItemAmount();
+                    return slot.GetComponent<Slot>();
+                }
             }
         }
 
@@ -187,7 +197,17 @@ public class Inventory : MonoBehaviour
     public void ConsumeItem()
     {
         nowSelectSlot.item.Consume();
-        nowSelectSlot.DeleteItem();
+
+        if (nowSelectSlot.item.itemAmount > 1)
+        {
+            nowSelectSlot.item.itemAmount -= 1;
+            nowSelectSlot.SetItemAmount();
+        }
+        else
+        {
+            nowSelectSlot.DeleteItem();
+        }
+
         explanationWindow.SetActive(false);
     }
 }
