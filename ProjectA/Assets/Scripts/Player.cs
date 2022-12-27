@@ -155,6 +155,7 @@ public class Player : Unit
     }
     
     RaycastHit2D[] hitObjects;
+    List<string> hitObjectsList = new List<string>();
     [SerializeField]
     Tile hitTile;
 
@@ -246,6 +247,12 @@ public class Player : Unit
         hitObjects = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);   //ray에 걸리는 물체 hit에 저장
         //Debug.Log(hitObjects.transform);
 
+        hitObjectsList.Clear();
+        for (int i = 0; i < hitObjects.Length; i++)
+        {
+            hitObjectsList.Add(hitObjects[i].transform.tag);
+        }
+
         foreach (var item in hitObjects)
         {
             if (item.transform.CompareTag("Tile"))
@@ -258,6 +265,11 @@ public class Player : Unit
             }
         }
 
+        if (!hitObjectsList.Contains("Box"))
+        {
+            Box.lastBox.CloseBox();
+        }
+        
 
         if (hitObjects.Length <= 0 || hitTile.transform.position == nowStandingTile.position)   //만약 ray가 땅이없는 곳을 눌렀을때 에러 발생을 막기위한 return
             return false;

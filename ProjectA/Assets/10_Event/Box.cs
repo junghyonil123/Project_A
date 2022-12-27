@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Box : MonoBehaviour
 {
+    public static Box lastBox;
+
     [SerializeField]
     private Sprite openSprite;
     [SerializeField]
@@ -59,6 +61,7 @@ public class Box : MonoBehaviour
 
     public void OpenBox()
     {
+        lastBox = this;
         GetComponent<SpriteRenderer>().sprite = openSprite;
         boxInventoryCanvas.SetActive(!boxInventoryCanvas.activeSelf);
         GameManager.Instance.isOpenBox = boxInventoryCanvas.activeSelf;
