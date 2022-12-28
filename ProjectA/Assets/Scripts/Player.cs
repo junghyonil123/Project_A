@@ -267,7 +267,10 @@ public class Player : Unit
 
         if (!hitObjectsList.Contains("Box"))
         {
-            Box.lastBox.CloseBox();
+            if (Box.lastBox != null)
+            {
+                Box.lastBox.CloseBox();
+            }
         }
         
 
