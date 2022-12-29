@@ -19,8 +19,8 @@ public class Box : MonoBehaviour
     private int boxSize;
     [SerializeField]
     private GameObject slotPrefab;
-
-    private List<Slot> boxInventorySlotList;
+    
+    private List<Slot> boxInventorySlotList = new List<Slot>();
 
     [SerializeField]
     private Transform content;
@@ -32,19 +32,36 @@ public class Box : MonoBehaviour
         MakeBox();
     }
 
+    public void FillBoxFirst()
+    {
+        for (int i = 0; i < boxContainItemList.Count; i++)
+        {
+            SetItmeInBox(boxContainItemList[i]);
+        }
+    }
+
+    public void SetItmeInBox(Item itme)
+    {
+        for (int i = 0; i < boxInventorySlotList.Count; i++)
+        {
+            if (boxInventorySlotList[i].item == null)
+            {
+                boxInventorySlotList[i].SetItem(itme);
+                break;
+            }
+        }
+    }
+
     public void MakeBox()
     {
         for (int i = 0; i < boxSize; i++)
         {
             GameObject newSlot =  Instantiate(slotPrefab, content); //슬롯을 BoxSize 크기만큼 만들어줌
-
-            if (boxContainItemList.Count >= i + 1)
-            {
-                newSlot.GetComponent<Slot>().item = boxContainItemList[i]; //애초에 가지고 있는 아이템을 저장
-            }
+            boxInventorySlotList.Add(newSlot.GetComponent<Slot>());
         }
 
         boxInventoryCanvas.SetActive(false);
+        FillBoxFirst();
     }
 
     public void OpenCloseBox()
