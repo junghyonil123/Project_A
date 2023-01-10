@@ -68,9 +68,9 @@ public class Inventory : MonoBehaviour
     
     public Slot GetItem(Item item)
     {
+        Debug.Log("½ÇÇà");
         foreach (GameObject slot in inventoryList)
         {
-            
             if (slot.GetComponent<Slot>().item == null)
             {
                 slot.GetComponent<Slot>().SetItem(item);

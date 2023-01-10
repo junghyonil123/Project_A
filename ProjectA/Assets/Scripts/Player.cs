@@ -84,6 +84,7 @@ public class Player : Unit
 
     public void GetItem(Item item) //아이템을 얻는 함수
     {
+        Debug.Log("d");
         Inventory.Instance.GetItem(item);
     }
 
@@ -145,6 +146,7 @@ public class Player : Unit
     {
         if (collision.CompareTag("Item"))
         {
+            GetItem(collision.gameObject.GetComponent<Item>());
             Destroy(collision.gameObject);
         }
 
@@ -163,7 +165,7 @@ public class Player : Unit
     {
         if (GameManager.Instance.openedUiCount <= 0 && Input.GetMouseButtonDown(0) && isCanMove && nowActivePoint != 0)
         {
-            Debug.Log(Input.GetMouseButtonDown(0));
+            //Debug.Log(Input.GetMouseButtonDown(0));
 
             isCanSave = true;
             isCanMove = false;
@@ -175,7 +177,7 @@ public class Player : Unit
 
             PlayerFlip();
 
-            Debug.Log("여기까지왓어요");
+            //Debug.Log("여기까지왓어요");
 
             if (hitTile.transform == nowStandingTile.GetComponent<Tile>().topMap.transform)
             {
@@ -301,7 +303,7 @@ public class Player : Unit
 
     void SetMoveTile()
     {
-        Debug.Log("움직입니다");
+        //Debug.Log("움직입니다");
         nowStandingTile = hitTile.transform;  //ray에 잡힌 물체를 target변수에 집어넣음
         playerAnimator.SetBool("Walk", true);
         nowActivePoint -= hitTile.requiredActivePoint;
